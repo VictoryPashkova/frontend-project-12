@@ -1,8 +1,32 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useDispatch } from 'react-redux';
 import { Formik, Field, ErrorMessage } from 'formik';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { setCredentials } from '../../redux/reducers/user/registrationSlice';
+import React, { useState } from 'react';
 
 const RegistrationForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const onSubmit = async ({ name, password }) => {
+    const user = {
+      username: name, 
+      password: password,
+    }
+    try {
+      const response = await axios.post('/api/v1/signup', { username: name, password: password });
+      const token = response.data.token;
+      dispatch(setCredentials({ user, token }));
+      navigate('/');
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    }
+  };
+  
     return (
       <Formik
         initialValues={{ name: '', password: '', confirmPassword: '' }}
@@ -23,10 +47,8 @@ const RegistrationForm = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          onSubmit(values);
+          setSubmitting(false);
         }}
       >
         {({

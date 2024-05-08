@@ -1,8 +1,31 @@
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../../redux/reducers/user/registrationSlice';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const LogInForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const onSubmit = async ({ name, password }) => {
+    setError('');
+    try {
+      const response = await axios.post('/api/v1/login', { username: name, password });
+      const token = response.data.token;
+      const username = response.data.username;
+      if (username) {
+        dispatch(setCredentials({ username, token }));
+        navigate('/');
+      }
+    } catch (error) {
+      setError('Неверное имя пользователя или пароль');
+    }
+  };
+
     return (
       <Formik
         initialValues={{ name: '', password: '', confirmPassword: '' }}
@@ -14,7 +37,7 @@ const LogInForm = () => {
             errors.name = 'От 3 до 20 символов';
           } if (!values.password) {
             errors.password = 'Обязательное поле';
-          } else if (values.password.length < 6) {
+          } else if (values.password.length < 5) {
             errors.password = 'Не менее 6 символов';
           } if (!values.confirmPassword) {
           } else if (values.password !== values.confirmPassword) {
@@ -23,10 +46,8 @@ const LogInForm = () => {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          onSubmit(values);
+          setSubmitting(false);
         }}
       >
         {({
@@ -65,6 +86,7 @@ const LogInForm = () => {
               />
               <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
             </Form.Group>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
                 Войти

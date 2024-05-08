@@ -4,7 +4,7 @@ import PrimaryButton from '../../../uikit/buttons/button';
 import React from 'react';
 import LogInForm from '../../Form/LogInForm';
 
-const LogInModal = ({children}) => {
+const LogInModal = () => {
   return (
     <div
       className="modal show"
