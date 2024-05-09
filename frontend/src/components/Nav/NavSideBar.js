@@ -2,18 +2,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import { fetchChannels } from '../../redux/reducers/app/channelsSlice';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 
 const NavbarSideBar = ({children}) => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchChannels());
-    }, [dispatch]);
-    const channels = useSelector((state) => state.channels);
+    const { data: channels, isLoading, isError } = useGetChannelsQuery();
     console.log(channels);
+
     return (
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
