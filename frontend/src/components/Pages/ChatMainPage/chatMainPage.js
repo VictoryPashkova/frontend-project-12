@@ -1,12 +1,9 @@
 import React, {useEffect} from "react";
-import MainModal from "../../Modals/Modal/MainModal";'../../Modals/Modal/MainModal';
 import NavbarHeader from "../../Nav/Nav";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { getToken } from '../../../redux/reducers/user/registrationSlice';
-import PrimaryButton from "../../../uikit/buttons/button";
 import Button from "react-bootstrap/esm/Button";
-import ChatModal from "../../Modals/chatModal/chatModal";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

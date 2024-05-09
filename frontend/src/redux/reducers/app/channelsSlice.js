@@ -7,10 +7,9 @@ import axios from 'axios';
 
 export const fetchChannels = createAsyncThunk(
     'channels/fetchChannels',
-    async (_, { getState }) => {
+    async ({ getState }) => {
       try {
         const { token } = getState().user;
-        console.log(token);
         const response = await axios.get('/api/v1/channels', {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -29,14 +28,13 @@ const channelsAdapter = createEntityAdapter();
 
 const channelsSlice = createSlice({
     name: 'channels',
-    initialState: channelsAdapter.getInitialState({ loadingStatus: 'idle', error: null }),
+    initialState: channelsAdapter.getInitialState(),
     reducers: {
       addChannel: channelsAdapter.addOne,
     },
     extraReducers: (builder) => {
       builder
         .addCase(fetchChannels.fulfilled, (state, action) => {
-          state.error = null;
           channelsAdapter.setAll(state, action.payload);
         });
     },
