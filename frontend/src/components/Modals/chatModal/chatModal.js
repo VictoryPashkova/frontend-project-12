@@ -4,8 +4,12 @@ import PrimaryButton from '../../../uikit/buttons/button';
 import React from 'react';
 import LogInForm from '../../Form/LogInForm';
 import { useNavigate } from 'react-router-dom';
+import SideBar from '../../SideBar/sideBar';
+import ChannelWindow from '../../ChannelWindow/ChannelWindow';
+import { Container, Row, Column } from 'react-bootstrap';
 
-const LogInModal = () => {
+
+const ChatModal = () => {
   const navigate = useNavigate();
   return (
     <div
@@ -14,16 +18,16 @@ const LogInModal = () => {
     >
       <Modal.Dialog>
         <Modal.Body>
-          <LogInForm />
+          <Container>
+          <Row>
+          <SideBar />
+          <ChannelWindow />
+          </Row>
+          </Container>
         </Modal.Body>
-        <Modal.Footer>
-          <PrimaryButton text={"Регистрация"} onClick={() => navigate('/registration', { replace: false })} >
-            <p style={{ display: 'inline-block' }}>Нет аккаунта?</p>
-          </PrimaryButton>
-        </Modal.Footer>
       </Modal.Dialog>
     </div>
   );
 }
 
-export default LogInModal;
+export default ChatModal;

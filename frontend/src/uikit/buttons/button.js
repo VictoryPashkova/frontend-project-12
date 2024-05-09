@@ -3,18 +3,11 @@ import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 
-const PrimaryButton = ({ text }) => {
-  const navigate = useNavigate();
-  const navigateToRegistration = () => {
-    navigate('/registration', {replace: false});
-  }
-
+const PrimaryButton = ({ text, onClick, children }) => {
     return (
-      <div style={{ textAlign: 'center', display: 'flex' , alignSelf: 'center'}}>
-        <p style={{ display: 'inline-block' }}>
-          Нет аккаунта?
-          <Button variant="link" onClick={navigateToRegistration}>{text}</Button>
-        </p>
+      <div style={{ textAlign: 'center', display: 'flex' , alignSelf: 'center', justifyContent: 'center', alignItems: 'center'}}>
+        {children}
+        <Button variant="link" onClick={onClick}>{text}</Button>
       </div>
     );
   }
