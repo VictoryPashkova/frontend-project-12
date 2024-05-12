@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const channelsApi = createApi({
-  reducerPath: 'channelsApi',
+export const massagesApi = createApi({
+  reducerPath: 'massagesApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/channels',
+    baseUrl: '/api/v1/messages',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().user.token;
       if (token) {
@@ -13,19 +13,12 @@ export const channelsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getChannels: builder.query({
+    getMassages: builder.query({
       query: () => '',
-    }),
-    addChannel: builder.mutation({
-      query: (channel) => ({
-        method: 'POST',
-        body: channel,
-      }),
     }),
   }),
 });
 
 export const {
-    useGetChannelsQuery,
-    useAddChannelMutation,
-  } = channelsApi;
+    useGetMassagesQuery,
+  } = massagesApi;

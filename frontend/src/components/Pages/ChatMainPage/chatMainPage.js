@@ -10,6 +10,8 @@ import Col from 'react-bootstrap/Col';
 import { Nav, Navbar } from "react-bootstrap";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import NavbarSideBar from "../../Nav/NavSideBar";
+import AddChannelModal from "../../Modals/AddChannelModal/addChannelModal";
+import ChannelWindow from '../../ChannelWindow/ChannelWindow';
 
 const ChatMainPage = () => {
   const navigate = useNavigate();
@@ -36,13 +38,14 @@ const ChatMainPage = () => {
         <body>
          <main>
             <>
+            <AddChannelModal />
          <Container fluid>
                 <Row>
-                    <Col xs={3} id="sidebar-wrapper"> 
+                    <Col xs={2} id="sidebar-wrapper"> 
                     <NavbarSideBar />
                     </Col>
-                    <Col  xs={9} id="page-content-wrapper">
-                        Chat Window Component
+                    <Col  xs={10} id="page-content-wrapper">
+                        <ChannelWindow />
                     </Col> 
                 </Row>
 
