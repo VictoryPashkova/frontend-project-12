@@ -12,14 +12,13 @@ const authSlice = createSlice({
       setCredentials: (
         state,
         {
-          payload: { user, token },
+          payload: { username, token },
         },
       ) => {
-  
-        state.user = user;
+        
+        state.user = username;
         state.token = token;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
+
       },
       getToken: (state) => {
         const token = localStorage.getItem('token');

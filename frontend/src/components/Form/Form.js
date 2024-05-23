@@ -12,20 +12,20 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
-    const user = {
-      username: name, 
-      password: password,
-    }
+    setError('');
     try {
-      const response = await axios.post('/api/v1/signup', { username: name, password: password });
+      const response = await axios.post('/api/v1/signup', { username: name, password });
       const token = response.data.token;
-      dispatch(setCredentials({ user, token }));
-      navigate('/');
+      const username = response.data.username;
+      if (username) {
+        dispatch(setCredentials({ username, token }));
+        navigate('/');
+      }
     } catch (error) {
-      setError(error);
-      console.log(error);
+      setError('Неверное имя пользователя или пароль');
     }
   };
+
   
     return (
       <Formik

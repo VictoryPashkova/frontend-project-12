@@ -8,9 +8,9 @@ import { Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import { useDispatch } from 'react-redux';
+import { useAddChannelMutation } from '../../../redux/reducers/app/channelsSlice';
 
 const AddChannelModal = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.addChannelModal);
   
@@ -19,7 +19,7 @@ const AddChannelModal = () => {
       show={modalState}
       size="lg"
       centered
-      onHide={() => dispatch(setAddChannelModal({state: false}))} // Закрывает модальное окно при нажатии на кнопку "закрыть" (крестик)
+      onHide={() => dispatch(setAddChannelModal({state: false}))}
     >
       <Modal.Header closeButton>
         <Modal.Title>Введите название канала</Modal.Title>

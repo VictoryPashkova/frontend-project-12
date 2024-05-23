@@ -12,13 +12,31 @@ export const massagesApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Message'],
   endpoints: (builder) => ({
     getMassages: builder.query({
       query: () => '',
+      providesTags: ['Message'],
+    }),
+    addMessage: builder.mutation({
+      query: (newMessage) => ({
+        method: 'POST',
+        body: newMessage,
+      }),
+      providesTags: ['Message'],
+    }),
+    removeMessage: builder.mutation({
+      query: (id) => ({
+        url: `/${id}`,
+        method: 'DELETE',
+        providesTags: ['Message'],
+      }),
     }),
   }),
 });
 
 export const {
     useGetMassagesQuery,
+    useAddMessageMutation,
+    useRemoveMessageMutation,
   } = massagesApi;

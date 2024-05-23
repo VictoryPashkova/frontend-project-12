@@ -15,7 +15,8 @@
     "@hexlet/chat-server": "^2.0.3",
     "bootstrap": "^5.3.3",
     "lorem-ipsum": "^2.0.8",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "socket.io-client": "^4.7.5"
   },
   "devDependencies": {
     "prettier": "^3.2.5"

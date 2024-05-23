@@ -8,23 +8,28 @@ import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAddChannelMutation } from '../../redux/reducers/app/channelsSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
+import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
+import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 
 const AddChannaleForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [
     addChannel,
     { error: addChannelError, isLoading: isAddingChannel },
   ] = useAddChannelMutation();
+  const { data: channels, isLoading, isError, refetch } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
     const newChannel = { name: values.channelName };
     try {
-      await addChannel(newChannel);
-      dispatch(setAddChannelModal({ state: false }));
-      сonsole.log(newChannel, useSelector((state => state.channels)));
+      const result = await addChannel(newChannel).unwrap();
+      if (result && result.id) {
+        dispatch(setCurrentChannel({ id: result.id, name: result.name }));
+        refetch();
+        dispatch(setAddChannelModal({ state: false }));
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Failed to add new channel:', error);
     }
   };
   
@@ -37,6 +42,8 @@ const AddChannaleForm = () => {
           errors.channelName = 'Обязательное поле';
         } else if (values.channelName.length < 3 || values.channelName.length > 20) {
           errors.channelName = 'От 3 до 20 символов';
+        } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
+          errors.channelName = 'Такой канал уже существует';
         }
         return errors;
       }}
@@ -53,7 +60,6 @@ const AddChannaleForm = () => {
         handleBlur,
         handleSubmit,
         isSubmitting,
-        /* and other goodies */
       }) => (
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">

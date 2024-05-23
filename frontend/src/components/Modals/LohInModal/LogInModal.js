@@ -1,12 +1,13 @@
-import { Children } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import PrimaryButton from '../../../uikit/buttons/button';
 import React from 'react';
 import LogInForm from '../../Form/LogInForm';
 import { useNavigate } from 'react-router-dom';
 
+
 const LogInModal = () => {
   const navigate = useNavigate();
+
   return (
     <div
       className="modal show"
