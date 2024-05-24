@@ -6,8 +6,10 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LogInForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -61,7 +63,7 @@ const LogInForm = () => {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            <h1 style={{ textAlign: 'center' }}>Войти</h1>
+            <h1 style={{ textAlign: 'center' }}>{t('login.login')}</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Ваш ник</Form.Label>
               <Form.Control
