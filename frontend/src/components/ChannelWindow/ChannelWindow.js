@@ -8,6 +8,7 @@ import { Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import leo from 'leo-profanity';
 
 
 const ChannelWindow = () => {
@@ -95,7 +96,11 @@ const ChannelWindow = () => {
   }, [massages]);
 
   const sendMessage = async () => {
-    if (newMessage.trim()) {
+    leo.loadDictionary('ru');
+    const cleanRuMessage = leo.clean(newMessage);
+    leo.loadDictionary('en');
+    const cleanMessage = leo.clean(cleanRuMessage);
+    if (cleanMessage.trim()) {
       try {
         const response = await addMessageHandler({
           body: newMessage,
@@ -202,7 +207,7 @@ const ChannelWindow = () => {
               <>
                 {currentChannelMessages.map((message) => (
                   <Row key={message.id}>
-                    <MassagesCard key={message.id} author={message.username} text={message.body} onDelete={() => handleDeleteMessage(message.id)} />
+                    <MassagesCard key={message.id} author={message.username} text={leo.clean(message.body)} onDelete={() => handleDeleteMessage(message.id)} />
                   </Row>
                 ))}
                 <div ref={messagesEndRef} />

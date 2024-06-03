@@ -13,8 +13,11 @@ import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import leo from 'leo-profanity';
+
 
 const AddChannaleForm = () => {
+  leo.loadDictionary('ru');
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [
@@ -24,7 +27,11 @@ const AddChannaleForm = () => {
   const { data: channels, isLoading: isChannelsLoading, isError: isChannelsError, refetch } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
-    const newChannel = { name: values.channelName };
+    leo.loadDictionary('ru');
+    const cleanRuChannelName = leo.clean(values.channelName);
+    leo.loadDictionary('en');
+    const cleanChannelName = leo.clean(cleanRuChannelName);
+    const newChannel = { name: cleanChannelName };
     try {
       const result = await addChannel(newChannel).unwrap();
       if (result && result.id) {
@@ -64,6 +71,8 @@ const AddChannaleForm = () => {
   }, [addChannelError]);
   
   return (
+    <>
+    <ToastContainer />
     <Formik
       initialValues={{ channelName: '' }}
       validate={(values) => {
@@ -112,6 +121,7 @@ const AddChannaleForm = () => {
         </Form>
       )}
     </Formik>
+    </>
   );
 };
 
