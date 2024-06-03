@@ -1,4 +1,4 @@
-import { Children } from 'react';
+import { Children, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
 import { Button, Alert, Spinner, Form } from 'react-bootstrap';
@@ -8,9 +8,12 @@ import { useEditChannelMutation } from '../../redux/reducers/app/channelsSlice';
 import { setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 import { Formik } from 'formik';
-
+import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditChannelModal = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.chat.onEditChannelId);
@@ -18,7 +21,7 @@ const EditChannelModal = () => {
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },
   ] = useEditChannelMutation();
-  const { data: channels, isLoading, isError, refetch } = useGetChannelsQuery();
+  const { data: channels, isLoading: isChannelsLoading, isError: isChannelsError } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
     const newChannel = { name: values.channelName };
@@ -30,29 +33,55 @@ const EditChannelModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (isEditingChannel) {
+      toast.info(t('interface.renaming'));
+    }
+  }, [isEditingChannel]);
+
+  useEffect(() => {
+    if (isChannelsLoading) {
+      toast.info(t('interface.loading'));
+    }
+  }, [isChannelsLoading]);
+
+  useEffect(() => {
+    if (editingChannelError) {
+      toast.error(t('interface.renameChannelError'));
+    }
+  }, [editingChannelError]);
+
+  useEffect(() => {
+    if (isChannelsError) {
+      toast.error(t('interface.getChannelsError'));
+    }
+  }, [isChannelsError]);
+
 
   return (
+    <><ToastContainer />
     <Modal
       show={modalState}
       size="lg"
       centered
       onHide={() => dispatch(setEditChannelModal({state: false}))}
     >
+      
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('interface.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       {isEditingChannel ? (
           <div className="d-flex justify-content-center">
             <Spinner animation="border" role="status">
-              <span className="visually-hidden">Переименование...</span>
+              <span className="visually-hidden">{t('interface.renaming')}</span>
             </Spinner>
           </div>
         ) : (
           <>
             {editingChannelError && (
               <Alert variant="danger">
-                Ошибка переименования канала: {editingChannelError.data.message || editingChannelError.message}
+                {t('interface.renameChannelError')} {editingChannelError.data.message || editingChannelError.message}
               </Alert>
             )}
             <Formik
@@ -60,11 +89,11 @@ const EditChannelModal = () => {
       validate={(values) => {
         const errors = {};
         if (!values.channelName) {
-          errors.channelName = 'Обязательное поле';
+          errors.channelName = t('interface.requiredField');
         } else if (values.channelName.length < 3 || values.channelName.length > 20) {
-          errors.channelName = 'От 3 до 20 символов';
+          errors.channelName = t('interface.usernameLength');
         } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
-          errors.channelName = 'Такой канал уже существует';
+          errors.channelName = t('interface.channelExists');
         }
         return errors;
       }}
@@ -97,7 +126,7 @@ const EditChannelModal = () => {
           </Form.Group>
           <div className="d-grid gap-2">
             <Button variant="danger" size="sm" type="submit" disabled={isSubmitting} >
-              Изменить
+              {t('interface.buttons.change')}
             </Button>
           </div>
         </Form>
@@ -108,10 +137,11 @@ const EditChannelModal = () => {
       </Modal.Body>
       <Modal.Footer>
       <Button variant="secondary" onClick={() => dispatch(setEditChannelModal({state: false}))}>
-          Отменить
+      {t('interface.buttons.cancel')}
         </Button>
       </Modal.Footer>
     </Modal>
+    </>
   );
 };
 

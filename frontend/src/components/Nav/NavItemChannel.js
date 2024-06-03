@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { setRemoveChannelModal, setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setOnEditChannelId } from '../../redux/reducers/app/chatSlice';
+import { useTranslation } from 'react-i18next';
 
 const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const removeClickHandler = () => {
@@ -36,8 +38,8 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
             <i className="bi bi-chevron-down cursor-pointer"></i>
           </Dropdown.Toggle>
           <Dropdown.Menu className='dropdown-menu-dark dropdown-menu-sm-auto'>
-            <Dropdown.Item onClick={() => editClickHandler()}>Переименовать</Dropdown.Item>
-            <Dropdown.Item onClick={() => removeClickHandler()}>Удалить</Dropdown.Item>
+            <Dropdown.Item onClick={() => editClickHandler()}>{t('interface.buttons.edit')}</Dropdown.Item>
+            <Dropdown.Item onClick={() => removeClickHandler()}>{t('interface.buttons.delete')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         }

@@ -6,8 +6,12 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrationForm = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -22,30 +26,33 @@ const RegistrationForm = () => {
         navigate('/');
       }
     } catch (error) {
-      setError('Неверное имя пользователя или пароль');
+      setError(t('interface.invalidCredentials'));
+      toast.error(t('interface.invalidCredentials'));
     }
   };
 
   
     return (
+      <>
+      <ToastContainer />
       <Formik
-        initialValues={{ name: '', password: '', confirmPassword: '' }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.name) {
-            errors.name = 'Обязательное поле';
-          } else if (values.name.length < 3 || values.name.length > 20) {
-            errors.name = 'От 3 до 20 символов';
-          } if (!values.password) {
-            errors.password = 'Обязательное поле';
-          } else if (values.password.length < 6) {
-            errors.password = 'Не менее 6 символов';
-          } if (!values.confirmPassword) {
-          } else if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = 'Пароли должны совпадать';
-          }
-          return errors;
-        }}
+      initialValues={{ name: '', password: '', confirmPassword: '' }}
+      validate={(values) => {
+        const errors = {};
+        if (!values.name) {
+          errors.name = t('interface.requiredField');
+        } else if (values.name.length < 3 || values.name.length > 20) {
+          errors.name = t('interface.usernameLength');
+        } if (!values.password) {
+          errors.password = t('interface.requiredFiel');
+        } else if (values.password.length < 5) {
+          errors.password = t('interface.passwordLength');
+        } if (!values.confirmPassword) {
+        } else if (values.password !== values.confirmPassword) {
+          errors.confirmPassword = t('interface.passwordsMustMatch');
+        }
+        return errors;
+      }}
         onSubmit={(values, { setSubmitting }) => {
           onSubmit(values);
           setSubmitting(false);
@@ -62,9 +69,9 @@ const RegistrationForm = () => {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            <h1 style={{ textAlign: 'center' }}>Регистрация</h1>
+            <h1 style={{ textAlign: 'center' }}>{t('interface.registration')}</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Имя</Form.Label>
+              <Form.Label>{t('interface.username')}</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -77,7 +84,7 @@ const RegistrationForm = () => {
             </Form.Group>
   
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Пароль</Form.Label>
+              <Form.Label>{t('interface.password')}</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
@@ -89,7 +96,7 @@ const RegistrationForm = () => {
               <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Подтвердите пароль</Form.Label>
+              <Form.Label>{t('interface.confirmPassword')}</Form.Label>
               <Form.Control
                 type="password"
                 name="confirmPassword"
@@ -102,12 +109,13 @@ const RegistrationForm = () => {
             </Form.Group>
             <div className="d-grid gap-2">
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
-                Зарегистрироваться
+              {t('interface.buttons.register')}
               </Button>
             </div>
           </Form>
         )}
       </Formik>
+      </>
     );
   };
   

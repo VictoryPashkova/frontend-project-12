@@ -12,7 +12,6 @@ const HomePage = () => {
                 <body className="h-100 bg-light">
                     <div className="h-100">
                         <div className="h-100" id="chat">
-
                                 <ChatMainPage />
                             </div>
                         </div>

@@ -1,5 +1,79 @@
 {
-      "login": {
-        "login": "Войти"
-      }
+  "translation": {
+    "interface": {
+    "nickname": "Ваш ник",
+    "password": "Пароль",
+    "login": "Войти",
+    "invalidCredentials": "Неверные имя пользователя или пароль",
+    "registration": "Регистрация",
+    "confirmPassword": "Подтвердите пароль",
+    "signUp": "Зарегистрироваться",
+    "username": "Имя пользователя",
+    "usernameLength": "От 3 до 20 символов",
+    "passwordLength": "Не менее 6 символов",
+    "passwordsMustMatch": "Пароли должны совпадать",
+    "send": "Отправить",
+    "connectionError": "Ошибка соединения",
+    "connected": "Соединение установлено",
+    "error": "Ошибка соединения",
+    "addChannel": "+",
+    "channelName": "Имя канала",
+    "manageChannel": "Управление каналом",
+    "rename": "Переименовать",
+    "delete": "Удалить",
+    "messageSent": "Сообщение отправлено",
+    "messageEdited": "Сообщение изменено",
+    "messageRemoved": "Сообщение удалено",
+    "channelCreated": "Канал создан",
+    "channelRenamed": "Канал переименован",
+    "channelDeleted": "Канал удалён",
+    "messageSendError": "Ошибка отправки сообщения",
+    "messageDeleteError": "Ошибка удаления сообщения",
+    "connectionLost": "Соединение потеряно. Попытка переподключения...",
+    "unableToConnect": "Не удается подключиться к серверу",
+    "reconnecting": "Переподключение к серверу...",
+    "loading": "Загрузка...",
+    "requiredField": "Обязательное поле",
+    "channelExists": "Такой канал уже существует",
+    "channelName_second": "Название канала",
+    "userExists": "Такой пользователь уже существует",
+    "enterChannelName": "Введите название канала",
+    "noAccount": "Нет аккаунта?",
+    "renameChannel": "Переименовать канал",
+    "renaming": "Переименование...",
+    "addingChannel": "Добавление канала...",
+    "renameChannelError": "Ошибка переименования канала",
+    "deleteChannelError": "Ошибка удаления канала",
+    "addingChannelError": "Ошибка добавления канала",
+    "renameChannelSuccess": "Канал переименован",
+    "getChannelsError": "Ошибка получения каналов",
+    "areYouSure": "Уверены?",
+    "deleting": "Удаление...",
+    "deleteChannel": "Удалить канал",
+    "hexletChat": "Hexlet Chat",
+    "channels": "Каналы",
+    "goToHomePage": "Вернуться на главную страницу",
+    "pageNotFound": "Извините, страница не найдена.",
+    "404": "404",
+    "messages": {
+      "one": "{{count}} сообщение",
+      "few": "{{count}} сообщения",
+      "many": "{{count}} сообщений"
+    },
+    "buttons": {
+      "send": "Отправить",
+      "add": "Добавить",
+      "delete": "Удалить",
+      "edit": "Редактировать",
+      "close": "Закрыть",
+      "change": "Изменить",
+      "cancel": "Отменить",
+      "rename": "Переименовать",
+      "logout": "Выйти",
+      "login": "Войти",
+      "register": "Зарегистрироваться"
+    }
+    }
+      
   }
+}

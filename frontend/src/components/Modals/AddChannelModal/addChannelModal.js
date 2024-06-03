@@ -9,8 +9,10 @@ import { useSelector } from 'react-redux';
 import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import { useDispatch } from 'react-redux';
 import { useAddChannelMutation } from '../../../redux/reducers/app/channelsSlice';
+import { useTranslation } from 'react-i18next';
 
 const AddChannelModal = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.addChannelModal);
   
@@ -22,14 +24,14 @@ const AddChannelModal = () => {
       onHide={() => dispatch(setAddChannelModal({state: false}))}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Введите название канала</Modal.Title>
+        <Modal.Title>{t('interface.enterChannelName')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AddChannaleForm />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => dispatch(setAddChannelModal({state: false}))}>
-          Закрыть
+          {t('interface.buttons.close')}
         </Button>
       </Modal.Footer>
     </Modal>

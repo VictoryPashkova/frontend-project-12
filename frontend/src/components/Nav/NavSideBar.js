@@ -8,8 +8,10 @@ import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 import NavItemChannel from './NavItemChannel';
+import { useTranslation } from 'react-i18next';
 
 const NavbarSideBar = ({children}) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { data: channels, isLoading, isError, refetch } = useGetChannelsQuery();
     const currentChannelId = useSelector((state) => state.chat.currentChannelId);
@@ -24,7 +26,7 @@ const NavbarSideBar = ({children}) => {
           <Container className="flex-column">
             <div className="d-flex align-items-center justify-content-between w-100 mb-3">
               <div>
-                <p className="m-0 fw-bold">Каналы</p>
+                <p className="m-0 fw-bold">{t('interface.channels')}</p>
               </div>
               <div>
                 <Button

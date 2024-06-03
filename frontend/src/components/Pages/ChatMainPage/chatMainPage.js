@@ -14,8 +14,10 @@ import AddChannelModal from "../../Modals/AddChannelModal/addChannelModal";
 import ChannelWindow from '../../ChannelWindow/ChannelWindow';
 import RemoveChannelModal from "../../Modals/removeChannelModal";
 import EditChannelModal from "../../Modals/editChannelModal.js";
+import { useTranslation } from 'react-i18next';
 
 const ChatMainPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,7 +35,7 @@ const ChatMainPage = () => {
     <>
     <NavbarHeader>
 <Button variant="primary" size="sm" type="button" onClick={() => navigate('/login', {replace: false})}>
-Выйти
+{t('interface.buttons.logout')}
 </Button>
 </NavbarHeader>
     <div className={"container h-100 my-4 overflow-scroll rounded shadow"}>

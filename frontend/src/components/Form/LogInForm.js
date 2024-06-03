@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LogInForm = () => {
   const { t } = useTranslation();
@@ -24,26 +26,29 @@ const LogInForm = () => {
         navigate('/');
       }
     } catch (error) {
-      setError('Неверное имя пользователя или пароль');
+      setError(t('interface.invalidCredentials'));
+      toast.error(t('interface.invalidCredentials'));
     }
   };
 
     return (
+      <>
+      <ToastContainer />
       <Formik
         initialValues={{ name: '', password: '', confirmPassword: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
-            errors.name = 'Обязательное поле';
+            errors.name = t('interface.requiredField');
           } else if (values.name.length < 3 || values.name.length > 20) {
-            errors.name = 'От 3 до 20 символов';
+            errors.name = t('interface.usernameLength');
           } if (!values.password) {
-            errors.password = 'Обязательное поле';
+            errors.password = t('interface.requiredFiel');
           } else if (values.password.length < 5) {
-            errors.password = 'Не менее 6 символов';
+            errors.password = t('interface.passwordLength');
           } if (!values.confirmPassword) {
           } else if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = 'Пароли должны совпадать';
+            errors.confirmPassword = t('interface.passwordsMustMatch');
           }
           return errors;
         }}
@@ -63,9 +68,9 @@ const LogInForm = () => {
           /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
-            <h1 style={{ textAlign: 'center' }}>{t('login.login')}</h1>
+            <h1 style={{ textAlign: 'center' }}>{t('interface.login')}</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Ваш ник</Form.Label>
+              <Form.Label>{t('interface.nickname')}</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -77,7 +82,7 @@ const LogInForm = () => {
               <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Пароль</Form.Label>
+              <Form.Label>{t('interface.password')}</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
@@ -91,12 +96,13 @@ const LogInForm = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
-                Войти
+              {t('interface.buttons.login')}
               </Button>
             </div>
           </Form>
         )}
       </Formik>
+      </>
     );
   };
   

@@ -5,8 +5,13 @@ import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } 
 import socket from '../../socket';
 import { useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ChannelWindow = () => {
+  const { t } = useTranslation();
   const { data: massages, isLoading, isError } = useGetMassagesQuery();
 
   const [
@@ -39,6 +44,7 @@ const ChannelWindow = () => {
 
     socket.on('newMessage', (message) => {
       setMessageList((prevMessages) => [...prevMessages, message]);
+      toast.success(t('interface.messageSent'));
     });
 
     socket.on('renameMessage', (updatedMessage) => {
@@ -47,28 +53,34 @@ const ChannelWindow = () => {
           message.id === updatedMessage.id ? updatedMessage : message
         )
       );
+      toast.info(t('interface.messageEdited'));
     });
 
     socket.on('removeMessage', ({ id }) => {
       setMessageList((prevMessages) =>
         prevMessages.filter((message) => message.id !== id)
       );
+      toast.warning(t('interface.messageRemoved'));
     });
 
     socket.on('connect', () => {
       setConnectionStatus('connected');
+      toast.success(t('interface.connected'));
     });
 
     socket.on('disconnect', (reason) => {
       setConnectionStatus('disconnected');
+      toast.error(t('interface.unableToConnect'));
     });
 
     socket.on('connect_error', (error) => {
       setConnectionStatus('error');
+      toast.error(t('interface.connectionError'));
     });
 
     socket.on('reconnect_attempt', () => {
       setConnectionStatus('reconnecting');
+      toast.info(t('interface.reconnecting'));
     });
 
     return () => {
@@ -93,13 +105,17 @@ const ChannelWindow = () => {
         const data = response.data;
         socket.emit('sendMessage', data, (acknowledgment) => {
           if (acknowledgment.error) {
-            setSocketError("Ошибка отправки сообщения");
+            setSocketError(t('interface.messageSendError'));
+            toast.error(t('interface.messageSendError'));
+          } else {
+            toast.success(t('interface.messageSent'));
           }
         });
         setNewMessage('');
         setSocketError('');
       } catch (error) {
         console.error('Error sending message:', error);
+        toast.error(t('interface.messageSendError'));
       }
     }
   };
@@ -109,12 +125,16 @@ const ChannelWindow = () => {
       await removeUMessageHandler(id);
       socket.emit('removeMessage', { id }, (acknowledgment) => {
         if (acknowledgment.error) {
-          setSocketError("Ошибка удаления сообщения");
+          setSocketError(t('interface.messageDeleteError'));
+          toast.error(t('interface.messageDeleteError'));
+        } else {
+          toast.success(t('interface.messageRemoved'));
         }
       });
       setSocketError('');
     } catch (error) {
       console.error('Error deleting message:', error);
+      toast.error(t('interface.messageDeleteError'));
     }
   };
 
@@ -124,32 +144,48 @@ const ChannelWindow = () => {
     }
   }, [currentChannelMessages]);
 
+
+  const numberTextMessage = () => {
+    const numberMessage = currentChannelMessages.length;
+  
+    if (numberMessage === 1) {
+      return t('interface.messages.one', { count: numberMessage });
+    }
+    
+    if (numberMessage > 1 && numberMessage < 5) {
+      return t('interface.messages.few', { count: numberMessage });
+    }
+  
+    return t('interface.messages.many', { count: numberMessage });
+  };
+
   return (
     <Container className='h-100 d-flex flex-column justify-content-between p-0'>
+      <ToastContainer />
       <Row className="justify-content-between h-100">
         <Col className="bg-light p-4">
           <h5># {currentChannelName}</h5>
-          <span className="text-muted">{currentChannelMessages.length || 0} сообщений</span>
+          <span className="text-muted">{numberTextMessage()}</span>
         </Col>
       </Row>
       {connectionStatus === 'disconnected' && (
         <Row>
           <Col>
-            <Alert variant="danger">Connection lost. Trying to reconnect...</Alert>
+            <Alert variant="danger">{t('interface.connectionLost')}</Alert>
           </Col>
         </Row>
       )}
       {connectionStatus === 'error' && (
         <Row>
           <Col>
-            <Alert variant="danger">Unable to connect to the server.</Alert>
+            <Alert variant="danger">{t('interface.unableToConnect')}</Alert>
           </Col>
         </Row>
       )}
       {connectionStatus === 'reconnecting' && (
         <Row>
           <Col>
-            <Alert variant="warning">Reconnecting to the server...</Alert>
+            <Alert variant="warning">{t('interface.reconnecting')}</Alert>
           </Col>
         </Row>
       )}
@@ -158,7 +194,7 @@ const ChannelWindow = () => {
           {isLoading ? (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
               <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
+                <span className="sr-only">{t('interface.loading')}</span>
               </Spinner>
             </div>
           ) : (
@@ -184,7 +220,7 @@ const ChannelWindow = () => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
               />
-              <Button variant="primary" onClick={sendMessage} disabled={isMessageUser || isRemovingMessage || isError}>Отправить</Button>
+              <Button variant="primary" onClick={sendMessage} disabled={isMessageUser || isRemovingMessage || isError}>{t('interface.buttons.send')}</Button>
             </InputGroup>
           </Form>
         </Col>
