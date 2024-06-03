@@ -14,10 +14,16 @@ const rollbarConfig = {
   environment: 'testenv',
 };
 
+function TestError() {
+  const a = null
+  return a.hello()
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RollbarProvider config={rollbarConfig}>
     <ErrorBoundary>
+    <TestError />
       <I18nextProvider i18n={i18next}>
         <ReduxProvider store={store}>
           <React.StrictMode>
