@@ -10,9 +10,13 @@ import i18next from './i18n';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
-  accessToken: '65a2845baa094776a7c4902509608ccc',
-  environment: 'testenv',
-}
+  accessToken: process.env.REACT_APP_MY_TOKEN,
+  payload: {
+    environment: 'production',
+  },
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
