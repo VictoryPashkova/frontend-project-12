@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import NavbarSideBar from '../../Nav/NavSideBar.js';
-import AddChannelModal from '../../Modals/AddChannelModal/AddChannelModal.js';
+import AddChannelModal from '../../Modals/AddChannelModal/addChannelModal.js';
 import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
 import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelModal.js';
 import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
