@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import LogInForm from '../../Form/LogInForm';
+import LogInForm from '../../Forms/LogInForm';
 import PrimaryButton from '../../../uikit/buttons/button';
 
 const LogInModal = () => {

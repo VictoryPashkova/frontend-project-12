@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LogInPage from './LogInPage/LogIn';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
 import NotFoundPage from './NotFoundPage/NotFoundPage';
-import ChatMainPage from './ChatMainPage/chatMainPage';
+import ChatMainPage from './ChatMainPage/ChatMainPage';
 
 const AppRouter = () => (
   <Router>

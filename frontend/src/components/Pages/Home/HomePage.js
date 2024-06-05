@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatMainPage from '../ChatMainPage/chatMainPage';
+import ChatMainPage from '../ChatMainPage/ChatMainPage';
 
 const HomePage = () => (
   <>

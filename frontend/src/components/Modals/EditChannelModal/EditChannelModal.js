@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import { setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
+import { setEditChannelModal } from '../../../redux/reducers/app/modalsSlice';
+import { useEditChannelMutation, useGetChannelsQuery } from '../../../redux/reducers/app/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const EditChannelModal = () => {

@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import AddChannaleForm from '../../Form/addChannelForm';
+import AddChannaleForm from '../../Forms/AddChannelForm';
 import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
 
 const AddChannelModal = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Form from '../../Form/Form';
+import Form from '../../Forms/RegisterForm';
 
 const RegistrationModal = () => (
   <div

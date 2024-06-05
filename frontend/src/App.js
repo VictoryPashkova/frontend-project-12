@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
-import './components/Form/Form';
+import './components/Forms/RegisterForm';
 import AppRouter from './components/Pages/Pages';
-import HomePage from './components/Pages/Home/homaPage';
+import HomePage from './components/Pages/Home/HomePage';
 
 const App = () => (
   <AppRouter>
