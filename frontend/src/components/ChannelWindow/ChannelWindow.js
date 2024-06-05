@@ -10,7 +10,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import leo from 'leo-profanity';
 
-
 const ChannelWindow = () => {
   const { t } = useTranslation();
   const { data: massages, isLoading, isError } = useGetMassagesQuery();
@@ -38,7 +37,6 @@ const ChannelWindow = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-
     if (massages) {
       setMessageList(massages);
     }
