@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {
   Container, Row, Col, Form, InputGroup, Button, Spinner,
-  Alert,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +30,6 @@ const ChannelWindow = () => {
   const [newMessage, setNewMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const userName = useSelector((state) => state.user.user);
-  const [connectionStatus, setConnectionStatus] = useState('connected');
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const currentChannelName = useSelector((state) => state.chat.currentChannelName);
   const currentChannelMessages = messageList
@@ -65,22 +63,18 @@ const ChannelWindow = () => {
     });
 
     socket.on('connect', () => {
-      setConnectionStatus('connected');
       toast.success(t('interface.connected'));
     });
 
     socket.on('disconnect', () => {
-      setConnectionStatus('disconnected');
       toast.error(t('interface.unableToConnect'));
     });
 
     socket.on('connect_error', () => {
-      setConnectionStatus('error');
       toast.error(t('interface.connectionError'));
     });
 
     socket.on('reconnect_attempt', () => {
-      setConnectionStatus('reconnecting');
       toast.info(t('interface.reconnecting'));
     });
 
@@ -171,27 +165,6 @@ const ChannelWindow = () => {
           <span className="text-muted">{numberTextMessage()}</span>
         </Col>
       </Row>
-      {connectionStatus === 'disconnected' && (
-        <Row>
-          <Col>
-            <Alert variant="danger">{t('interface.connectionLost')}</Alert>
-          </Col>
-        </Row>
-      )}
-      {connectionStatus === 'error' && (
-        <Row>
-          <Col>
-            <Alert variant="danger">{t('interface.unableToConnect')}</Alert>
-          </Col>
-        </Row>
-      )}
-      {connectionStatus === 'reconnecting' && (
-        <Row>
-          <Col>
-            <Alert variant="warning">{t('interface.reconnecting')}</Alert>
-          </Col>
-        </Row>
-      )}
       <Row>
         <Col className="bg-white p-4 overflow-scroll" style={{ minHeight: '60vh' }}>
           {isLoading ? (
