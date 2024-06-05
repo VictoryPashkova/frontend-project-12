@@ -13,7 +13,7 @@ import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js'
 import { getToken } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 
-const ChatMainPage = () => {
+const ChatPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,4 +54,4 @@ const ChatMainPage = () => {
   );
 };
 
-export default ChatMainPage;
+export default ChatPage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import ChatMainPage from '../ChatMainPage/chatMainPage';
+import ChatPage from '../ChatPage/ChatPage';
 
 const HomePage = () => (
   <>
@@ -8,7 +8,7 @@ const HomePage = () => (
       <main className="h-100 bg-light">
         <div className="h-100">
           <div className="h-100" id="chat">
-            <ChatMainPage />
+            <ChatPage />
           </div>
         </div>
       </main>
