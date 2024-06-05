@@ -1,13 +1,5 @@
-import React from "react";
-import RegistrationModal from "../RegustrationModal/RegistrationModal";
-import LogInModal from '../LohInModal/LogInModal';
-
-const MainModal = ({ children }) => {
-    return (
-     <>
-      {children}
-     </>
-    );
-}
+const MainModal = ({ children }) => (
+  children
+);
 
 export default MainModal;

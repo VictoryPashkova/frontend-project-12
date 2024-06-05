@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 
 const socket = io();
 
@@ -7,19 +7,19 @@ socket.on('connect', () => {
 });
 
 socket.on('disconnect', (reason) => {
-    console.log('Disconnected from WebSocket server:', reason);
-    if (reason === 'io server disconnect') {
-      socket.connect();
-    }
-  });
+  console.log('Disconnected from WebSocket server:', reason);
+  if (reason === 'io server disconnect') {
+    socket.connect();
+  }
+});
 
-  socket.on('connect_error', (error) => {
-    console.log('Connection error:', error);
-  });
+socket.on('connect_error', (error) => {
+  console.log('Connection error:', error);
+});
 
-  socket.on('reconnect_attempt', () => {
-    console.log('Attempting to reconnect to WebSocket server');
-  });
+socket.on('reconnect_attempt', () => {
+  console.log('Attempting to reconnect to WebSocket server');
+});
 
 socket.on('newMessage', (message) => {
   console.log('new message:', message);

@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Row, Col, Form, InputGroup, Button, Spinner } from 'react-bootstrap';
-import MassagesCard from '../MassageCard/MassageCard';
-import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
-import socket from '../../socket';
+import {
+  Container, Row, Col, Form, InputGroup, Button, Spinner,
+  Alert,
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { Alert } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import leo from 'leo-profanity';
+import socket from '../../socket';
+import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
+import MassagesCard from '../MassageCard/MassageCard';
 
 const ChannelWindow = () => {
   const { t } = useTranslation();
@@ -28,38 +30,38 @@ const ChannelWindow = () => {
   const addMessageHandler = (message) => addMessage(message);
   const [newMessage, setNewMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const [socketError, setSocketError] = useState('');
   const userName = useSelector((state) => state.user.user);
   const [connectionStatus, setConnectionStatus] = useState('connected');
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const currentChannelName = useSelector((state) => state.chat.currentChannelName);
-  const currentChannelMessages = messageList.filter((message) => message.channelId === currentChannelId);
+  const currentChannelMessages = messageList
+    .filter((message) => message.channelId === currentChannelId);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    if (removeMessageError) {
+      toast.error(t('interface.messageDeleteError'));
+    }
+
+    if (addMessageError) {
+      toast.error(t('interface.messageSendError'));
+    }
+
     if (massages) {
       setMessageList(massages);
     }
 
     socket.on('newMessage', (message) => {
       setMessageList((prevMessages) => [...prevMessages, message]);
-      toast.success(t('interface.messageSent'));
     });
 
     socket.on('renameMessage', (updatedMessage) => {
-      setMessageList((prevMessages) =>
-        prevMessages.map((message) =>
-          message.id === updatedMessage.id ? updatedMessage : message
-        )
-      );
-      toast.info(t('interface.messageEdited'));
+      setMessageList((prevMessages) => prevMessages
+        .map((message) => (message.id === updatedMessage.id ? updatedMessage : message)));
     });
 
     socket.on('removeMessage', ({ id }) => {
-      setMessageList((prevMessages) =>
-        prevMessages.filter((message) => message.id !== id)
-      );
-      toast.warning(t('interface.messageRemoved'));
+      setMessageList((prevMessages) => prevMessages.filter((message) => message.id !== id));
     });
 
     socket.on('connect', () => {
@@ -67,12 +69,12 @@ const ChannelWindow = () => {
       toast.success(t('interface.connected'));
     });
 
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', () => {
       setConnectionStatus('disconnected');
       toast.error(t('interface.unableToConnect'));
     });
 
-    socket.on('connect_error', (error) => {
+    socket.on('connect_error', () => {
       setConnectionStatus('error');
       toast.error(t('interface.connectionError'));
     });
@@ -91,7 +93,7 @@ const ChannelWindow = () => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [massages]);
+  }, [massages, removeMessageError, addMessageError, t]);
 
   const sendMessage = async () => {
     leo.loadDictionary('ru');
@@ -105,17 +107,15 @@ const ChannelWindow = () => {
           username: userName,
           channelId: currentChannelId,
         });
-        const data = response.data;
+        const { data } = response;
         socket.emit('sendMessage', data, (acknowledgment) => {
           if (acknowledgment.error) {
-            setSocketError(t('interface.messageSendError'));
             toast.error(t('interface.messageSendError'));
           } else {
             toast.success(t('interface.messageSent'));
           }
         });
         setNewMessage('');
-        setSocketError('');
       } catch (error) {
         console.error('Error sending message:', error);
         toast.error(t('interface.messageSendError'));
@@ -128,13 +128,11 @@ const ChannelWindow = () => {
       await removeUMessageHandler(id);
       socket.emit('removeMessage', { id }, (acknowledgment) => {
         if (acknowledgment.error) {
-          setSocketError(t('interface.messageDeleteError'));
           toast.error(t('interface.messageDeleteError'));
         } else {
           toast.success(t('interface.messageRemoved'));
         }
       });
-      setSocketError('');
     } catch (error) {
       console.error('Error deleting message:', error);
       toast.error(t('interface.messageDeleteError'));
@@ -147,27 +145,29 @@ const ChannelWindow = () => {
     }
   }, [currentChannelMessages]);
 
-
   const numberTextMessage = () => {
     const numberMessage = currentChannelMessages.length;
-  
+
     if (numberMessage === 1) {
       return t('interface.messages.one', { count: numberMessage });
     }
-    
+
     if (numberMessage > 1 && numberMessage < 5) {
       return t('interface.messages.few', { count: numberMessage });
     }
-  
+
     return t('interface.messages.many', { count: numberMessage });
   };
 
   return (
-    <Container className='h-100 d-flex flex-column justify-content-between p-0'>
+    <Container className="h-100 d-flex flex-column justify-content-between p-0">
       <ToastContainer />
       <Row className="justify-content-between h-100">
         <Col className="bg-light p-4">
-          <h5># {currentChannelName}</h5>
+          <h5>
+            #
+            {currentChannelName}
+          </h5>
           <span className="text-muted">{numberTextMessage()}</span>
         </Col>
       </Row>
@@ -201,16 +201,19 @@ const ChannelWindow = () => {
               </Spinner>
             </div>
           ) : (
-            socketError || removeMessageError || addMessageError ? <div>{socketError || removeMessageError || addMessageError || isError}</div> : (
-              <>
-                {currentChannelMessages.map((message) => (
-                  <Row key={message.id}>
-                    <MassagesCard key={message.id} author={message.username} text={leo.clean(message.body)} onDelete={() => handleDeleteMessage(message.id)} />
-                  </Row>
-                ))}
-                <div ref={messagesEndRef} />
-              </>
-            )
+            <>
+              {currentChannelMessages.map((message) => (
+                <Row key={message.id}>
+                  <MassagesCard
+                    key={message.id}
+                    author={message.username}
+                    text={leo.clean(message.body)}
+                    onDelete={() => handleDeleteMessage(message.id)}
+                  />
+                </Row>
+              ))}
+              <div ref={messagesEndRef} />
+            </>
           )}
         </Col>
       </Row>

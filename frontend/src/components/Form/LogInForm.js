@@ -1,13 +1,13 @@
-import React, { useState,  } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import axios from 'axios';
-import { useDispatch, useSelector, useContext } from 'react-redux';
-import { setCredentials } from '../../redux/reducers/user/registrationSlice';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
+import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LogInForm = () => {
@@ -19,23 +19,23 @@ const LogInForm = () => {
     setError('');
     try {
       const response = await axios.post('/api/v1/login', { username: name, password });
-      const token = response.data.token;
-      const username = response.data.username;
+      const { token } = response.data;
+      const { username } = response.data;
       if (username) {
         dispatch(setCredentials({ username, token }));
         navigate('/');
       }
-    } catch (error) {
-      setError(t('interface.invalidCredentials'));
+    } catch (e) {
+      setError(t('interface.invalidCredentials'), e);
       toast.error(t('interface.invalidCredentials'));
     }
   };
 
-    return (
-      <>
+  return (
+    <>
       <ToastContainer />
       <Formik
-        initialValues={{ name: '', password: '', confirmPassword: '' }}
+        initialValues={{ name: '', password: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -46,9 +46,6 @@ const LogInForm = () => {
             errors.password = t('interface.requiredFiel');
           } else if (values.password.length < 5) {
             errors.password = t('interface.passwordLength');
-          } if (!values.confirmPassword) {
-          } else if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = t('interface.passwordsMustMatch');
           }
           return errors;
         }}
@@ -65,7 +62,6 @@ const LogInForm = () => {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
         }) => (
           <Form onSubmit={handleSubmit}>
             <h1 style={{ textAlign: 'center' }}>{t('interface.login')}</h1>
@@ -76,7 +72,7 @@ const LogInForm = () => {
                 name="name"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.email}
+                value={values.name || ''}
                 isInvalid={!!errors.name && touched.name}
               />
               <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
@@ -88,7 +84,7 @@ const LogInForm = () => {
                 name="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.password}
+                value={values.password || ''}
                 isInvalid={!!errors.password && touched.password}
               />
               <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
@@ -96,15 +92,14 @@ const LogInForm = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
-              {t('interface.buttons.login')}
+                {t('interface.buttons.login')}
               </Button>
             </div>
           </Form>
         )}
       </Formik>
-      </>
-    );
-  };
-  
-  export default LogInForm;
-  
+    </>
+  );
+};
+
+export default LogInForm;

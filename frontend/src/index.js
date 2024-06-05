@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { Provider as ReduxProvider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
-import { I18nextProvider } from 'react-i18next';
 import i18next from './i18n';
-
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -31,7 +31,7 @@ root.render(
         </ReduxProvider>
       </I18nextProvider>
     </ErrorBoundary>
-  </RollbarProvider>
+  </RollbarProvider>,
 );
 
 reportWebVitals();

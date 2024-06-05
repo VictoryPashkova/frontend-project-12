@@ -1,24 +1,19 @@
-import React from "react";
-import ChatMainPage from "../ChatMainPage/chatMainPage";
+import React from 'react';
+import ChatMainPage from '../ChatMainPage/chatMainPage';
 
-
-const HomePage = () => {
-    return (
-        <>
-            <header>
-
-            </header>
-            <main>
-                <body className="h-100 bg-light">
-                    <div className="h-100">
-                        <div className="h-100" id="chat">
-                                <ChatMainPage />
-                            </div>
-                        </div>
-                </body>
-            </main>
-        </>
-    );
-};
+const HomePage = () => (
+  <>
+    <header />
+    <body>
+      <main className="h-100 bg-light">
+        <div className="h-100">
+          <div className="h-100" id="chat">
+            <ChatMainPage />
+          </div>
+        </div>
+      </main>
+    </body>
+  </>
+);
 
 export default HomePage;

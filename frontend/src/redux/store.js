@@ -15,8 +15,8 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(channelsApi.middleware, massagesApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    .concat(channelsApi.middleware, massagesApi.middleware),
 });
 
 export default store;

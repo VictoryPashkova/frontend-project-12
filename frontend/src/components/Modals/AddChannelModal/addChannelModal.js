@@ -1,27 +1,22 @@
-import { Children } from 'react';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import PrimaryButton from '../../../uikit/buttons/button';
-import React, { useState } from 'react';
-import AddChannaleForm from '../../Form/addChannelForm';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import { useDispatch } from 'react-redux';
-import { useAddChannelMutation } from '../../../redux/reducers/app/channelsSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import AddChannaleForm from '../../Form/addChannelForm';
+import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
 
 const AddChannelModal = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.addChannelModal);
-  
+
   return (
     <Modal
       show={modalState}
       size="lg"
       centered
-      onHide={() => dispatch(setAddChannelModal({state: false}))}
+      onHide={() => dispatch(setAddChannelModal({ state: false }))}
     >
       <Modal.Header closeButton>
         <Modal.Title>{t('interface.enterChannelName')}</Modal.Title>
@@ -30,7 +25,7 @@ const AddChannelModal = () => {
         <AddChannaleForm />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(setAddChannelModal({state: false}))}>
+        <Button variant="secondary" onClick={() => dispatch(setAddChannelModal({ state: false }))}>
           {t('interface.buttons.close')}
         </Button>
       </Modal.Footer>

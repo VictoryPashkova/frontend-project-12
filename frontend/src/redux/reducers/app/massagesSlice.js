@@ -5,7 +5,7 @@ export const massagesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/messages',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().user.token;
+      const { token } = getState().user;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
@@ -36,7 +36,7 @@ export const massagesApi = createApi({
 });
 
 export const {
-    useGetMassagesQuery,
-    useAddMessageMutation,
-    useRemoveMessageMutation,
-  } = massagesApi;
+  useGetMassagesQuery,
+  useAddMessageMutation,
+  useRemoveMessageMutation,
+} = massagesApi;
