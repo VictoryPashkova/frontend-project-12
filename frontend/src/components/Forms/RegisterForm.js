@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
@@ -14,6 +14,7 @@ const RegistrationForm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
     try {
       const response = await axios.post('/api/v1/signup', { username: name, password });
@@ -23,8 +24,10 @@ const RegistrationForm = () => {
         dispatch(setCredentials({ username, token }));
         navigate('/');
       }
-    } catch (error) {
-      toast.error(t('interface.invalidCredentials'));
+    } catch (err) {
+      console.error('Error signing up:', err);
+      toast.error(`${t('interface.userExists')}: ${name}`);
+      setError(`${t('interface.userExists')}: ${name}`);
     }
   };
 
@@ -103,6 +106,7 @@ const RegistrationForm = () => {
               />
               <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
             </Form.Group>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
                 {t('interface.buttons.register')}

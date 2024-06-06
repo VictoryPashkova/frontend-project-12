@@ -10,7 +10,7 @@ const AppRouter = () => (
     <Routes>
       <Route path="/" element={<ChatPage />} />
       <Route path="login" element={<LogInPage />} />
-      <Route path="registration" element={<RegistrationPage />} />
+      <Route path="signup" element={<RegistrationPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </Router>
