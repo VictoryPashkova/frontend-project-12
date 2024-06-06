@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { setEditChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../../redux/reducers/app/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import cleanBadWords from '../../../utils/cleanBadWords';
 
 const EditChannelModal = () => {
   const { t } = useTranslation();
@@ -26,7 +27,8 @@ const EditChannelModal = () => {
   } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
-    const newChannel = { name: values.channelName };
+    const cleanChannelName = cleanBadWords(values.channelName);
+    const newChannel = { name: cleanChannelName };
     try {
       await editChannel({ id: currentChannelId, ...newChannel });
       dispatch(setEditChannelModal({ state: false }));

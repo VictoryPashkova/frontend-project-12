@@ -10,6 +10,7 @@ import leo from 'leo-profanity';
 import socket from '../../socket';
 import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
 import MassagesCard from '../MassageCard/MassageCard';
+import cleanBadWords from '../../utils/cleanBadWords';
 
 const ChannelWindow = () => {
   const { t } = useTranslation();
@@ -90,10 +91,7 @@ const ChannelWindow = () => {
   }, [massages, removeMessageError, addMessageError, t]);
 
   const sendMessage = async () => {
-    leo.loadDictionary('ru');
-    const cleanRuMessage = leo.clean(newMessage);
-    leo.loadDictionary('en');
-    const cleanMessage = leo.clean(cleanRuMessage);
+    const cleanMessage = cleanBadWords(newMessage);
     if (cleanMessage.trim()) {
       try {
         const response = await addMessageHandler({

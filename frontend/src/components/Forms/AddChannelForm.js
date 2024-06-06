@@ -5,14 +5,13 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import leo from 'leo-profanity';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import cleanBadWords from '../../utils/cleanBadWords';
 
 const AddChannaleForm = () => {
-  leo.loadDictionary('ru');
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [
@@ -24,10 +23,8 @@ const AddChannaleForm = () => {
   } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
-    leo.loadDictionary('ru');
-    const cleanRuChannelName = leo.clean(values.channelName);
-    leo.loadDictionary('en');
-    const cleanChannelName = leo.clean(cleanRuChannelName);
+    const cleanChannelName = cleanBadWords(values.channelName);
+
     const newChannel = { name: cleanChannelName };
     try {
       const result = await addChannel(newChannel).unwrap();
