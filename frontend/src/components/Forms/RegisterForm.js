@@ -108,7 +108,6 @@ const RegistrationForm = () => {
             </Form.Group>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
-              <button type="submit" className="w-100 btn btn-primary" disabled={isSubmitting}>{t('interface.buttons.register')}</button>
               <Button variant="primary" size="lg" type="submit" disabled={isSubmitting} name="general" role="button">
                 {t('interface.buttons.register')}
               </Button>
