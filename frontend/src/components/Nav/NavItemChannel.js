@@ -29,6 +29,8 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
             onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
             className="text-truncate d-flex align-items-center w-100"
             as="div"
+            role="button"
+            name={channel.name}
           >
             {`#${channel.name}`}
           </Nav.Link>
