@@ -1,3 +1,4 @@
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
@@ -107,7 +108,10 @@ const RegistrationForm = () => {
             </Form.Group>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
-              <button type="submit" name="general" className="w-100 btn btn-primary" disabled={isSubmitting}>{t('interface.buttons.register')}</button>
+              <button type="submit" className="w-100 btn btn-primary" disabled={isSubmitting}>{t('interface.buttons.register')}</button>
+              <Button variant="primary" size="lg" type="submit" disabled={isSubmitting} name="general" role="button">
+                {t('interface.buttons.register')}
+              </Button>
             </div>
           </Form>
         )}
