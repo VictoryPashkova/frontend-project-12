@@ -22,3 +22,4 @@ develop:
 build:
 	rm -rf frontend/build
 	npm run build
+	npx start-server -s ./frontend/build
