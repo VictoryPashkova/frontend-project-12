@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
 import Row from 'react-bootstrap/Row';
@@ -14,7 +14,7 @@ import { getToken, setCredentials } from '../../../redux/reducers/user/registrat
 import NavbarHeader from '../../Nav/Nav.js';
 
 const ChatPage = () => {
-  const token = useSelector((state) => state.user.token);
+  const token = localStorage.getItem('token');
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ const ChatPage = () => {
   useEffect(() => {
     dispatch(getToken());
   }, [dispatch]);
+
   useEffect(() => {
     if (!token) {
       navigate('/login');
