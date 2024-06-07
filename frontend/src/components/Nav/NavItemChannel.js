@@ -25,7 +25,7 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
   return (
     <Nav.Item key={channel.id}>
       <div className="d-flex justify-content-between align-items-center w-100">
-        <div className="d-flex align-items-center w-100">
+        <div className="d-flex align-items-center w-100" role="button" name={channel.name}>
           <button
             type="button"
             name={channel.name}
