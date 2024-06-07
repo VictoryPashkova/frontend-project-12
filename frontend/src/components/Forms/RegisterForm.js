@@ -26,8 +26,8 @@ const RegistrationForm = () => {
       }
     } catch (err) {
       console.error('Error signing up:', err);
-      toast.error(`${t('interface.userExists')}: ${name}`);
-      setError(`${t('interface.userExists')}: ${name}`);
+      toast.error(t('interface.userExists'));
+      setError(t('interface.userExists'));
     }
   };
 
@@ -43,11 +43,11 @@ const RegistrationForm = () => {
           } else if (values.name.length < 3 || values.name.length > 20) {
             errors.name = t('interface.usernameLength');
           } if (!values.password) {
-            errors.password = t('interface.requiredFiel');
+            errors.password = t('interface.requiredField');
           } else if (values.password.length < 5) {
             errors.password = t('interface.passwordLength');
           } if (!values.confirmPassword) {
-            errors.confirmPassword = t('interface.requiredFiel');
+            errors.confirmPassword = t('interface.requiredField');
           } else if (values.password !== values.confirmPassword) {
             errors.confirmPassword = t('interface.passwordsMustMatch');
           }

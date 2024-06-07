@@ -19,33 +19,33 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
     dispatch(setOnEditChannelId({ id: channel.id }));
   };
 
+  const isActive = Number(currentChannelId) === Number(channel.id);
+  const activeClasses = 'bg-dark text-white';
+
   return (
     <Nav.Item key={channel.id}>
       <div className="d-flex justify-content-between align-items-center w-100">
         <div className="d-flex align-items-center w-100">
-          <Nav.Link
-            active={Number(currentChannelId) === Number(channel.id)}
-            style={{ fontWeight: Number(currentChannelId) === Number(channel.id) ? 'bold' : 'normal' }}
-            onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
-            className="text-truncate d-flex align-items-center w-100"
-            as="div"
-            role="button"
+          <button
+            type="button"
             name={channel.name}
+            id={channel.id}
+            className={`nav-link text-truncate d-flex align-items-center w-100 ${isActive ? activeClasses : ''}`}
+            onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
           >
             {`#${channel.name}`}
-          </Nav.Link>
-          {channel.removable
-        && (
-        <Dropdown as={ButtonGroup}>
-          <Dropdown.Toggle split variant="link" className="shadow-none p-0 m-0 border-0">
-            <i className="bi bi-chevron-down cursor-pointer" />
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
-            <Dropdown.Item onClick={() => editClickHandler()}>{t('interface.buttons.edit')}</Dropdown.Item>
-            <Dropdown.Item onClick={() => removeClickHandler()}>{t('interface.buttons.delete')}</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        )}
+          </button>
+          {channel.removable && (
+            <Dropdown as={ButtonGroup}>
+              <Dropdown.Toggle split variant="link" className="shadow-none p-0 m-0 border-0">
+                <i className="bi bi-chevron-down cursor-pointer" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
+                <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.edit')}</Dropdown.Item>
+                <Dropdown.Item onClick={removeClickHandler}>{t('interface.buttons.delete')}</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </div>
       </div>
     </Nav.Item>
