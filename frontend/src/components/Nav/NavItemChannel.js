@@ -33,7 +33,8 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
             className={`nav-link text-truncate d-flex align-items-center w-100 ${isActive ? activeClasses : ''}`}
             onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
           >
-            {`#${channel.name}`}
+            <span className="me-1">#</span>
+            {channel.name}
           </button>
           {channel.removable && (
             <Dropdown as={ButtonGroup}>
