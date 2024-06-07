@@ -10,27 +10,34 @@ import AddChannelModal from '../../Modals/AddChannelModal/addChannelModal.js';
 import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
 import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelModal.js';
 import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
-import { getToken } from '../../../redux/reducers/user/registrationSlice.js';
+import { getToken, setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 
 const ChatPage = () => {
+  const token = useSelector((state) => state.user.token);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getToken());
   }, [dispatch]);
-  const token = useSelector((state) => state.user.token);
   useEffect(() => {
     if (!token) {
       navigate('/login');
     }
   }, [token, navigate]);
 
+  const handleExit = () => {
+    localStorage.removeItem('token');
+    navigate('/login', { replace: false });
+    dispatch(setCredentials({ username: '', token: null }));
+  };
+
   return (
     <>
       <NavbarHeader>
-        <Button variant="primary" size="sm" type="button" onClick={() => navigate('/login', { replace: false })}>
+        <Button variant="primary" size="sm" type="button" onClick={handleExit}>
           {t('interface.buttons.logout')}
         </Button>
       </NavbarHeader>

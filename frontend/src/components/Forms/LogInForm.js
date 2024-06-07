@@ -91,7 +91,7 @@ const LogInForm = () => {
             </Form.Group>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className="d-grid gap-2">
-              <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>
+              <Button variant="primary" size="lg" type="submit" disabled={isSubmitting} role="button" name="login">
                 {t('interface.buttons.login')}
               </Button>
             </div>
