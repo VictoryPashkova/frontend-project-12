@@ -64,19 +64,15 @@ const ChannelWindow = () => {
     });
 
     socket.on('connect', () => {
-      toast.success(t('interface.connected'));
     });
 
     socket.on('disconnect', () => {
-      toast.error(t('interface.unableToConnect'));
     });
 
     socket.on('connect_error', () => {
-      toast.error(t('interface.connectionError'));
     });
 
     socket.on('reconnect_attempt', () => {
-      toast.info(t('interface.reconnecting'));
     });
 
     return () => {
