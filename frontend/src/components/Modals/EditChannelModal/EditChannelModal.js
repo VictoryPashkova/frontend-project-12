@@ -21,10 +21,7 @@ const EditChannelModal = () => {
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },
   ] = useEditChannelMutation();
-  const {
-    data: channels,
-    isLoading: isChannelsLoading, isError: isChannelsError,
-  } = useGetChannelsQuery();
+  const { data: channels } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
     const cleanChannelName = cleanBadWords(values.channelName);
@@ -41,16 +38,10 @@ const EditChannelModal = () => {
     if (isEditingChannel) {
       toast.info(t('interface.renaming'));
     }
-    if (isChannelsLoading) {
-      toast.info(t('interface.loading'));
-    }
     if (editingChannelError) {
       toast.error(t('interface.renameChannelError'));
     }
-    if (isChannelsError) {
-      toast.error(t('interface.getChannelsError'));
-    }
-  }, [isEditingChannel, isChannelsLoading, editingChannelError, isChannelsError, t]);
+  }, [isEditingChannel, editingChannelError, t]);
 
   return (
     <>

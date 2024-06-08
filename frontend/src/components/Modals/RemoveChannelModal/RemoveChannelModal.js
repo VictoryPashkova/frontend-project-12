@@ -15,7 +15,6 @@ const RemoveChannelModal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.removeChannelModal);
   const currentChannelId = useSelector((state) => state.chat.onEditChannelId);
-  console.log(currentChannelId);
   const [
     removeChannel,
     { error: removeChannelError, isLoading: isRemovingChannel },

@@ -19,7 +19,7 @@ const AddChannaleForm = () => {
     { error: addChannelError, isLoading: isAddingChannel },
   ] = useAddChannelMutation();
   const {
-    data: channels, isLoading: isChannelsLoading, isError: isChannelsError, refetch,
+    data: channels, refetch,
   } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
@@ -44,17 +44,10 @@ const AddChannaleForm = () => {
     if (isAddingChannel) {
       toast.info(t('interface.addingChannel'));
     }
-
-    if (isChannelsLoading) {
-      toast.info(t('interface.loading'));
-    }
-    if (isChannelsError) {
-      toast.error(t('interface.getChannelsError'));
-    }
     if (addChannelError) {
       toast.error(t('interface.addingChannelError'));
     }
-  }, [isAddingChannel, isChannelsLoading, isChannelsError, addChannelError, t]);
+  }, [isAddingChannel, addChannelError, t]);
 
   return (
     <>

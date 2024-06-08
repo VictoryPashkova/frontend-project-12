@@ -167,9 +167,7 @@ const ChannelWindow = () => {
         <Col className="bg-white p-4 overflow-scroll" style={{ minHeight: '60vh' }}>
           {isLoading ? (
             <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
-              <Spinner animation="border" role="status">
-                <span className="sr-only">{t('interface.loading')}</span>
-              </Spinner>
+              <Spinner animation="border" role="status" />
             </div>
           ) : (
             <>
