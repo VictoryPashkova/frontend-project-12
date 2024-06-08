@@ -10,18 +10,15 @@ import AddChannelModal from '../../Modals/AddChannelModal/addChannelModal.js';
 import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
 import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelModal.js';
 import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
-import { getToken, setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
+import { setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 
 const ChatPage = () => {
   const token = localStorage.getItem('token');
+  console.log(token);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getToken());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!token) {

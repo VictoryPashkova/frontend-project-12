@@ -13,13 +13,12 @@ import NavItemChannel from './NavItemChannel';
 const NavbarSideBar = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels, refetch } = useGetChannelsQuery();
+  const { data: channels } = useGetChannelsQuery();
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
 
   useEffect(() => {
     dispatch(setCurrentChannel({ id: 1, name: 'general' }));
-    refetch();
-  }, [dispatch, refetch, t]);
+  }, [dispatch, t]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis overflow-auto">

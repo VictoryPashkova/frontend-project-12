@@ -1,16 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  Container, Row, Col, Form, InputGroup, Button, Spinner,
-} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import leo from 'leo-profanity';
 import socket from '../../socket';
 import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
-import MassagesCard from '../MassageCard/MassageCard';
-import cleanBadWords from '../../utils/cleanBadWords';
+import AddMessageForm from '../Forms/AddNewMessageForm';
+import MessageList from '../MessageList/MessageList';
 
 const ChannelWindow = () => {
   const { t } = useTranslation();
@@ -28,14 +25,12 @@ const ChannelWindow = () => {
 
   const removeUMessageHandler = (id) => removeMessage(id);
   const addMessageHandler = (message) => addMessage(message);
-  const [newMessage, setNewMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
   const userName = useSelector((state) => state.user.user);
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const currentChannelName = useSelector((state) => state.chat.currentChannelName);
   const currentChannelMessages = messageList
     .filter((message) => message.channelId === currentChannelId);
-  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     if (removeMessageError) {
@@ -67,12 +62,15 @@ const ChannelWindow = () => {
     });
 
     socket.on('disconnect', () => {
+      socket.connect();
     });
 
     socket.on('connect_error', () => {
+      socket.connect();
     });
 
     socket.on('reconnect_attempt', () => {
+      socket.connect();
     });
 
     return () => {
@@ -86,9 +84,8 @@ const ChannelWindow = () => {
     };
   }, [massages, removeMessageError, addMessageError, t]);
 
-  const sendMessage = async () => {
-    const cleanMessage = cleanBadWords(newMessage);
-    if (cleanMessage.trim()) {
+  const sendMessage = async (newMessage) => {
+    if (newMessage.trim()) {
       try {
         const response = await addMessageHandler({
           body: newMessage,
@@ -103,7 +100,6 @@ const ChannelWindow = () => {
             toast.success(t('interface.messageSent'));
           }
         });
-        setNewMessage('');
       } catch (error) {
         console.error('Error sending message:', error);
         toast.error(t('interface.messageSendError'));
@@ -126,12 +122,6 @@ const ChannelWindow = () => {
       toast.error(t('interface.messageDeleteError'));
     }
   };
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [currentChannelMessages]);
 
   const numberTextMessage = () => {
     const numberMessage = currentChannelMessages.length;
@@ -159,43 +149,16 @@ const ChannelWindow = () => {
           <span className="text-muted">{numberTextMessage()}</span>
         </Col>
       </Row>
-      <Row>
-        <Col className="bg-white p-4 overflow-scroll" style={{ minHeight: '60vh' }}>
-          {isLoading ? (
-            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
-              <Spinner animation="border" role="status" />
-            </div>
-          ) : (
-            <>
-              {currentChannelMessages.map((message) => (
-                <Row key={message.id}>
-                  <MassagesCard
-                    key={message.id}
-                    author={message.username}
-                    text={leo.clean(message.body)}
-                    onDelete={() => handleDeleteMessage(message.id)}
-                  />
-                </Row>
-              ))}
-              <div ref={messagesEndRef} />
-            </>
-          )}
-        </Col>
-      </Row>
-      <Row className="mt-auto">
-        <Col>
-          <Form className="py-1">
-            <InputGroup hasValidation>
-              <Form.Control
-                placeholder="Введите сообщение..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-              />
-              <Button variant="primary" onClick={sendMessage} disabled={isMessageUser || isRemovingMessage || isError}>{t('interface.buttons.send')}</Button>
-            </InputGroup>
-          </Form>
-        </Col>
-      </Row>
+      <MessageList
+        isLoading={isLoading}
+        messages={currentChannelMessages}
+        handleDeleteMessage={handleDeleteMessage}
+      />
+      <AddMessageForm
+        disabled={isMessageUser || isRemovingMessage || isError}
+        btnName={t('interface.buttons.send')}
+        sendMessage={sendMessage}
+      />
     </Container>
   );
 };
