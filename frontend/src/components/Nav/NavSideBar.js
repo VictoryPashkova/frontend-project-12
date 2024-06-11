@@ -45,6 +45,15 @@ const NavbarSideBar = () => {
             </Button>
           </div>
         </div>
+        <button
+          type="button"
+          name="general"
+          id="1"
+          className="nav-link text-truncate d-flex align-items-center w-100"
+        >
+          <span className="me-1">#</span>
+          general
+        </button>
         <Nav className="flex-column w-100 align-items-start">
           {channels && channels.map((channel) => (
             <NavItemChannel
