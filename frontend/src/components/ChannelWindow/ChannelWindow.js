@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import socket from '../../socket';
-import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
 import AddMessageForm from '../Forms/AddNewMessageForm';
 import MessageList from '../MessageList/MessageList';
+import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
 
 const ChannelWindow = () => {
   const { t } = useTranslation();

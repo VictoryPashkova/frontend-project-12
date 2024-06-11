@@ -47,7 +47,6 @@ const ChatPage = () => {
               <ChannelWindow />
             </Col>
           </Row>
-
         </div>
       </div>
     </>
