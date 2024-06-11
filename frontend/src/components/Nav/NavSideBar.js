@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
@@ -13,12 +14,17 @@ import NavItemChannel from './NavItemChannel';
 const NavbarSideBar = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { data: channels } = useGetChannelsQuery();
+  const navigate = useNavigate();
+  const { data: channels, isError, error } = useGetChannelsQuery();
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
 
   useEffect(() => {
     dispatch(setCurrentChannel({ id: 1, name: 'general' }));
-  }, [dispatch, t]);
+    console.log(error);
+    if (isError) {
+      navigate('/login', { replace: false });
+    }
+  }, [dispatch, t, isError, error, navigate]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis overflow-auto">
