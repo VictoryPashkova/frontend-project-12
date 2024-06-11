@@ -22,7 +22,7 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
             />
-            <Button variant="primary" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
+            <Button variant="primary" type="button" name="general" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
           </InputGroup>
         </Form>
       </Col>

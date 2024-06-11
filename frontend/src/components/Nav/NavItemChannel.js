@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Nav, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { setRemoveChannelModal, setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { setOnEditChannelId } from '../../redux/reducers/app/chatSlice';
+import { setOnEditChannelId, setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 
-const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
+const NavItemChannel = ({ channel, currentChannelId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
   const activeClasses = 'bg-dark text-white';
 
   return (
-    <Nav.Item key={channel.id}>
+    <li key={channel.id}>
       <div className="d-flex justify-content-between align-items-center w-100">
         <div className="d-flex align-items-center w-100">
           <button
@@ -49,7 +49,7 @@ const NavItemChannel = ({ channel, currentChannelId, setCurrentChannel }) => {
           )}
         </div>
       </div>
-    </Nav.Item>
+    </li>
   );
 };
 

@@ -21,8 +21,7 @@ const LogInForm = () => {
     setError('');
     try {
       const response = await axios.post('/api/v1/login', { username: name, password });
-      const { token } = response.data;
-      const { username } = response.data;
+      const { token, username } = response.data;
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);

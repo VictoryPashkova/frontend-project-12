@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import socket from '../../socket';
@@ -10,8 +11,11 @@ import MessageList from '../MessageList/MessageList';
 import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
 
 const ChannelWindow = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data: massages, isLoading, isError } = useGetMassagesQuery();
+  const {
+    data: massages, isLoading, isError, error,
+  } = useGetMassagesQuery();
 
   const [
     addMessage,
@@ -33,6 +37,11 @@ const ChannelWindow = () => {
     .filter((message) => message.channelId === currentChannelId);
 
   useEffect(() => {
+    if (isError) {
+      if (error.response && error.response.status === 401) {
+        navigate('/login');
+      }
+    }
     if (removeMessageError) {
       toast.error(t('interface.messageDeleteError'));
     }
@@ -82,7 +91,7 @@ const ChannelWindow = () => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [massages, removeMessageError, addMessageError, t]);
+  }, [massages, removeMessageError, addMessageError, t, navigate, isError, error]);
 
   const sendMessage = async (newMessage) => {
     if (newMessage.trim()) {
@@ -100,7 +109,7 @@ const ChannelWindow = () => {
             toast.success(t('interface.messageSent'));
           }
         });
-      } catch (error) {
+      } catch (err) {
         console.error('Error sending message:', error);
         toast.error(t('interface.messageSendError'));
       }
@@ -117,8 +126,8 @@ const ChannelWindow = () => {
           toast.success(t('interface.messageRemoved'));
         }
       });
-    } catch (error) {
-      console.error('Error deleting message:', error);
+    } catch (err) {
+      console.error('Error deleting message:', err);
       toast.error(t('interface.messageDeleteError'));
     }
   };
