@@ -9,6 +9,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import i18next from './i18n';
+import AuthProvider from './context/AuthContext';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -21,14 +22,17 @@ const rollbarConfig = {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
   <RollbarProvider config={rollbarConfig}>
     <ErrorBoundary>
       <I18nextProvider i18n={i18next}>
-        <ReduxProvider store={store}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </ReduxProvider>
+        <AuthProvider>
+          <ReduxProvider store={store}>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </ReduxProvider>
+        </AuthProvider>
       </I18nextProvider>
     </ErrorBoundary>
   </RollbarProvider>,

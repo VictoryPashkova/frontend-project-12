@@ -9,11 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../context/AuthContext';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { saveAuthData } = useAuth();
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
     try {
@@ -22,6 +24,7 @@ const RegistrationForm = () => {
       const { username } = response.data;
       if (username) {
         dispatch(setCredentials({ username, token }));
+        saveAuthData(token, username);
         navigate('/');
       }
     } catch (err) {

@@ -4,8 +4,8 @@ export const massagesApi = createApi({
   reducerPath: 'massagesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1/messages',
-    prepareHeaders: (headers, { getState }) => {
-      const { token } = getState().user;
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

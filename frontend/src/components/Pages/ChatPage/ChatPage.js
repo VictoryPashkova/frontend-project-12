@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
@@ -12,23 +12,18 @@ import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelMod
 import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
 import { setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
+import { useAuth } from '../../../context/AuthContext.js';
 
 const ChatPage = () => {
-  const token = localStorage.getItem('token');
-  console.log(token);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    }
-  }, [token, navigate]);
+  const { clearAuthData } = useAuth();
 
   const handleExit = () => {
     localStorage.removeItem('token');
     navigate('/login', { replace: false });
+    clearAuthData();
     dispatch(setCredentials({ username: '', token: null }));
   };
 
