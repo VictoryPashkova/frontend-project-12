@@ -37,7 +37,7 @@
     "channelExists": "Такой канал уже существует",
     "channelName_second": "Название канала",
     "userExists": "Такой пользователь уже существует",
-    "enterChannelName": "Введите название канала",
+    "enterChannelName": "Имя канала",
     "noAccount": "Нет аккаунта?",
     "renameChannel": "Переименовать канал",
     "renaming": "Переименование...",
