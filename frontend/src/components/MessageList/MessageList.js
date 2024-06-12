@@ -29,9 +29,8 @@ const MessageList = ({ isLoading, messages }) => {
             <Row key={message.id}>
               <p>
                 <b>
-                  {message.username}
+                  {`${message.username}: `}
                 </b>
-                :
                 {cleanBadWords(message.body)}
               </p>
             </Row>

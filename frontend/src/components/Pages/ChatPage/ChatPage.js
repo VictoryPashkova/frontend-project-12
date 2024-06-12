@@ -26,7 +26,7 @@ const ChatPage = () => {
   const { clearAuthData } = useAuth();
 
   const handleExit = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     navigate('/login', { replace: false });
     clearAuthData();
     dispatch(setCredentials({ username: '', token: null }));

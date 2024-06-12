@@ -24,7 +24,7 @@ const ChannelWindow = () => {
 
   const sendMessageHandler = (message) => sendMessage(message);
   const [messageList, setMessageList] = useState([]);
-  const userName = useSelector((state) => state.user.userName);
+  const userName = localStorage.getItem('username');
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const currentChannelName = useSelector((state) => state.chat.currentChannelName);
   const currentChannelMessages = messageList

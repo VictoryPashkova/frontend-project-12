@@ -12,6 +12,13 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
     setNewMessage('');
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Чтобы избежать переноса строки в поле ввода
+      sendMessageHandler();
+    }
+  };
+
   return (
     <Row className="mt-auto">
       <Col>
@@ -24,8 +31,9 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
               placeholder="Введите сообщение..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
-            <Button variant="primary" type="button" name="general" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
+            <Button variant="primary" type="submit" name="sendNewMessage" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
           </InputGroup>
         </Form>
       </Col>
