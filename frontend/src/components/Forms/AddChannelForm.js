@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsSlice';
+import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 import 'react-toastify/dist/ReactToastify.css';

@@ -4,10 +4,10 @@ import { Button, Alert, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
-import { useRemoveChannelMutation } from '../../../redux/reducers/app/channelsSlice';
+import { useRemoveChannelMutation } from '../../../redux/reducers/app/channelsApiSlice';
 import { setRemoveChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../../redux/reducers/app/chatSlice';
-import { useGetMassagesQuery, useRemoveMessageMutation } from '../../../redux/reducers/app/massagesSlice';
+import { useGetMassagesQuery, useRemoveMessageMutation } from '../../../redux/reducers/app/massagesApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RemoveChannelModal = () => {

@@ -1,51 +1,50 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const channelsApi = createApi({
-  reducerPath: 'channelsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/channels',
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
+const initialState = {
+  channels: [],
+  currentChannelId: 1,
+  currentChannelName: '',
+  onEditChannelId: 0,
+};
+
+const channelsSlice = createSlice({
+  name: 'chat',
+  initialState,
+  reducers: {
+    setChannels: (state, action) => {
+      state.channels = action.payload;
     },
-  }),
-  tagTypes: ['Channel'],
-  endpoints: (builder) => ({
-    getChannels: builder.query({
-      query: () => '',
-      providesTags: ['Channel'],
-    }),
-    addChannel: builder.mutation({
-      query: (channel) => ({
-        method: 'POST',
-        body: channel,
-      }),
-      invalidatesTags: ['Channel'],
-    }),
-    removeChannel: builder.mutation({
-      query: (id) => ({
-        url: `/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Channel'],
-    }),
-    editChannel: builder.mutation({
-      query: ({ id, ...newChannel }) => ({
-        url: `/${id}`,
-        method: 'PATCH',
-        body: newChannel,
-      }),
-      invalidatesTags: ['Channel'],
-    }),
-  }),
+    addChannel: (state, action) => {
+      state.channels = [...state.channels, action.payload];
+    },
+    removeChannel: (state, action) => {
+      state.channels = state.channels.filter((channel) => channel.id !== action.payload);
+    },
+    editChannel: (state, action) => {
+      state.channels = state.channels.map((channel) => {
+        if (channel.id === action.payload.id) {
+          return action.payload;
+        }
+        return channel;
+      });
+    },
+    setCurrentChannel: (state, action) => {
+      state.currentChannelId = action.payload.id;
+      state.currentChannelName = action.payload.name;
+    },
+    setOnEditChannelId: (state, action) => {
+      state.onEditChannelId = action.payload.id;
+    },
+  },
 });
 
 export const {
-  useGetChannelsQuery,
-  useAddChannelMutation,
-  useRemoveChannelMutation,
-  useEditChannelMutation,
-} = channelsApi;
+  setChannels,
+  addChannel,
+  removeChannel,
+  editChannel,
+  setCurrentChannel,
+  setOnEditChannelId,
+} = channelsSlice.actions;
+
+export default channelsSlice.reducer;

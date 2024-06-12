@@ -1,11 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from './reducers/user/registrationSlice';
-import { channelsApi } from './reducers/app/channelsSlice';
+import { channelsApi } from './reducers/app/channelsApiSlice';
 import modalsReducer from './reducers/app/modalsSlice';
-import { massagesApi } from './reducers/app/massagesSlice';
+import { massagesApi } from './reducers/app/massagesApiSlice';
 import chatReducer from './reducers/app/chatSlice';
+import channelReducer from './reducers/app/channelsSlice';
+import messageReducer from './reducers/app/messagesSlice';
 
 const rootReducer = combineReducers({
+  channels: channelReducer,
+  messages: messageReducer,
   user: authReducer,
   [channelsApi.reducerPath]: channelsApi.reducer,
   modals: modalsReducer,

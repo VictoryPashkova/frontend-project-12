@@ -8,7 +8,7 @@ import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ToastContainer, toast } from 'react-toastify';
 import { setEditChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import { useEditChannelMutation, useGetChannelsQuery } from '../../../redux/reducers/app/channelsSlice';
+import { useEditChannelMutation, useGetChannelsQuery } from '../../../redux/reducers/app/channelsApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import cleanBadWords from '../../../utils/cleanBadWords';
 

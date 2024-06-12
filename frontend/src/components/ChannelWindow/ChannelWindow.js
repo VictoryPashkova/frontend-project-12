@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,50 +8,35 @@ import 'react-toastify/dist/ReactToastify.css';
 import socket from '../../socket';
 import AddMessageForm from '../Forms/AddNewMessageForm';
 import MessageList from '../MessageList/MessageList';
-import { useGetMassagesQuery, useAddMessageMutation, useRemoveMessageMutation } from '../../redux/reducers/app/massagesSlice';
+import { useSendMessageMutation } from '../../redux/reducers/app/massagesApiSlice';
+import { addMessage } from '../../redux/reducers/app/messagesSlice';
 
 const ChannelWindow = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const {
-    data: massages, isLoading, isError, error,
-  } = useGetMassagesQuery();
+  const messages = useSelector((state) => state.messages.messages);
 
   const [
-    addMessage,
+    sendMessage,
     { error: addMessageError, isLoading: isMessageUser },
-  ] = useAddMessageMutation();
+  ] = useSendMessageMutation();
 
-  const [
-    removeMessage,
-    { error: removeMessageError, isLoading: isRemovingMessage },
-  ] = useRemoveMessageMutation();
-
-  const removeUMessageHandler = (id) => removeMessage(id);
-  const addMessageHandler = (message) => addMessage(message);
+  const sendMessageHandler = (message) => sendMessage(message);
   const [messageList, setMessageList] = useState([]);
-  const userName = useSelector((state) => state.user.user);
+  const userName = useSelector((state) => state.user.userName);
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const currentChannelName = useSelector((state) => state.chat.currentChannelName);
   const currentChannelMessages = messageList
     .filter((message) => message.channelId === currentChannelId);
 
   useEffect(() => {
-    if (isError) {
-      if (error.response && error.response.status === 401) {
-        navigate('/login');
-      }
-    }
-    if (removeMessageError) {
-      toast.error(t('interface.messageDeleteError'));
-    }
-
     if (addMessageError) {
       toast.error(t('interface.messageSendError'));
     }
 
-    if (massages) {
-      setMessageList(massages);
+    if (messages) {
+      setMessageList(messages);
     }
 
     socket.on('newMessage', (message) => {
@@ -91,12 +76,12 @@ const ChannelWindow = () => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [massages, removeMessageError, addMessageError, t, navigate, isError, error]);
+  }, [messages, addMessageError, t, navigate]);
 
-  const sendMessage = async (newMessage) => {
+  const handleSendMessage = async (newMessage) => {
     if (newMessage.trim()) {
       try {
-        const response = await addMessageHandler({
+        const response = await sendMessageHandler({
           body: newMessage,
           username: userName,
           channelId: currentChannelId,
@@ -109,26 +94,11 @@ const ChannelWindow = () => {
             toast.success(t('interface.messageSent'));
           }
         });
+        dispatch(addMessage(data));
       } catch (err) {
-        console.error('Error sending message:', error);
+        console.error('Error sending message:', err);
         toast.error(t('interface.messageSendError'));
       }
-    }
-  };
-
-  const handleDeleteMessage = async (id) => {
-    try {
-      await removeUMessageHandler(id);
-      socket.emit('removeMessage', { id }, (acknowledgment) => {
-        if (acknowledgment.error) {
-          toast.error(t('interface.messageDeleteError'));
-        } else {
-          toast.success(t('interface.messageRemoved'));
-        }
-      });
-    } catch (err) {
-      console.error('Error deleting message:', err);
-      toast.error(t('interface.messageDeleteError'));
     }
   };
 
@@ -159,14 +129,12 @@ const ChannelWindow = () => {
         </Col>
       </Row>
       <MessageList
-        isLoading={isLoading}
         messages={currentChannelMessages}
-        handleDeleteMessage={handleDeleteMessage}
       />
       <AddMessageForm
-        disabled={isMessageUser || isRemovingMessage || isError}
+        disabled={isMessageUser}
         btnName={t('interface.buttons.send')}
-        sendMessage={sendMessage}
+        sendMessage={handleSendMessage}
       />
     </Container>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/esm/Button';
@@ -13,6 +13,11 @@ import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js'
 import { setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 import { useAuth } from '../../../context/AuthContext.js';
+import { useGetChannelsQuery } from '../../../redux/reducers/app/channelsApiSlice.js';
+import { useGetMassagesQuery } from '../../../redux/reducers/app/massagesApiSlice.js';
+import { setChannels } from '../../../redux/reducers/app/channelsSlice.js';
+import { setMessages } from '../../../redux/reducers/app/messagesSlice.js';
+import AppSpinner from '../../../uikit/spinner/Spinner.js';
 
 const ChatPage = () => {
   const { t } = useTranslation();
@@ -26,6 +31,54 @@ const ChatPage = () => {
     clearAuthData();
     dispatch(setCredentials({ username: '', token: null }));
   };
+
+  const {
+    data: massages, isLoadingMessages, isErrorMessages, errorMessages,
+  } = useGetMassagesQuery();
+
+  const {
+    data: channles, isLoadingChannels, isErrorChannels, errorChannels,
+  } = useGetChannelsQuery();
+
+  useEffect(() => {
+    if (channles) {
+      dispatch(setChannels(channles));
+    }
+  }, [channles, dispatch]);
+
+  useEffect(() => {
+    if (massages) {
+      dispatch(setMessages(massages));
+    }
+  }, [massages, dispatch]);
+
+  useEffect(() => {
+    if (isErrorMessages || isErrorChannels) {
+      if (
+        (errorMessages.response && errorMessages.response.status === 401)
+        || (errorChannels.response && errorChannels.response.status === 401)
+      ) {
+        handleExit();
+      }
+    }
+  }, [isErrorMessages, isErrorChannels, errorMessages, errorChannels, handleExit]);
+
+  if (isLoadingMessages || isLoadingChannels) {
+    return (
+      <>
+        <NavbarHeader>
+          <Button variant="primary" size="sm" type="button" onClick={handleExit}>
+            {t('interface.buttons.logout')}
+          </Button>
+        </NavbarHeader>
+        <div className="container h-100 my-4 overflow-scroll rounded shadow">
+          <div className="row h-100 bg-white flex-md-row p-3">
+            <AppSpinner />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

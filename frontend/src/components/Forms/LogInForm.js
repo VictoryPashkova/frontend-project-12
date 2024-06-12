@@ -67,7 +67,7 @@ const LogInForm = () => {
         }) => (
           <Form onSubmit={handleSubmit}>
             <h1 style={{ textAlign: 'center' }}>{t('interface.login')}</h1>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>{t('interface.nickname')}</Form.Label>
               <Form.Control
                 type="text"

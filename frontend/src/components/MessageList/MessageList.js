@@ -2,9 +2,8 @@ import { Row, Col } from 'react-bootstrap';
 import React, { useRef, useEffect } from 'react';
 import cleanBadWords from '../../utils/cleanBadWords';
 import AppSpinner from '../../uikit/spinner/Spinner';
-import MassagesCard from '../MassageCard/MassageCard';
 
-const MessageList = ({ isLoading, messages, handleDeleteMessage }) => {
+const MessageList = ({ isLoading, messages }) => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -28,12 +27,13 @@ const MessageList = ({ isLoading, messages, handleDeleteMessage }) => {
         <>
           {messages.map((message) => (
             <Row key={message.id}>
-              <MassagesCard
-                key={message.id}
-                author={message.username}
-                text={cleanBadWords(message.body)}
-                onDelete={() => handleDeleteMessage(message.id)}
-              />
+              <p>
+                <b>
+                  {message.username}
+                </b>
+                :
+                {cleanBadWords(message.body)}
+              </p>
             </Row>
           ))}
           <div ref={messagesEndRef} />

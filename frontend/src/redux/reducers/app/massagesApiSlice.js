@@ -18,7 +18,7 @@ export const massagesApi = createApi({
       query: () => '',
       providesTags: ['Message'],
     }),
-    addMessage: builder.mutation({
+    sendMessage: builder.mutation({
       query: (newMessage) => ({
         method: 'POST',
         body: newMessage,
@@ -37,6 +37,6 @@ export const massagesApi = createApi({
 
 export const {
   useGetMassagesQuery,
-  useAddMessageMutation,
+  useSendMessageMutation,
   useRemoveMessageMutation,
 } = massagesApi;
