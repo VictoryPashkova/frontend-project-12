@@ -41,9 +41,6 @@ const AddChannaleForm = () => {
   };
 
   useEffect(() => {
-    if (isAddingChannel) {
-      toast.info(t('interface.addingChannel'));
-    }
     if (addChannelError) {
       toast.error(t('interface.addingChannelError'));
     }
