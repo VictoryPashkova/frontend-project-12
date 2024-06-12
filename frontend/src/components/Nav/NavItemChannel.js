@@ -32,7 +32,6 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
         >
           <button
             type="button"
-            name={channel.name}
             id={channel.id}
             className={`nav-link text-truncate d-flex align-items-center w-100 text-dark ${isActive && !isHovered ? 'bg-dark text-white' : ''} ${isHovered ? 'bg-secondary' : ''}`}
             onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
@@ -42,8 +41,9 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
           </button>
           {channel.removable && (
             <Dropdown as={ButtonGroup}>
-              <Dropdown.Toggle split variant="link" className="shadow-none p-0 m-0 border-0">
+              <Dropdown.Toggle split variant="link" className="shadow-none p-0 m-0 border-0" aria-expanded="false">
                 <i className="bi bi-chevron-down cursor-pointer" />
+                <span className="visually-hidden">Управление каналом</span>
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
                 <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.edit')}</Dropdown.Item>

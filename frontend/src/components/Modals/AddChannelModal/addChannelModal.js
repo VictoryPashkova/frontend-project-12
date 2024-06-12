@@ -19,14 +19,14 @@ const AddChannelModal = () => {
       onHide={() => dispatch(setAddChannelModal({ state: false }))}
     >
       <Modal.Header closeButton>
-        <Modal.Title>{t('interface.enterChannelName')}</Modal.Title>
+        <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <AddChannaleForm />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => dispatch(setAddChannelModal({ state: false }))}>
-          {t('interface.buttons.close')}
+          {t('interface.buttons.cancel')}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -56,9 +56,7 @@ const AddChannaleForm = () => {
         initialValues={{ channelName: '' }}
         validate={(values) => {
           const errors = {};
-          if (!values.channelName) {
-            errors.channelName = t('interface.requiredField');
-          } else if (values.channelName.length < 3 || values.channelName.length > 20) {
+          if (values.channelName.length < 3 || values.channelName.length > 20) {
             errors.channelName = t('interface.usernameLength');
           } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
             errors.channelName = t('interface.channelExists');
@@ -72,7 +70,7 @@ const AddChannaleForm = () => {
       >
         {({
           errors,
-          touched,
+          isValid,
           handleChange,
           handleBlur,
           handleSubmit,
@@ -86,15 +84,15 @@ const AddChannaleForm = () => {
                 name="channelName"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isInvalid={!!errors.channelName && touched.channelName}
-                placeholder="Название канала"
+                isInvalid={!isValid}
                 className="form-control-sm"
+                autoFocus
               />
               <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
             </Form.Group>
             <div className="d-grid gap-2">
               <Button variant="primary" size="sm" type="submit" disabled={isSubmitting}>
-                {t('interface.buttons.add')}
+                {t('interface.buttons.send')}
               </Button>
             </div>
           </Form>
