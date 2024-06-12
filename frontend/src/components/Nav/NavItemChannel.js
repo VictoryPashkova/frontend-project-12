@@ -27,7 +27,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
         <button
           type="button"
           id={channel.id}
-          className={`w-100 rounded-0 text-start text-truncate btn btn-secondary ${isActive ? 'bg-dark text-white' : ''}}`}
+          className={`w-100 rounded-0 text-start text-truncate btn ${isActive ? 'btn-secondary' : ''}`}
           onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
         >
           <span className="me-1">#</span>
