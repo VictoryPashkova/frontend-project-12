@@ -30,19 +30,17 @@ const EditChannelModal = () => {
     try {
       await editChannel({ id: currentChannelId, ...newChannel });
       dispatch(setEditChannelModal({ state: false }));
+      toast.success(t('interface.channelRenamed'));
     } catch (error) {
       console.error('Failed to edit channel:', error);
     }
   };
 
   useEffect(() => {
-    if (isEditingChannel) {
-      toast.info(t('interface.renaming'));
-    }
     if (editingChannelError) {
       toast.error(t('interface.renameChannelError'));
     }
-  }, [isEditingChannel, editingChannelError, t]);
+  }, [editingChannelError, t]);
 
   return (
     <Modal
