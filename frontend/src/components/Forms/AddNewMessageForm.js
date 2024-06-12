@@ -32,6 +32,7 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
+              aria-label="Новое сообщение"
             />
             <Button variant="primary" type="submit" name="sendNewMessage" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
           </InputGroup>
