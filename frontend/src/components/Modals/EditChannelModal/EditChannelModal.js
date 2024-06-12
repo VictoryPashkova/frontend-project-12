@@ -17,6 +17,8 @@ const EditChannelModal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.chat.onEditChannelId);
+  const currentChannelName = useSelector((state) => state.chat.onEditChannelName);
+  console.log(currentChannelName);
   const [
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },
@@ -71,7 +73,7 @@ const EditChannelModal = () => {
               </Alert>
             )}
             <Formik
-              initialValues={{ channelName: '' }}
+              initialValues={{ channelName: currentChannelName || '' }}
               validate={(values) => {
                 const errors = {};
                 if (!values.channelName) {
@@ -90,8 +92,9 @@ const EditChannelModal = () => {
               }}
             >
               {({
+                values,
                 errors,
-                touched,
+                isValid,
                 handleChange,
                 handleBlur,
                 handleSubmit,
@@ -99,21 +102,23 @@ const EditChannelModal = () => {
               }) => (
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
-                    <Form.Label className="form-label visually-hidden">Новое название канала</Form.Label>
+                    <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
                     <Form.Control
                       type="text"
                       name="channelName"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      isInvalid={!!errors.channelName && touched.channelName}
+                      isInvalid={!isValid}
                       placeholder="Название канала"
                       className="form-control-sm"
+                      autoFocus
+                      value={values.channelName}
                     />
                     <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                   </Form.Group>
                   <div className="d-grid gap-2">
                     <Button variant="danger" size="sm" type="submit" disabled={isSubmitting}>
-                      {t('interface.buttons.change')}
+                      {t('interface.buttons.send')}
                     </Button>
                   </div>
                 </Form>

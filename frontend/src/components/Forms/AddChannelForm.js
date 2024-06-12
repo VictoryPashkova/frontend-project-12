@@ -16,7 +16,7 @@ const AddChannaleForm = () => {
   const dispatch = useDispatch();
   const [
     addChannel,
-    { error: addChannelError, isLoading: isAddingChannel },
+    { error: addChannelError },
   ] = useAddChannelMutation();
   const {
     data: channels, refetch,
@@ -44,7 +44,7 @@ const AddChannaleForm = () => {
     if (addChannelError) {
       toast.error(t('interface.addingChannelError'));
     }
-  }, [isAddingChannel, addChannelError, t]);
+  }, [addChannelError, t]);
 
   return (
     <Formik

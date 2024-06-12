@@ -4,6 +4,7 @@ const initialState = {
   currentChannelId: 1,
   currentChannelName: '',
   onEditChannelId: 0,
+  onEditChannelName: '',
 };
 
 const chatSlice = createSlice({
@@ -14,12 +15,13 @@ const chatSlice = createSlice({
       state.currentChannelId = action.payload.id;
       state.currentChannelName = action.payload.name;
     },
-    setOnEditChannelId: (state, action) => {
+    setOnEditChannel: (state, action) => {
       state.onEditChannelId = action.payload.id;
+      state.onEditChannelName = action.payload.name;
     },
   },
 });
 
-export const { setCurrentChannel, setOnEditChannelId } = chatSlice.actions;
+export const { setCurrentChannel, setOnEditChannel } = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { setRemoveChannelModal, setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { setOnEditChannelId, setCurrentChannel } from '../../redux/reducers/app/chatSlice';
+import { setOnEditChannel, setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 
 const NavItemChannel = ({ channel, currentChannelId }) => {
   const { t } = useTranslation();
@@ -12,12 +12,12 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
 
   const removeClickHandler = () => {
     dispatch(setRemoveChannelModal({ state: true }));
-    dispatch(setOnEditChannelId({ id: channel.id }));
+    dispatch(setOnEditChannel({ id: channel.id, name: channel.name }));
   };
 
   const editClickHandler = () => {
     dispatch(setEditChannelModal({ state: true }));
-    dispatch(setOnEditChannelId({ id: channel.id }));
+    dispatch(setOnEditChannel({ id: channel.id, name: channel.name }));
   };
 
   const isActive = Number(currentChannelId) === Number(channel.id);
