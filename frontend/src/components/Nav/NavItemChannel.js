@@ -43,7 +43,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
               <span className="visually-hidden">Управление каналом</span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
-              <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.edit')}</Dropdown.Item>
+              <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.rename')}</Dropdown.Item>
               <Dropdown.Item onClick={removeClickHandler}>{t('interface.buttons.delete')}</Dropdown.Item>
             </Dropdown.Menu>
           </>
