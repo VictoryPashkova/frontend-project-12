@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import socket from '../../socket';
 import AddMessageForm from '../Forms/AddNewMessageForm';
@@ -118,7 +118,6 @@ const ChannelWindow = () => {
 
   return (
     <Container className="h-100 d-flex flex-column justify-content-between p-0">
-      <ToastContainer />
       <Row className="justify-content-between h-100">
         <Col className="bg-light p-4">
           <h5>

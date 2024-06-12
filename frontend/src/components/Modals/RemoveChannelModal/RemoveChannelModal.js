@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, Alert, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../../redux/reducers/app/channelsApiSlice';
 import { setRemoveChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../../redux/reducers/app/chatSlice';
@@ -54,54 +54,48 @@ const RemoveChannelModal = () => {
   };
 
   useEffect(() => {
-    if (isRemovingChannel) {
-      toast.info(t('interface.deleting'));
-    }
     if (removeChannelError) {
       toast.error(t('interface.deleteChannelError'));
     }
-  }, [isRemovingChannel, removeChannelError, t]);
+  }, [removeChannelError, t]);
 
   return (
-    <>
-      <ToastContainer />
-      <Modal
-        show={modalState}
-        size="lg"
-        centered
-        onHide={() => dispatch(setRemoveChannelModal({ state: false }))}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{t('interface.deleteChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {isRemovingChannel ? (
-            <div className="d-flex justify-content-center">
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">{t('interface.deleting')}</span>
-              </Spinner>
-            </div>
-          ) : (
-            <>
-              {removeChannelError && (
+    <Modal
+      show={modalState}
+      size="lg"
+      centered
+      onHide={() => dispatch(setRemoveChannelModal({ state: false }))}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{t('interface.deleteChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {isRemovingChannel ? (
+          <div className="d-flex justify-content-center">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">{t('interface.deleting')}</span>
+            </Spinner>
+          </div>
+        ) : (
+          <>
+            {removeChannelError && (
               <Alert variant="danger">
                 {t('interface.deleteChannelError')}
               </Alert>
-              )}
-              <p>{t('interface.areYouSure')}</p>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => dispatch(setRemoveChannelModal({ state: false }))} disabled={isRemovingChannel}>
-            {t('interface.buttons.cancel')}
-          </Button>
-          <Button variant="danger" onClick={() => removeChannelHandler(Number(currentChannelId))} disabled={isRemovingChannel}>
-            {t('interface.buttons.delete')}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+            )}
+            <p>{t('interface.areYouSure')}</p>
+          </>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => dispatch(setRemoveChannelModal({ state: false }))} disabled={isRemovingChannel}>
+          {t('interface.buttons.cancel')}
+        </Button>
+        <Button variant="danger" onClick={() => removeChannelHandler(Number(currentChannelId))} disabled={isRemovingChannel}>
+          {t('interface.buttons.delete')}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

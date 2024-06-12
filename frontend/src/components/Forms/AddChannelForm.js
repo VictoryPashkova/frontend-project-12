@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
@@ -47,55 +47,52 @@ const AddChannaleForm = () => {
   }, [isAddingChannel, addChannelError, t]);
 
   return (
-    <>
-      <ToastContainer />
-      <Formik
-        initialValues={{ channelName: '' }}
-        validate={(values) => {
-          const errors = {};
-          if (values.channelName.length < 3 || values.channelName.length > 20) {
-            errors.channelName = t('interface.usernameLength');
-          } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
-            errors.channelName = t('interface.channelExists');
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          onSubmit(values);
-          setSubmitting(false);
-        }}
-      >
-        {({
-          errors,
-          isValid,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
-              <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
-              <Form.Control
-                type="text"
-                name="channelName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!isValid}
-                className="form-control-sm"
-                autoFocus
-              />
-              <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
-            </Form.Group>
-            <div className="d-grid gap-2">
-              <Button variant="primary" size="sm" type="submit" disabled={isSubmitting}>
-                {t('interface.buttons.send')}
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <Formik
+      initialValues={{ channelName: '' }}
+      validate={(values) => {
+        const errors = {};
+        if (values.channelName.length < 3 || values.channelName.length > 20) {
+          errors.channelName = t('interface.usernameLength');
+        } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
+          errors.channelName = t('interface.channelExists');
+        }
+        return errors;
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        onSubmit(values);
+        setSubmitting(false);
+      }}
+    >
+      {({
+        errors,
+        isValid,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+      }) => (
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
+            <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
+            <Form.Control
+              type="text"
+              name="channelName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={!isValid}
+              className="form-control-sm"
+              autoFocus
+            />
+            <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
+          </Form.Group>
+          <div className="d-grid gap-2">
+            <Button variant="primary" size="sm" type="submit" disabled={isSubmitting}>
+              {t('interface.buttons.send')}
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

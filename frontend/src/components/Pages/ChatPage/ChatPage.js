@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Button from 'react-bootstrap/esm/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -88,6 +89,7 @@ const ChatPage = () => {
         </Button>
       </NavbarHeader>
       <div className="container h-100 my-4 overflow-scroll rounded shadow">
+        <ToastContainer />
         <div className="row h-100 bg-white flex-md-row p-3">
           <AddChannelModal />
           <RemoveChannelModal />
