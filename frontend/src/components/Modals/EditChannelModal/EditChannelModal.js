@@ -101,6 +101,7 @@ const EditChannelModal = () => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
+                      <Form.Label className="form-label visually-hidden">Новое название канала</Form.Label>
                       <Form.Control
                         type="text"
                         name="channelName"
