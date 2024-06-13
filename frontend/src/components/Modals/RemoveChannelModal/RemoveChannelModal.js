@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../../redux/reducers/app/channelsApiSlice';
 import { setRemoveChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import { setCurrentChannel } from '../../../redux/reducers/app/chatSlice';
+import { setCurrentChannel } from '../../../redux/reducers/app/channelsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../../redux/reducers/app/massagesApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +14,7 @@ const RemoveChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.removeChannelModal);
-  const currentChannelId = useSelector((state) => state.chat.onEditChannelId);
+  const currentChannelId = useSelector((state) => state.channels.onEditChannelId);
   const [
     removeChannel,
     { error: removeChannelError, isLoading: isRemovingChannel },

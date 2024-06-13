@@ -13,12 +13,16 @@ const authSlice = createSlice({
       const { username, token } = action.payload;
       localStorage.setItem('username', username);
       localStorage.setItem('token', token);
-      state.userName = username;
-      state.token = token;
+      return {
+        ...state,
+        userName: username,
+        token,
+      };
     },
-    setToken: (state, action) => {
-      state.token = action.payload.token;
-    },
+    setToken: (state, action) => ({
+      ...state,
+      token: action.payload.token,
+    }),
   },
 });
 

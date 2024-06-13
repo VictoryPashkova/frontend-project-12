@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -26,12 +26,12 @@ const ChatPage = () => {
   const dispatch = useDispatch();
   const { clearAuthData } = useAuth();
 
-  const handleExit = () => {
+  const handleExit = useCallback(() => {
     localStorage.clear();
     navigate('/login', { replace: false });
     clearAuthData();
     dispatch(setCredentials({ username: '', token: null }));
-  };
+  }, [navigate, clearAuthData, dispatch]);
 
   const {
     data: massages, isLoadingMessages, isErrorMessages, errorMessages,

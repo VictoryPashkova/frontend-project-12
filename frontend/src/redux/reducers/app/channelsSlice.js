@@ -5,36 +5,42 @@ const initialState = {
   currentChannelId: 1,
   currentChannelName: '',
   onEditChannelId: 0,
+  onEditChannelName: '',
 };
 
 const channelsSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    setChannels: (state, action) => {
-      state.channels = action.payload;
-    },
-    sendChannel: (state, action) => {
-      state.channels = [...state.channels, action.payload];
-    },
-    removeChannel: (state, action) => {
-      state.channels = state.channels.filter((channel) => channel.id !== action.payload);
-    },
-    editChannel: (state, action) => {
-      state.channels = state.channels.map((channel) => {
-        if (channel.id === action.payload.id) {
-          return action.payload;
-        }
-        return channel;
-      });
-    },
-    setCurrentChannel: (state, action) => {
-      state.currentChannelId = action.payload.id;
-      state.currentChannelName = action.payload.name;
-    },
-    setOnEditChannelId: (state, action) => {
-      state.onEditChannelId = action.payload.id;
-    },
+    setChannels: (state, action) => ({
+      ...state,
+      channels: action.payload,
+    }),
+    sendChannel: (state, action) => ({
+      ...state,
+      channels: [...state.channels, action.payload],
+    }),
+    removeChannel: (state, action) => ({
+      ...state,
+      channels: state.channels.filter((channel) => channel.id !== action.payload),
+    }),
+    editChannel: (state, action) => ({
+      ...state,
+      channels:
+        state.channels
+          .map((channel) => (
+            channel.id === action.payload.id ? { ...channel, ...action.payload } : channel)),
+    }),
+    setCurrentChannel: (state, action) => ({
+      ...state,
+      currentChannelId: action.payload.id,
+      currentChannelName: action.payload.name,
+    }),
+    setOnEditChannel: (state, action) => ({
+      ...state,
+      onEditChannelId: action.payload.id,
+      onEditChannelName: action.payload.name,
+    }),
   },
 });
 
@@ -44,7 +50,7 @@ export const {
   removeChannel,
   editChannel,
   setCurrentChannel,
-  setOnEditChannelId,
+  setOnEditChannel,
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;

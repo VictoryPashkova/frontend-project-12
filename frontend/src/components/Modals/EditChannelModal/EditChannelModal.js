@@ -16,8 +16,8 @@ const EditChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
-  const currentChannelId = useSelector((state) => state.chat.onEditChannelId);
-  const currentChannelName = useSelector((state) => state.chat.onEditChannelName);
+  const currentChannelId = useSelector((state) => state.channels.onEditChannelId);
+  const currentChannelName = useSelector((state) => state.channels.onEditChannelName);
   const [
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },

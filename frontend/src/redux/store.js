@@ -3,7 +3,6 @@ import authReducer from './reducers/user/registrationSlice';
 import { channelsApi } from './reducers/app/channelsApiSlice';
 import modalsReducer from './reducers/app/modalsSlice';
 import { massagesApi } from './reducers/app/massagesApiSlice';
-import chatReducer from './reducers/app/chatSlice';
 import channelReducer from './reducers/app/channelsSlice';
 import messageReducer from './reducers/app/messagesSlice';
 
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   [channelsApi.reducerPath]: channelsApi.reducer,
   modals: modalsReducer,
   [massagesApi.reducerPath]: massagesApi.reducer,
-  chat: chatReducer,
 });
 
 const store = configureStore({

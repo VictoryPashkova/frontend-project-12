@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import socket from '../../socket';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
+import { setCurrentChannel } from '../../redux/reducers/app/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import cleanBadWords from '../../utils/cleanBadWords';
 
