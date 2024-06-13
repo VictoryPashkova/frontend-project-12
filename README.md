@@ -10,7 +10,6 @@ Hexlet chat is a simplified version of the Slack app that allows you to exchange
 [Chat Link](https://frontend-project-12-3cjf.onrender.com)
 
 ## How to use it?
-[Click here to look the app](http://localhost:5000)
 
 Sign up by the next login and password:
 
