@@ -33,4 +33,8 @@ socket.on('removeMessage', (messageId) => {
   console.log('message removed:', messageId);
 });
 
+socket.on('newChannel', (newChannel) => {
+  console.log('add new channel:', newChannel);
+});
+
 export default socket;

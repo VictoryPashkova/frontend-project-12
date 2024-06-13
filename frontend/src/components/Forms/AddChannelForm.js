@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import socket from '../../socket';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
@@ -21,6 +22,7 @@ const AddChannaleForm = () => {
   const {
     data: channels, refetch,
   } = useGetChannelsQuery();
+  const [channelList, updateChannelList] = useState([]);
 
   const onSubmit = async (values) => {
     const cleanChannelName = cleanBadWords(values.channelName);
@@ -33,12 +35,45 @@ const AddChannaleForm = () => {
         toast.success(t('interface.channelCreated'));
         refetch();
         dispatch(setAddChannelModal({ state: false }));
+        socket.emit('newChannel', result);
       }
     } catch (error) {
       console.error('Failed to add new channel:', error);
       toast.error(t('interface.addingChannelError'));
     }
   };
+
+  useEffect(() => {
+    if (channels) {
+      updateChannelList(channels);
+    }
+    socket.on('newChannel', (newChannel) => {
+      updateChannelList((prevChannels) => [...prevChannels, newChannel]);
+    });
+
+    socket.on('connect', () => {
+    });
+
+    socket.on('disconnect', () => {
+      socket.connect();
+    });
+
+    socket.on('connect_error', () => {
+      socket.connect();
+    });
+
+    socket.on('reconnect_attempt', () => {
+      socket.connect();
+    });
+
+    return () => {
+      socket.off('newMessage');
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('connect_error');
+      socket.off('reconnect_attempt');
+    };
+  }, [channels, channelList]);
 
   useEffect(() => {
     if (addChannelError) {

@@ -11,7 +11,7 @@ import AddChannelModal from '../../Modals/AddChannelModal/addChannelModal.js';
 import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
 import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelModal.js';
 import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
-import { setCredentials } from '../../../redux/reducers/user/registrationSlice.js';
+import { setCredentials, setToken } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 import { useAuth } from '../../../context/AuthContext.js';
 import { useGetChannelsQuery } from '../../../redux/reducers/app/channelsApiSlice.js';
@@ -41,11 +41,19 @@ const ChatPage = () => {
     data: channles, isLoadingChannels, isErrorChannels, errorChannels,
   } = useGetChannelsQuery();
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     if (channles) {
       dispatch(setChannels(channles));
     }
   }, [channles, dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(setToken(token));
+    }
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (massages) {

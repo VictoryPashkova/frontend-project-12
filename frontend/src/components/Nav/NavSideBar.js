@@ -5,16 +5,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import socket from '../../socket';
 import { useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/chatSlice';
 import NavItemChannel from './NavItemChannel';
+import { sendChannel } from '../../redux/reducers/app/channelsSlice';
 
 const NavbarSideBar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data: channels, isError, error } = useGetChannelsQuery();
+  const { isError, error } = useGetChannelsQuery();
+  const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.chat.currentChannelId);
   const refScrollTop = useRef(null);
   const [prevNumChannels, setPrevNumChannels] = useState(channels ? channels.length : 0);
@@ -36,6 +39,16 @@ const NavbarSideBar = () => {
       }
     }
   }, [dispatch, t, navigate, isError, error]);
+
+  useEffect(() => {
+    socket.on('newChannel', (newChannel) => {
+      dispatch(sendChannel(newChannel));
+    });
+
+    return () => {
+      socket.off('newChannel');
+    };
+  }, [dispatch]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis d-block">
