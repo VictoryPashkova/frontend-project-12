@@ -28,6 +28,7 @@ const NavbarSideBar = () => {
   };
 
   const handleScrollToBottom = () => {
+    console.log(refScroll.current?.lastElementChild);
     refScroll.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
   };
 

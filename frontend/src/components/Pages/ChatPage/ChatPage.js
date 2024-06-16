@@ -7,10 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import NavbarSideBar from '../../Nav/NavSideBar.js';
-import AddChannelModal from '../../Modals/AddChannelModal/addChannelModal.js';
 import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
-import RemoveChannelModal from '../../Modals/RemoveChannelModal/RemoveChannelModal.js';
-import EditChannelModal from '../../Modals/EditChannelModal/EditChannelModal.js';
 import { setCredentials, setToken } from '../../../redux/reducers/user/registrationSlice.js';
 import NavbarHeader from '../../Nav/Nav.js';
 import { useAuth } from '../../../context/AuthContext.js';
@@ -99,9 +96,6 @@ const ChatPage = () => {
       <div className="container h-100 my-4 overflow-scroll rounded shadow">
         <ToastContainer />
         <div className="row h-100 bg-white flex-md-row p-3">
-          <AddChannelModal />
-          <RemoveChannelModal />
-          <EditChannelModal />
           <Row>
             <Col xs={3} id="sidebar-wrapper" сlassName="bg-light border-end col-md">
               <NavbarSideBar />

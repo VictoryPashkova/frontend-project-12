@@ -34,7 +34,7 @@ const AddChannaleForm = ({ handleScroll }) => {
       if (result && result.id) {
         setTimeout(() => {
           handleScroll();
-        }, 0);
+        }, 200);
         dispatch(setCurrentChannel({ id: result.id, name: result.name }));
         toast.success(t('interface.channelCreated'));
         refetch();
