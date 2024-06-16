@@ -10,6 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import i18next from './i18n';
 import AuthProvider from './context/AuthContext';
+import { SocketProvider } from './context/socketContext';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -29,7 +30,9 @@ root.render(
         <AuthProvider>
           <ReduxProvider store={store}>
             <React.StrictMode>
-              <App />
+              <SocketProvider>
+                <App />
+              </SocketProvider>
             </React.StrictMode>
           </ReduxProvider>
         </AuthProvider>

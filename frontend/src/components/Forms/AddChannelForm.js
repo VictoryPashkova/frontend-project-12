@@ -5,14 +5,15 @@ import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import socket from '../../socket';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/app/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import cleanBadWords from '../../utils/cleanBadWords';
+import { useSocket } from '../../context/socketContext';
 
 const AddChannaleForm = ({ handleScroll }) => {
+  const socket = useSocket();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -77,7 +78,7 @@ const AddChannaleForm = ({ handleScroll }) => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [channels, channelList]);
+  }, [channels, channelList, socket]);
 
   useEffect(() => {
     if (addChannelError) {

@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import socket from '../../socket';
 import { useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel, sendChannel } from '../../redux/reducers/app/channelsSlice';
@@ -13,8 +12,10 @@ import NavItemChannel from './NavItemChannel';
 import AddChannelModal from '../Modals/AddChannelModal/addChannelModal';
 import EditChannelModal from '../Modals/EditChannelModal/EditChannelModal';
 import RemoveChannelModal from '../Modals/RemoveChannelModal/RemoveChannelModal';
+import { useSocket } from '../../context/socketContext';
 
 const NavbarSideBar = () => {
+  const socket = useSocket();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const NavbarSideBar = () => {
     return () => {
       socket.off('newChannel');
     };
-  }, [dispatch]);
+  }, [dispatch, socket]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis d-block">

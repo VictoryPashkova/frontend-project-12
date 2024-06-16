@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import socket from '../../socket';
 import AddMessageForm from '../Forms/AddNewMessageForm';
 import MessageList from '../MessageList/MessageList';
 import { useSendMessageMutation } from '../../redux/reducers/app/massagesApiSlice';
 import { addMessage } from '../../redux/reducers/app/messagesSlice';
+import { useSocket } from '../../context/socketContext';
 
 const ChannelWindow = () => {
+  const socket = useSocket();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ const ChannelWindow = () => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [messages, addMessageError, t, navigate]);
+  }, [messages, addMessageError, t, navigate, socket]);
 
   const handleSendMessage = async (newMessage) => {
     if (newMessage.trim()) {
