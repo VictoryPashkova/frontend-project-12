@@ -88,11 +88,11 @@ const RemoveChannelModal = () => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(setRemoveChannelModal({ state: false }))} disabled={isRemovingChannel}>
-          {t('interface.buttons.cancel')}
-        </Button>
         <Button variant="danger" onClick={() => removeChannelHandler(Number(currentChannelId))} disabled={isRemovingChannel}>
           {t('interface.buttons.delete')}
+        </Button>
+        <Button variant="secondary" onClick={() => dispatch(setRemoveChannelModal({ state: false }))} disabled={isRemovingChannel}>
+          {t('interface.buttons.cancel')}
         </Button>
       </Modal.Footer>
     </Modal>

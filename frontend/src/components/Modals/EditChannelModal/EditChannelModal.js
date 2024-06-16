@@ -127,23 +127,21 @@ const EditChannelModal = () => {
                       value={values.channelName}
                     />
                     <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
+                    <div className="d-flex justify-content-end gap-2 mt-3">
+                      <Button variant="danger" type="submit" disabled={isSubmitting}>
+                        {t('interface.buttons.send')}
+                      </Button>
+                      <Button variant="secondary" type="button" onClick={() => dispatch(setEditChannelModal({ state: false }))}>
+                        {t('interface.buttons.cancel')}
+                      </Button>
+                    </div>
                   </Form.Group>
-                  <div className="d-grid gap-2">
-                    <Button variant="danger" size="sm" type="submit" disabled={isSubmitting}>
-                      {t('interface.buttons.send')}
-                    </Button>
-                  </div>
                 </Form>
               )}
             </Formik>
           </>
         )}
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(setEditChannelModal({ state: false }))}>
-          {t('interface.buttons.cancel')}
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };

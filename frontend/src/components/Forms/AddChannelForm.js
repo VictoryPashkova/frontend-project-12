@@ -120,9 +120,12 @@ const AddChannaleForm = () => {
             />
             <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
           </Form.Group>
-          <div className="d-grid gap-2">
-            <Button variant="primary" size="sm" type="submit" disabled={isSubmitting}>
+          <div className="d-flex justify-content-end gap-2 mt-3">
+            <Button variant="primary" type="submit" disabled={isSubmitting}>
               {t('interface.buttons.send')}
+            </Button>
+            <Button variant="secondary" type="button" onClick={() => dispatch(setAddChannelModal({ state: false }))}>
+              {t('interface.buttons.cancel')}
             </Button>
           </div>
         </Form>
