@@ -12,7 +12,7 @@ import { setCurrentChannel } from '../../redux/reducers/app/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import cleanBadWords from '../../utils/cleanBadWords';
 
-const AddChannaleForm = () => {
+const AddChannaleForm = ({ handleScroll }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -32,6 +32,9 @@ const AddChannaleForm = () => {
     try {
       const result = await addChannel(newChannel).unwrap();
       if (result && result.id) {
+        setTimeout(() => {
+          handleScroll();
+        }, 0);
         dispatch(setCurrentChannel({ id: result.id, name: result.name }));
         toast.success(t('interface.channelCreated'));
         refetch();

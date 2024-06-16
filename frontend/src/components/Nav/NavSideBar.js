@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,9 @@ import { useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
 import { setCurrentChannel, sendChannel } from '../../redux/reducers/app/channelsSlice';
 import NavItemChannel from './NavItemChannel';
+import AddChannelModal from '../Modals/AddChannelModal/addChannelModal';
+import EditChannelModal from '../Modals/EditChannelModal/EditChannelModal';
+import RemoveChannelModal from '../Modals/RemoveChannelModal/RemoveChannelModal';
 
 const NavbarSideBar = () => {
   const { t } = useTranslation();
@@ -18,17 +21,15 @@ const NavbarSideBar = () => {
   const { isError, error } = useGetChannelsQuery();
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const refScrollTop = useRef(null);
-  const [prevNumChannels, setPrevNumChannels] = useState(channels ? channels.length : 0);
+  const refScroll = useRef(null);
 
-  useEffect(() => {
-    if (refScrollTop.current && channels) {
-      if (prevNumChannels > channels.length) {
-        refScrollTop.current.scrollIntoView({ behavior: 'smooth' });
-      }
-      setPrevNumChannels(channels.length);
-    }
-  }, [channels, prevNumChannels]);
+  const handleScrollToTop = () => {
+    refScroll.current?.firstElementChild?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToBottom = () => {
+    refScroll.current?.lastElementChild?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     dispatch(setCurrentChannel({ id: 1, name: 'general' }));
@@ -51,7 +52,7 @@ const NavbarSideBar = () => {
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis d-block">
-      <div ref={refScrollTop}>
+      <div className="overflow-auto" style={{ maxHeight: '80vh' }}>
         <Container className="flex-column align-items-start">
           <div className="d-flex justify-content-between w-100 mb-3">
             <div>
@@ -68,7 +69,7 @@ const NavbarSideBar = () => {
               </Button>
             </div>
           </div>
-          <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 h-100 d-block">
+          <ul ref={refScroll} id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 h-100 d-block">
             {channels && channels.map((channel) => (
               <NavItemChannel
                 key={channel.id}
@@ -77,6 +78,9 @@ const NavbarSideBar = () => {
               />
             ))}
           </ul>
+          <AddChannelModal handleScroll={handleScrollToBottom} />
+          <RemoveChannelModal handleScroll={handleScrollToTop} />
+          <EditChannelModal />
         </Container>
       </div>
     </Navbar>

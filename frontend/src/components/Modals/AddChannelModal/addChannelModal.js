@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
 import AddChannaleForm from '../../Forms/AddChannelForm';
 
-const AddChannelModal = () => {
+const AddChannelModal = ({ handleScroll }) => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.addChannelModal);
 
@@ -19,7 +19,7 @@ const AddChannelModal = () => {
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddChannaleForm />
+        <AddChannaleForm handleScroll={handleScroll} />
       </Modal.Body>
     </Modal>
   );

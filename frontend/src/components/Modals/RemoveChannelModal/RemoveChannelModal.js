@@ -10,7 +10,7 @@ import { setCurrentChannel } from '../../../redux/reducers/app/channelsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../../redux/reducers/app/massagesApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
-const RemoveChannelModal = () => {
+const RemoveChannelModal = ({ handleScroll }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.removeChannelModal);
@@ -47,6 +47,7 @@ const RemoveChannelModal = () => {
       dispatch(setRemoveChannelModal({ state: false }));
       dispatch(setCurrentChannel({ id: 1, name: 'general' }));
       toast.success(t('interface.channelDeleted'));
+      handleScroll();
     } catch (error) {
       console.error('Failed to remove channel:', error);
       toast.error(t('interface.deleteChannelError'));
