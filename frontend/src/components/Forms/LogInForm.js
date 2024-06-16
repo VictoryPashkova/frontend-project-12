@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
@@ -14,6 +14,7 @@ const LogInForm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
   const [error, setError] = useState('');
   const { saveAuthData } = useAuth();
   const onSubmit = async ({ name, password }) => {
@@ -31,9 +32,17 @@ const LogInForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <Formik
       initialValues={{ name: '', password: '' }}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={(values, { setSubmitting }) => {
         onSubmit(values);
         setSubmitting(false);
@@ -57,6 +66,8 @@ const LogInForm = () => {
               onBlur={handleBlur}
               value={values.name || ''}
               isInvalid={error}
+              aria-label="Никнейм"
+              ref={inputRef}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -68,6 +79,7 @@ const LogInForm = () => {
               onBlur={handleBlur}
               value={values.password || ''}
               isInvalid={error}
+              aria-label="Пароль"
             />
           </Form.Group>
           {error && <p style={{ color: 'red' }}>{error}</p>}

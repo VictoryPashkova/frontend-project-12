@@ -125,6 +125,7 @@ const EditChannelModal = () => {
                       ref={inputRef}
                       autoFocus
                       value={values.channelName}
+                      aria-label="Название канала"
                     />
                     <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                     <div className="d-flex justify-content-end gap-2 mt-3">

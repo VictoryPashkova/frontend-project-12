@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
@@ -15,6 +15,7 @@ const RegistrationForm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
   const { saveAuthData } = useAuth();
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
@@ -34,9 +35,17 @@ const RegistrationForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
     <Formik
       initialValues={{ name: '', password: '', confirmPassword: '' }}
+      validateOnBlur={false}
+      validateOnChange={false}
       validate={(values) => {
         const errors = {};
         if (!values.name) {
@@ -79,10 +88,12 @@ const RegistrationForm = () => {
               onBlur={handleBlur}
               value={values.email}
               isInvalid={!!errors.name && touched.name}
+              ref={inputRef}
+              aria-label="Имя"
+              autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>{t('interface.password')}</Form.Label>
             <Form.Control
@@ -92,6 +103,8 @@ const RegistrationForm = () => {
               onBlur={handleBlur}
               value={values.password}
               isInvalid={!!errors.password && touched.password}
+              aria-label="Пароль"
+              autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
           </Form.Group>
@@ -104,6 +117,8 @@ const RegistrationForm = () => {
               onBlur={handleBlur}
               value={values.confirmPassword}
               isInvalid={!!errors.confirmPassword && touched.confirmPassword}
+              aria-label="Подтверждение пароля"
+              autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
           </Form.Group>

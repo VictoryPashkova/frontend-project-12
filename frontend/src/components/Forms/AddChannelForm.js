@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
@@ -15,6 +15,7 @@ import cleanBadWords from '../../utils/cleanBadWords';
 const AddChannaleForm = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
   const [
     addChannel,
     { error: addChannelError },
@@ -84,6 +85,8 @@ const AddChannaleForm = () => {
   return (
     <Formik
       initialValues={{ channelName: '' }}
+      validateOnBlur={false}
+      validateOnChange={false}
       validate={(values) => {
         const errors = {};
         if (values.channelName.length < 3 || values.channelName.length > 20) {
@@ -117,6 +120,9 @@ const AddChannaleForm = () => {
               isInvalid={!isValid}
               className="form-control-sm"
               autoFocus
+              ref={inputRef}
+              placeholder="Название канала"
+              aria-label="Название канала"
             />
             <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
           </Form.Group>
