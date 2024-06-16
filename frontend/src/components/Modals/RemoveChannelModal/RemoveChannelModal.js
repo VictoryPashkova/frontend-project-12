@@ -15,6 +15,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.removeChannelModal);
   const currentChannelId = useSelector((state) => state.channels.onEditChannelId);
+  const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const [
     removeChannel,
     { error: removeChannelError, isLoading: isRemovingChannel },
@@ -45,7 +46,9 @@ const RemoveChannelModal = ({ handleScroll }) => {
       await removeChannel(id).unwrap();
       await removeChannelMessages(id);
       dispatch(setRemoveChannelModal({ state: false }));
-      dispatch(setCurrentChannel({ id: 1, name: 'general' }));
+      if (Number(currentChannelId) === Number(activeChannelId)) {
+        dispatch(setCurrentChannel({ id: 1, name: 'general' }));
+      }
       toast.success(t('interface.channelDeleted'));
       handleScroll();
     } catch (error) {
