@@ -97,7 +97,7 @@ const ChatPage = () => {
         <ToastContainer />
         <div className="row h-100 bg-white flex-md-row p-3">
           <Row>
-            <Col xs={3} id="sidebar-wrapper" сlassName="bg-light border-end col-md">
+            <Col xs={2} id="sidebar-wrapper" сlassName="bg-light border-end col-md">
               <NavbarSideBar />
             </Col>
             <Col xs={9} id="page-content-wrapper" сlassName="bg-light border-end col-md">

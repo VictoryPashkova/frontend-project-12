@@ -57,7 +57,7 @@ const NavbarSideBar = () => {
         <Container className="flex-column align-items-start">
           <div className="d-flex justify-content-between w-100 mb-3">
             <div>
-              <p className="m-0 fw-bold">{t('interface.channels')}</p>
+              <p className="m-0 fw-bold text-overflow-ellipsis">{t('interface.channels')}</p>
             </div>
             <div>
               <Button
