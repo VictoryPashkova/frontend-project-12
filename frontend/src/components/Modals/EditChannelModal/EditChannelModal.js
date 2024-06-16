@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {
   Button, Alert, Spinner, Form,
@@ -18,6 +18,7 @@ const EditChannelModal = () => {
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.channels.onEditChannelId);
   const currentChannelName = useSelector((state) => state.channels.onEditChannelName);
+  const inputRef = useRef(null);
   const [
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },
@@ -35,6 +36,17 @@ const EditChannelModal = () => {
       console.error('Failed to edit channel:', error);
     }
   };
+
+  useEffect(() => {
+    if (modalState) {
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          inputRef.current.select();
+        }
+      }, 0);
+    }
+  }, [modalState]);
 
   useEffect(() => {
     if (editingChannelError) {
@@ -71,6 +83,8 @@ const EditChannelModal = () => {
             )}
             <Formik
               initialValues={{ channelName: currentChannelName || '' }}
+              validateOnChange={false}
+              validateOnBlur={false}
               validate={(values) => {
                 const errors = {};
                 if (!values.channelName) {
@@ -108,6 +122,7 @@ const EditChannelModal = () => {
                       isInvalid={!isValid}
                       placeholder="Название канала"
                       className="form-control-sm"
+                      ref={inputRef}
                       autoFocus
                       value={values.channelName}
                     />
