@@ -27,7 +27,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
         <button
           type="button"
           id={channel.id}
-          className={`w-100 rounded-0 text-start text-truncate btn ${isActive ? 'btn-secondary' : ''}`}
+          className={`w-100 rounded-0 text-start text-truncate rounded btn ${isActive ? 'btn-secondary' : ''}`}
           onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
         >
           <span className="me-1">#</span>
@@ -35,13 +35,13 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
         </button>
         {channel.removable && (
           <>
-            <Dropdown.Toggle split variant="link" className="shadow-none p-0 m-0 border-0" aria-expanded="false">
+            <Dropdown.Toggle split variant="link" className={`dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`} aria-expanded="false">
               <i className="bi bi-chevron-down cursor-pointer" />
               <span className="visually-hidden">Управление каналом</span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
-              <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.rename')}</Dropdown.Item>
               <Dropdown.Item onClick={removeClickHandler}>{t('interface.buttons.delete')}</Dropdown.Item>
+              <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.rename')}</Dropdown.Item>
             </Dropdown.Menu>
           </>
         )}
