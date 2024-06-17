@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -8,9 +9,9 @@ import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
-import i18next from './i18n';
 import AuthProvider from './context/AuthContext';
 import { SocketProvider } from './context/socketContext';
+import createI18n from './i18n';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -21,24 +22,29 @@ const rollbarConfig = {
   captureUnhandledRejections: true,
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const initializeApp = async () => {
+  const i18next = await createI18n();
 
-  <RollbarProvider config={rollbarConfig}>
-    <ErrorBoundary>
-      <I18nextProvider i18n={i18next}>
-        <AuthProvider>
-          <ReduxProvider store={store}>
-            <React.StrictMode>
-              <SocketProvider>
-                <App />
-              </SocketProvider>
-            </React.StrictMode>
-          </ReduxProvider>
-        </AuthProvider>
-      </I18nextProvider>
-    </ErrorBoundary>
-  </RollbarProvider>,
-);
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18next}>
+          <AuthProvider>
+            <ReduxProvider store={store}>
+              <React.StrictMode>
+                <SocketProvider>
+                  <App />
+                </SocketProvider>
+              </React.StrictMode>
+            </ReduxProvider>
+          </AuthProvider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollbarProvider>,
+  );
 
-reportWebVitals();
+  reportWebVitals();
+};
+
+initializeApp();

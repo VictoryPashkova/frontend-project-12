@@ -12,6 +12,7 @@
   "author": "Victoria Pashkova",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.3"
+    "@hexlet/chat-server": "^2.0.3",
+    "bootstrap": "^5.3.3"
   }
 }
