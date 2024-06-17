@@ -30,21 +30,19 @@ const ChatPage = () => {
     dispatch(setCredentials({ username: '', token: null }));
   }, [navigate, clearAuthData, dispatch]);
 
+  const token = localStorage.getItem('token');
+
   const {
-    data: massages, isLoadingMessages, isErrorMessages, errorMessages,
+    data: massages,
+    isLoading: isLoadingMessages,
+    isError: isErrorMessages, error: errorMessages, refetch: refetchMessages,
   } = useGetMassagesQuery();
 
   const {
-    data: channles, isLoadingChannels, isErrorChannels, errorChannels,
+    data: channles,
+    isLoading: isLoadingChannels,
+    isError: isErrorChannels, error: errorChannels, refetch: refetchChannels,
   } = useGetChannelsQuery();
-
-  const token = localStorage.getItem('token');
-
-  useEffect(() => {
-    if (channles) {
-      dispatch(setChannels(channles));
-    }
-  }, [channles, dispatch]);
 
   useEffect(() => {
     if (token) {
@@ -53,21 +51,34 @@ const ChatPage = () => {
   }, [token, dispatch]);
 
   useEffect(() => {
+    if (channles) {
+      dispatch(setChannels(channles));
+    } else {
+      refetchChannels();
+    }
+  }, [channles, dispatch, refetchChannels]);
+
+  useEffect(() => {
     if (massages) {
       dispatch(setMessages(massages));
+    } else {
+      refetchMessages();
     }
-  }, [massages, dispatch]);
+  }, [massages, dispatch, refetchMessages]);
 
   useEffect(() => {
     if (isErrorMessages || isErrorChannels) {
+      const isErrorMessagesStatus = errorMessages?.status;
+      const isErrorChannelsStatus = errorChannels?.status;
       if (
-        (errorMessages.response && errorMessages.response.status === 401)
-        || (errorChannels.response && errorChannels.response.status === 401)
+        (isErrorMessagesStatus === 401) || (isErrorChannelsStatus === 401)
       ) {
         handleExit();
       }
     }
-  }, [isErrorMessages, isErrorChannels, errorMessages, errorChannels, handleExit]);
+  }, [
+    isErrorMessages, isErrorChannels, errorMessages, errorChannels, handleExit,
+  ]);
 
   if (isLoadingMessages || isLoadingChannels) {
     return (
