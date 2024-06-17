@@ -44,8 +44,6 @@ const RegistrationForm = () => {
   return (
     <Formik
       initialValues={{ name: '', password: '', confirmPassword: '' }}
-      validateOnBlur={false}
-      validateOnChange={false}
       validate={(values) => {
         const errors = {};
         if (!values.name) {
@@ -86,7 +84,7 @@ const RegistrationForm = () => {
               name="name"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.email}
+              value={values.name}
               isInvalid={!!errors.name && touched.name}
               ref={inputRef}
               aria-label="Имя"
@@ -104,7 +102,6 @@ const RegistrationForm = () => {
               value={values.password}
               isInvalid={!!errors.password && touched.password}
               aria-label="Пароль"
-              autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
           </Form.Group>
@@ -116,9 +113,8 @@ const RegistrationForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.confirmPassword}
-              isInvalid={!!errors.confirmPassword && touched.confirmPassword}
+              isInvalid={!!errors.confirmPassword && touched.confirmPassword && touched.password}
               aria-label="Подтверждение пароля"
-              autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
           </Form.Group>
