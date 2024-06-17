@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { setCredentials } from '../../redux/reducers/user/registrationSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/AuthContext';
@@ -30,7 +29,6 @@ const RegistrationForm = () => {
       }
     } catch (err) {
       console.error('Error signing up:', err);
-      toast.error(t('interface.userExists'));
       setError(t('interface.userExists'));
     }
   };
