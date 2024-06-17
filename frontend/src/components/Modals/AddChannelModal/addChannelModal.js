@@ -11,7 +11,7 @@ const AddChannelModal = ({ handleScroll }) => {
   return (
     <Modal
       show={modalState}
-      size="lg"
+      size="md"
       centered
       onHide={() => dispatch(setAddChannelModal({ state: false }))}
     >

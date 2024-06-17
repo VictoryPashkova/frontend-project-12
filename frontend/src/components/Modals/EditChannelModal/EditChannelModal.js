@@ -57,7 +57,7 @@ const EditChannelModal = () => {
   return (
     <Modal
       show={modalState}
-      size="lg"
+      size="md"
       centered
       onHide={() => dispatch(setEditChannelModal({ state: false }))}
     >

@@ -66,7 +66,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
   return (
     <Modal
       show={modalState}
-      size="lg"
+      size="md"
       centered
       onHide={() => dispatch(setRemoveChannelModal({ state: false }))}
     >
