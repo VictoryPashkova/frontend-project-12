@@ -17,7 +17,7 @@
     "connected": "Соединение установлено",
     "error": "Ошибка соединения",
     "addChannel": "+",
-    "channelsManagement": "Управление каналами",
+    "channelManagement": "Управление каналом",
     "channelName": "Имя канала",
     "rename": "Переименовать",
     "delete": "Удалить",

@@ -37,7 +37,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
           <>
             <Dropdown.Toggle split variant="link" className={`dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`} aria-expanded="false">
               <i className="bi bi-chevron-down cursor-pointer" />
-              <span className="visually-hidden">Управление каналом</span>
+              <span className="visually-hidden">{t('interface.channelManagement')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
               <Dropdown.Item onClick={removeClickHandler}>{t('interface.buttons.delete')}</Dropdown.Item>
