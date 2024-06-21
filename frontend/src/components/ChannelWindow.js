@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddMessageForm from './Forms/AddNewMessageForm';
@@ -13,7 +12,6 @@ import { useSocket } from '../context/socketContext';
 
 const ChannelWindow = () => {
   const socket = useSocket();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
@@ -77,7 +75,7 @@ const ChannelWindow = () => {
       socket.off('connect_error');
       socket.off('reconnect_attempt');
     };
-  }, [messages, addMessageError, t, navigate, socket]);
+  }, [messages, addMessageError, t, socket]);
 
   const handleSendMessage = async (newMessage) => {
     if (newMessage.trim()) {

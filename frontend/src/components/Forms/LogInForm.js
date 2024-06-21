@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { setCredentials } from '../../redux/reducers/authSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/AuthContext';
+import routes from '../routes';
 
 const LogInForm = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const LogInForm = () => {
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
-        navigate('/');
+        navigate(routes.home(), { replace: false });
       }
     } catch (e) {
       setError(t('interface.invalidCredentials'));

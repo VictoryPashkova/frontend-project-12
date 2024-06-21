@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import routes from '../routes';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ const NotFoundPage = () => {
         <p>
           <button
             type="button"
-            onClick={() => navigate('/login', { replace: false })}
+            onClick={() => navigate(routes.home(), { replace: false })}
             style={{
               backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', padding: '8px 16px', fontSize: '1.2rem', cursor: 'pointer',
             }}

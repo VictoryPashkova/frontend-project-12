@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LogInForm from '../Forms/LogInForm';
 import PrimaryButton from '../../uikit/buttons/button';
+import routes from '../routes';
 
 const LogInModal = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const LogInModal = () => {
           <LogInForm />
         </Modal.Body>
         <Modal.Footer>
-          <PrimaryButton text="Регистрация" onClick={() => navigate('/signup', { replace: false })}>
+          <PrimaryButton text="Регистрация" onClick={() => navigate(routes.signup(), { replace: false })}>
             <p style={{ display: 'inline-block' }}>{t('interface.noAccount')}</p>
           </PrimaryButton>
         </Modal.Footer>

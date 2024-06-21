@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { setCredentials } from '../../redux/reducers/authSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/AuthContext';
+import routes from '../routes';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const RegistrationForm = () => {
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
-        navigate('/');
+        navigate(routes.home(), { replace: false });
       }
     } catch (err) {
       console.error('Error signing up:', err);

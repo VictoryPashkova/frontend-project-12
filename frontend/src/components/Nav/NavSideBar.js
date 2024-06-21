@@ -13,6 +13,7 @@ import AddChannelModal from '../Modals/AddChannelModal';
 import EditChannelModal from '../Modals/EditChannelModal';
 import RemoveChannelModal from '../Modals/RemoveChannelModal';
 import { useSocket } from '../../context/socketContext';
+import routes from '../routes';
 
 const NavbarSideBar = () => {
   const socket = useSocket();
@@ -36,7 +37,7 @@ const NavbarSideBar = () => {
     dispatch(setCurrentChannel({ id: 1, name: 'general' }));
     if (isError) {
       if (error.response && error.response.status === 401) {
-        navigate('/login');
+        navigate(routes.login(), { replace: false });
       }
     }
   }, [dispatch, t, navigate, isError, error]);
