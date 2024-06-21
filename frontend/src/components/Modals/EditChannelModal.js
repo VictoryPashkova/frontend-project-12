@@ -10,10 +10,11 @@ import { toast } from 'react-toastify';
 import { setEditChannelModal } from '../../redux/reducers/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import cleanBadWords from '../../utils/cleanBadWords';
+import { useBadWordsContext } from '../../context/BadWordsContext';
 
 const EditChannelModal = () => {
   const { t } = useTranslation();
+  const { cleanBadWords } = useBadWordsContext();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.modals.onEditChannelId);

@@ -12,6 +12,7 @@ import store from './redux/store';
 import AuthProvider from './context/AuthContext';
 import { SocketProvider } from './context/socketContext';
 import createI18n from './i18n';
+import { BadWordsProvider } from './context/BadWordsContext';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -34,7 +35,9 @@ const initializeApp = async () => {
             <ReduxProvider store={store}>
               <React.StrictMode>
                 <SocketProvider>
-                  <App />
+                  <BadWordsProvider>
+                    <App />
+                  </BadWordsProvider>
                 </SocketProvider>
               </React.StrictMode>
             </ReduxProvider>

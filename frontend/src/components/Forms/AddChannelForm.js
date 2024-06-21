@@ -9,11 +9,12 @@ import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers
 import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import cleanBadWords from '../../utils/cleanBadWords';
+import { useBadWordsContext } from '../../context/BadWordsContext';
 import { useSocket } from '../../context/socketContext';
 
 const AddChannaleForm = ({ handleScroll }) => {
   const socket = useSocket();
+  const { cleanBadWords } = useBadWordsContext();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);

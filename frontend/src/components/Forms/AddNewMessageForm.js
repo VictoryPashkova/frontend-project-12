@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import {
   Button, Col, Form, InputGroup, Row,
 } from 'react-bootstrap';
-import cleanBadWords from '../../utils/cleanBadWords';
+import { useBadWordsContext } from '../../context/BadWordsContext';
 
 const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
   const [newMessage, setNewMessage] = useState('');
+  const { cleanBadWords } = useBadWordsContext();
 
   const sendMessageHandler = () => {
     sendMessage(cleanBadWords(newMessage));
@@ -14,7 +15,7 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Чтобы избежать переноса строки в поле ввода
+      e.preventDefault();
       sendMessageHandler();
     }
   };

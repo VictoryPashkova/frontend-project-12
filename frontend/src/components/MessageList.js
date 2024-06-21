@@ -1,9 +1,10 @@
 import { Row, Col } from 'react-bootstrap';
 import React, { useRef, useEffect } from 'react';
-import cleanBadWords from '../utils/cleanBadWords';
+import { useBadWordsContext } from '../context/BadWordsContext';
 import AppSpinner from '../uikit/spinner/Spinner';
 
 const MessageList = ({ isLoading, messages }) => {
+  const { cleanBadWords } = useBadWordsContext();
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
