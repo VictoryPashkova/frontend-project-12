@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { setRemoveChannelModal, setEditChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { setOnEditChannel, setCurrentChannel } from '../../redux/reducers/app/channelsSlice';
+import { setRemoveChannelModal, setEditChannelModal, setOnEditChannel } from '../../redux/reducers/app/modalsSlice';
+import { setCurrentChannel } from '../../redux/reducers/app/channelsSlice';
 
 const NavItemChannel = ({ channel, currentChannelId }) => {
   const { t } = useTranslation();

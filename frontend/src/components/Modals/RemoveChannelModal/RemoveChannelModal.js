@@ -14,7 +14,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.removeChannelModal);
-  const currentChannelId = useSelector((state) => state.channels.onEditChannelId);
+  const currentChannelId = useSelector((state) => state.modals.onEditChannelId);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const [
     removeChannel,

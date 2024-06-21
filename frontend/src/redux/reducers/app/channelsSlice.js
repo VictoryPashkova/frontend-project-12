@@ -4,8 +4,6 @@ const initialState = {
   channels: [],
   currentChannelId: 1,
   currentChannelName: '',
-  onEditChannelId: 0,
-  onEditChannelName: '',
 };
 
 const channelsSlice = createSlice({
@@ -36,11 +34,6 @@ const channelsSlice = createSlice({
       currentChannelId: action.payload.id,
       currentChannelName: action.payload.name,
     }),
-    setOnEditChannel: (state, action) => ({
-      ...state,
-      onEditChannelId: action.payload.id,
-      onEditChannelName: action.payload.name,
-    }),
   },
 });
 
@@ -50,7 +43,6 @@ export const {
   removeChannel,
   editChannel,
   setCurrentChannel,
-  setOnEditChannel,
 } = channelsSlice.actions;
 
 export default channelsSlice.reducer;
