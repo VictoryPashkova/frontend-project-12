@@ -6,16 +6,16 @@ import Button from 'react-bootstrap/esm/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
-import NavbarSideBar from '../../Nav/NavSideBar.js';
-import ChannelWindow from '../../ChannelWindow/ChannelWindow.js';
-import { setCredentials, setToken } from '../../../redux/reducers/user/registrationSlice.js';
-import NavbarHeader from '../../Nav/Nav.js';
-import { useAuth } from '../../../context/AuthContext.js';
-import { useGetChannelsQuery } from '../../../redux/reducers/app/channelsApiSlice.js';
-import { useGetMassagesQuery } from '../../../redux/reducers/app/massagesApiSlice.js';
-import { setChannels } from '../../../redux/reducers/app/channelsSlice.js';
-import { setMessages } from '../../../redux/reducers/app/messagesSlice.js';
-import AppSpinner from '../../../uikit/spinner/Spinner.js';
+import NavbarSideBar from '../Nav/NavSideBar.js';
+import ChannelWindow from '../ChannelWindow.js';
+import { setCredentials, setToken } from '../../redux/reducers/authSlice.js';
+import NavbarHeader from '../Nav/Nav.js';
+import { useAuth } from '../../context/AuthContext.js';
+import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice.js';
+import { useGetMassagesQuery } from '../../redux/reducers/massagesApiSlice.js';
+import { setChannels } from '../../redux/reducers/channelsSlice.js';
+import { setMessages } from '../../redux/reducers/messagesSlice.js';
+import AppSpinner from '../../uikit/spinner/Spinner.js';
 
 const ChatPage = () => {
   const { t } = useTranslation();

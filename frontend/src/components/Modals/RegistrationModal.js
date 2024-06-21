@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Form from '../../Forms/RegisterForm';
+import RegistrationForm from '../Forms/RegisterForm';
 
 const RegistrationModal = () => (
   <div
@@ -9,7 +9,7 @@ const RegistrationModal = () => (
   >
     <Modal.Dialog>
       <Modal.Body>
-        <Form />
+        <RegistrationForm />
       </Modal.Body>
     </Modal.Dialog>
   </div>

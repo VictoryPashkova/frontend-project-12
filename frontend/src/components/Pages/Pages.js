@@ -2,11 +2,11 @@ import React from 'react';
 import {
   BrowserRouter as Router, Routes, Route, Navigate,
 } from 'react-router-dom';
-import LogInPage from './LogInPage/LogIn';
-import RegistrationPage from './RegistrationPage/RegistrationPage';
-import NotFoundPage from './NotFoundPage/NotFoundPage';
+import LogInPage from './LogInPage';
+import RegistrationPage from './RegistrationPage';
+import NotFoundPage from './NotFoundPage';
 import { useAuth } from '../../context/AuthContext';
-import Home from './Home/HomePage';
+import Home from './HomePage';
 
 const AppRouter = () => {
   const { token } = useAuth();

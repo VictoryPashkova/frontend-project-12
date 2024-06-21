@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AddMessageForm from '../Forms/AddNewMessageForm';
-import MessageList from '../MessageList/MessageList';
-import { useSendMessageMutation } from '../../redux/reducers/app/massagesApiSlice';
-import { addMessage } from '../../redux/reducers/app/messagesSlice';
-import { useSocket } from '../../context/socketContext';
+import AddMessageForm from './Forms/AddNewMessageForm';
+import MessageList from './MessageList';
+import { useSendMessageMutation } from '../redux/reducers/massagesApiSlice';
+import { addMessage } from '../redux/reducers/messagesSlice';
+import { useSocket } from '../context/socketContext';
 
 const ChannelWindow = () => {
   const socket = useSocket();

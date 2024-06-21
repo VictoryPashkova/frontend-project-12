@@ -4,10 +4,10 @@ import { Button, Alert, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useRemoveChannelMutation } from '../../../redux/reducers/app/channelsApiSlice';
-import { setRemoveChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import { setCurrentChannel } from '../../../redux/reducers/app/channelsSlice';
-import { useGetMassagesQuery, useRemoveMessageMutation } from '../../../redux/reducers/app/massagesApiSlice';
+import { useRemoveChannelMutation } from '../../redux/reducers/channelsApiSlice';
+import { setRemoveChannelModal } from '../../redux/reducers/modalsSlice';
+import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { useGetMassagesQuery, useRemoveMessageMutation } from '../../redux/reducers/massagesApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RemoveChannelModal = ({ handleScroll }) => {

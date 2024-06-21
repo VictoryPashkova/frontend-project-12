@@ -7,10 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setEditChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import { useEditChannelMutation, useGetChannelsQuery } from '../../../redux/reducers/app/channelsApiSlice';
+import { setEditChannelModal } from '../../redux/reducers/modalsSlice';
+import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
-import cleanBadWords from '../../../utils/cleanBadWords';
+import cleanBadWords from '../../utils/cleanBadWords';
 
 const EditChannelModal = () => {
   const { t } = useTranslation();

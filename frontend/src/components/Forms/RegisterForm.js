@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setCredentials } from '../../redux/reducers/user/registrationSlice';
+import { setCredentials } from '../../redux/reducers/authSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/AuthContext';
 

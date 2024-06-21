@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAddChannelModal } from '../../../redux/reducers/app/modalsSlice';
-import AddChannaleForm from '../../Forms/AddChannelForm';
+import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
+import AddChannaleForm from '../Forms/AddChannelForm';
 
 const AddChannelModal = ({ handleScroll }) => {
   const dispatch = useDispatch();

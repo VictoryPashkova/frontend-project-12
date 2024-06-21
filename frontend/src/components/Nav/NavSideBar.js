@@ -5,13 +5,13 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGetChannelsQuery } from '../../redux/reducers/app/channelsApiSlice';
-import { setAddChannelModal } from '../../redux/reducers/app/modalsSlice';
-import { setCurrentChannel, sendChannel } from '../../redux/reducers/app/channelsSlice';
+import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
+import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
+import { setCurrentChannel, sendChannel } from '../../redux/reducers/channelsSlice';
 import NavItemChannel from './NavItemChannel';
-import AddChannelModal from '../Modals/AddChannelModal/addChannelModal';
-import EditChannelModal from '../Modals/EditChannelModal/EditChannelModal';
-import RemoveChannelModal from '../Modals/RemoveChannelModal/RemoveChannelModal';
+import AddChannelModal from '../Modals/AddChannelModal';
+import EditChannelModal from '../Modals/EditChannelModal';
+import RemoveChannelModal from '../Modals/RemoveChannelModal';
 import { useSocket } from '../../context/socketContext';
 
 const NavbarSideBar = () => {

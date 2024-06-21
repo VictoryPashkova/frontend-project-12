@@ -1,7 +1,7 @@
 import { Row, Col } from 'react-bootstrap';
 import React, { useRef, useEffect } from 'react';
-import cleanBadWords from '../../utils/cleanBadWords';
-import AppSpinner from '../../uikit/spinner/Spinner';
+import cleanBadWords from '../utils/cleanBadWords';
+import AppSpinner from '../uikit/spinner/Spinner';
 
 const MessageList = ({ isLoading, messages }) => {
   const messagesEndRef = useRef(null);

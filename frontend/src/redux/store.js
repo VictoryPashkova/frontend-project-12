@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from './reducers/user/registrationSlice';
-import { channelsApi } from './reducers/app/channelsApiSlice';
-import modalsReducer from './reducers/app/modalsSlice';
-import { massagesApi } from './reducers/app/massagesApiSlice';
-import channelReducer from './reducers/app/channelsSlice';
-import messageReducer from './reducers/app/messagesSlice';
+import authReducer from './reducers/authSlice';
+import { channelsApi } from './reducers/channelsApiSlice';
+import modalsReducer from './reducers/modalsSlice';
+import { massagesApi } from './reducers/massagesApiSlice';
+import channelReducer from './reducers/channelsSlice';
+import messageReducer from './reducers/messagesSlice';
 
 const rootReducer = combineReducers({
   channels: channelReducer,
