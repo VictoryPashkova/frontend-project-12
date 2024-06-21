@@ -4,13 +4,15 @@ import ChatPage from './ChatPage';
 const HomePage = () => (
   <>
     <header />
-    <div className="h-100 bg-light">
-      <div className="h-100">
-        <div className="h-100" id="chat">
-          <ChatPage />
+    <body>
+      <main className="h-100 bg-light">
+        <div className="h-100">
+          <div className="h-100" id="chat">
+            <ChatPage />
+          </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </body>
   </>
 );
 
