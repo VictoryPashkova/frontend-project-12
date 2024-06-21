@@ -108,10 +108,10 @@ const ChatPage = () => {
         <ToastContainer />
         <div className="row h-100 bg-white flex-md-row p-3">
           <Row>
-            <Col xs={3} id="sidebar-wrapper" сlassName="bg-light border-end col-md">
+            <Col xs={2} id="sidebar-wrapper" className="bg-light border-end col-xs">
               <NavbarSideBar />
             </Col>
-            <Col xs={9} id="page-content-wrapper" сlassName="bg-light border-end col-md">
+            <Col xs={8} id="page-content-wrapper" className="border-end col-md">
               <ChannelWindow />
             </Col>
           </Row>

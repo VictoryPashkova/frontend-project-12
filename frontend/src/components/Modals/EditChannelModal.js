@@ -17,7 +17,8 @@ const EditChannelModal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.modals.onEditChannelId);
-  const currentChannelName = useSelector((state) => state.modals.onEditChannelName);
+  const { name } = useSelector((state) => state.channels.channels
+    .find((channel) => channel.id === currentChannelId)) || {};
   const inputRef = useRef(null);
   const [
     editChannel,
@@ -82,7 +83,7 @@ const EditChannelModal = () => {
               </Alert>
             )}
             <Formik
-              initialValues={{ channelName: currentChannelName || '' }}
+              initialValues={{ channelName: name || '' }}
               validateOnChange={false}
               validateOnBlur={false}
               validate={(values) => {
@@ -112,7 +113,7 @@ const EditChannelModal = () => {
                 isSubmitting,
               }) => (
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
+                  <Form.Group className="mb-3 form-control-sm" controlid="formBasicChannelName">
                     <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
                     <Form.Control
                       type="text"

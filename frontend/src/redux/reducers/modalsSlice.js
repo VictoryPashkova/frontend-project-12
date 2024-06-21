@@ -5,7 +5,6 @@ const initialState = {
   removeChannelModal: false,
   editChannelModal: false,
   onEditChannelId: 0,
-  onEditChannelName: '',
 };
 
 const modalsSlice = createSlice({
@@ -27,7 +26,6 @@ const modalsSlice = createSlice({
     setOnEditChannel: (state, action) => ({
       ...state,
       onEditChannelId: action.payload.id,
-      onEditChannelName: action.payload.name,
     }),
   },
 });

@@ -57,7 +57,7 @@ const LogInForm = () => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <h1 style={{ textAlign: 'center' }}>{t('interface.login')}</h1>
-          <Form.Group className="mb-3" controlId="formBasicName">
+          <Form.Group className="mb-3" controlid="formBasicName">
             <Form.Label>{t('interface.nickname')}</Form.Label>
             <Form.Control
               type="text"
@@ -70,7 +70,7 @@ const LogInForm = () => {
               ref={inputRef}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3" controlid="formBasicPassword">
             <Form.Label>{t('interface.password')}</Form.Label>
             <Form.Control
               type="password"

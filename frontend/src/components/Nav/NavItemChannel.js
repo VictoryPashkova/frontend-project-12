@@ -11,12 +11,12 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
 
   const removeClickHandler = () => {
     dispatch(setRemoveChannelModal({ state: true }));
-    dispatch(setOnEditChannel({ id: channel.id, name: channel.name }));
+    dispatch(setOnEditChannel({ id: channel.id }));
   };
 
   const editClickHandler = () => {
     dispatch(setEditChannelModal({ state: true }));
-    dispatch(setOnEditChannel({ id: channel.id, name: channel.name }));
+    dispatch(setOnEditChannel({ id: channel.id }));
   };
 
   const isActive = Number(currentChannelId) === Number(channel.id);

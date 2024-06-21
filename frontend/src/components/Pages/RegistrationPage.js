@@ -5,16 +5,10 @@ import RegistrationModal from '../Modals/RegistrationModal';
 
 const RegistrationPage = () => (
   <>
-    <header>
-      <Navbar />
-    </header>
-    <main>
-      <body>
-        <MainModal>
-          <RegistrationModal />
-        </MainModal>
-      </body>
-    </main>
+    <Navbar />
+    <MainModal>
+      <RegistrationModal />
+    </MainModal>
   </>
 );
 
