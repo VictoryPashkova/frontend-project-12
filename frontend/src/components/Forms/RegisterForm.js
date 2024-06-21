@@ -75,7 +75,7 @@ const RegistrationForm = () => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <h1 style={{ textAlign: 'center' }}>{t('interface.registration')}</h1>
-          <Form.Group className="mb-3" controlid="formBasicName">
+          <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>{t('interface.username')}</Form.Label>
             <Form.Control
               type="text"
@@ -90,7 +90,7 @@ const RegistrationForm = () => {
             />
             <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mb-3" controlid="formBasicPassword">
+          <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>{t('interface.password')}</Form.Label>
             <Form.Control
               type="password"
@@ -103,7 +103,7 @@ const RegistrationForm = () => {
             />
             <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mb-3" controlid="formBasicConfirmPassword">
+          <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
             <Form.Label>{t('interface.confirmPassword')}</Form.Label>
             <Form.Control
               type="password"

@@ -23,7 +23,7 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
     <Row className="mt-auto">
       <Col>
         <Form className="py-1">
-          <InputGroup hasValidation controlid="formBasicNewMessage">
+          <InputGroup hasValidation controlId="formBasicNewMessage">
             <Form.Label className="form-label visually-hidden">Новое сообщение</Form.Label>
             <Form.Control
               type="text"
