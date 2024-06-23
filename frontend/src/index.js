@@ -4,15 +4,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider as ReduxProvider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import AuthProvider from './context/AuthContext';
 import { SocketProvider } from './context/socketContext';
-import createI18n from './i18n';
 import { BadWordsProvider } from './context/BadWordsContext';
+import { sendChannel } from './redux/reducers/channelsSlice';
+import { addMessage } from './redux/reducers/messagesSlice';
+import initializeApp from './initializeApp';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_MY_TOKEN,
@@ -23,8 +24,8 @@ const rollbarConfig = {
   captureUnhandledRejections: true,
 };
 
-const initializeApp = async () => {
-  const i18next = await createI18n();
+const runApp = async () => {
+  const { i18next, socket } = await initializeApp(store, sendChannel, addMessage);
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
@@ -34,7 +35,7 @@ const initializeApp = async () => {
           <AuthProvider>
             <ReduxProvider store={store}>
               <React.StrictMode>
-                <SocketProvider>
+                <SocketProvider socket={socket}>
                   <BadWordsProvider>
                     <App />
                   </BadWordsProvider>
@@ -50,4 +51,4 @@ const initializeApp = async () => {
   reportWebVitals();
 };
 
-initializeApp();
+runApp();

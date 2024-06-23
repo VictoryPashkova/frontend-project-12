@@ -7,16 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
-import { setCurrentChannel, sendChannel } from '../../redux/reducers/channelsSlice';
+import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 import NavItemChannel from './NavItemChannel';
 import AddChannelModal from '../Modals/AddChannelModal';
 import EditChannelModal from '../Modals/EditChannelModal';
 import RemoveChannelModal from '../Modals/RemoveChannelModal';
-import { useSocket } from '../../context/socketContext';
 import routes from '../routes';
 
 const NavbarSideBar = () => {
-  const socket = useSocket();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -41,16 +39,6 @@ const NavbarSideBar = () => {
       }
     }
   }, [dispatch, t, navigate, isError, error]);
-
-  useEffect(() => {
-    socket.on('newChannel', (newChannel) => {
-      dispatch(sendChannel(newChannel));
-    });
-
-    return () => {
-      socket.off('newChannel');
-    };
-  }, [dispatch, socket]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis d-block">

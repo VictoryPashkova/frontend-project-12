@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
@@ -25,7 +25,6 @@ const AddChannaleForm = ({ handleScroll }) => {
   const {
     data: channels, refetch,
   } = useGetChannelsQuery();
-  const [channelList, updateChannelList] = useState([]);
 
   const onSubmit = async (values) => {
     const cleanChannelName = cleanBadWords(values.channelName);
@@ -48,38 +47,6 @@ const AddChannaleForm = ({ handleScroll }) => {
       toast.error(t('interface.addingChannelError'));
     }
   };
-
-  useEffect(() => {
-    if (channels) {
-      updateChannelList(channels);
-    }
-    socket.on('newChannel', (newChannel) => {
-      updateChannelList((prevChannels) => [...prevChannels, newChannel]);
-    });
-
-    socket.on('connect', () => {
-    });
-
-    socket.on('disconnect', () => {
-      socket.connect();
-    });
-
-    socket.on('connect_error', () => {
-      socket.connect();
-    });
-
-    socket.on('reconnect_attempt', () => {
-      socket.connect();
-    });
-
-    return () => {
-      socket.off('newMessage');
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('connect_error');
-      socket.off('reconnect_attempt');
-    };
-  }, [channels, channelList, socket]);
 
   useEffect(() => {
     if (addChannelError) {

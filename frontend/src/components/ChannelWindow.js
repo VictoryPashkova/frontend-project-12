@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddMessageForm from './Forms/AddNewMessageForm';
 import MessageList from './MessageList';
 import { useSendMessageMutation } from '../redux/reducers/massagesApiSlice';
-import { addMessage } from '../redux/reducers/messagesSlice';
 import { useSocket } from '../context/socketContext';
 
 const ChannelWindow = () => {
   const socket = useSocket();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
 
@@ -22,60 +20,17 @@ const ChannelWindow = () => {
   ] = useSendMessageMutation();
 
   const sendMessageHandler = (message) => sendMessage(message);
-  const [messageList, setMessageList] = useState([]);
   const userName = localStorage.getItem('username');
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannelName = useSelector((state) => state.channels.currentChannelName);
-  const currentChannelMessages = messageList
+  const currentChannelMessages = messages
     .filter((message) => message.channelId === currentChannelId);
 
   useEffect(() => {
     if (addMessageError) {
       toast.error(t('interface.messageSendError'));
     }
-
-    if (messages) {
-      setMessageList(messages);
-    }
-
-    socket.on('newMessage', (message) => {
-      setMessageList((prevMessages) => [...prevMessages, message]);
-    });
-
-    socket.on('renameMessage', (updatedMessage) => {
-      setMessageList((prevMessages) => prevMessages
-        .map((message) => (message.id === updatedMessage.id ? updatedMessage : message)));
-    });
-
-    socket.on('removeMessage', ({ id }) => {
-      setMessageList((prevMessages) => prevMessages.filter((message) => message.id !== id));
-    });
-
-    socket.on('connect', () => {
-    });
-
-    socket.on('disconnect', () => {
-      socket.connect();
-    });
-
-    socket.on('connect_error', () => {
-      socket.connect();
-    });
-
-    socket.on('reconnect_attempt', () => {
-      socket.connect();
-    });
-
-    return () => {
-      socket.off('newMessage');
-      socket.off('renameMessage');
-      socket.off('removeMessage');
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('connect_error');
-      socket.off('reconnect_attempt');
-    };
-  }, [messages, addMessageError, t, socket]);
+  }, [addMessageError, t]);
 
   const handleSendMessage = async (newMessage) => {
     if (newMessage.trim()) {
@@ -86,14 +41,13 @@ const ChannelWindow = () => {
           channelId: currentChannelId,
         });
         const { data } = response;
-        socket.emit('sendMessage', data, (acknowledgment) => {
+        socket.emit('newMessage', data, (acknowledgment) => {
           if (acknowledgment.error) {
             toast.error(t('interface.messageSendError'));
           } else {
             toast.success(t('interface.messageSent'));
           }
         });
-        dispatch(addMessage(data));
       } catch (err) {
         console.error('Error sending message:', err);
         toast.error(t('interface.messageSendError'));
