@@ -26,7 +26,9 @@ const RegistrationForm = () => {
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
-        navigate(routes.home(), { replace: false });
+        setTimeout(() => {
+          navigate(routes.home(), { replace: false });
+        }, 1000);
       }
     } catch (err) {
       console.error('Error signing up:', err);
