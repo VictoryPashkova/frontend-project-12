@@ -16,7 +16,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
   const isMatchModalType = useSelector((state) => state.modals.type) === 'removeChannel';
   const isModalVisible = useSelector((state) => state.modals.isVisible);
   const modalState = isMatchModalType && isModalVisible;
-  const currentChannelId = useSelector((state) => state.modals.extraData.onEditChannelId);
+  const currentChannelId = useSelector((state) => state.modals.extraData.currentModalChannelId);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const [
     removeChannel,

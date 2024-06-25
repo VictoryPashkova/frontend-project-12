@@ -4,7 +4,7 @@ const initialState = {
   isVisible: false,
   type: '',
   extraData: {
-    onEditChannelId: 0,
+    currentModalChannelId: 0,
   },
 };
 

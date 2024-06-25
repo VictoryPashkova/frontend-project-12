@@ -19,7 +19,7 @@ const EditChannelModal = () => {
   const isMatchModalType = useSelector((state) => state.modals.type) === 'editChannel';
   const isModalVisible = useSelector((state) => state.modals.isVisible);
   const modalState = isMatchModalType && isModalVisible;
-  const currentChannelId = useSelector((state) => state.modals.extraData.onEditChannelId);
+  const currentChannelId = useSelector((state) => state.modals.extraData.currentModalChannelId);
   const minChannelNameLength = 3;
   const maxChannelNameLength = 20;
   const { name } = useSelector((state) => state.channels.channels

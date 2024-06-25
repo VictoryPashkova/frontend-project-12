@@ -10,11 +10,11 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
   const dispatch = useDispatch();
 
   const removeClickHandler = () => {
-    dispatch(setModalVisibility({ isVisible: true, type: 'removeChannel', extraData: { onEditChannelId: channel.id } }));
+    dispatch(setModalVisibility({ isVisible: true, type: 'removeChannel', extraData: { currentModalChannelId: channel.id } }));
   };
 
   const editClickHandler = () => {
-    dispatch(setModalVisibility({ isVisible: true, type: 'editChannel', extraData: { onEditChannelId: channel.id } }));
+    dispatch(setModalVisibility({ isVisible: true, type: 'editChannel', extraData: { currentModalChannelId: channel.id } }));
   };
 
   const isActive = Number(currentChannelId) === Number(channel.id);
