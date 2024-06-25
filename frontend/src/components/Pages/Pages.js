@@ -18,7 +18,7 @@ const AppRouter = () => {
         <Route path={routes.home()} element={token ? <Home /> : <Navigate to="/login" />} />
         <Route path={routes.login()} element={<LogInPage />} />
         <Route path={routes.signup()} element={<RegistrationPage />} />
-        <Route path={routes.notFound()} element={<NotFoundPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
