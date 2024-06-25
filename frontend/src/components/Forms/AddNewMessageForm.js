@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button, Col, Form, InputGroup, Row,
 } from 'react-bootstrap';
 import { useBadWordsContext } from '../../context/BadWordsContext';
 
 const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
+  const { t } = useTranslation();
   const [newMessage, setNewMessage] = useState('');
   const { cleanBadWords } = useBadWordsContext();
 
@@ -25,15 +27,15 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
       <Col>
         <Form className="py-1">
           <InputGroup hasValidation controlId="formBasicNewMessage">
-            <Form.Label className="form-label visually-hidden">Новое сообщение</Form.Label>
+            <Form.Label className="form-label visually-hidden">{t('interface.newMessage')}</Form.Label>
             <Form.Control
               type="text"
               name="newMessage"
-              placeholder="Введите сообщение..."
+              placeholder={t('interface.newMessagePlaceholder')}
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
-              aria-label="Новое сообщение"
+              aria-label={t('interface.newMessage')}
             />
             <Button variant="primary" type="submit" name="sendNewMessage" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
           </InputGroup>

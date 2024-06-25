@@ -70,7 +70,7 @@ const LogInForm = () => {
               onBlur={handleBlur}
               value={values.name || ''}
               isInvalid={error}
-              aria-label="Никнейм"
+              aria-label={t('interface.nicknameLabel')}
               ref={inputRef}
             />
           </Form.Group>
@@ -83,7 +83,7 @@ const LogInForm = () => {
               onBlur={handleBlur}
               value={values.password || ''}
               isInvalid={error}
-              aria-label="Пароль"
+              aria-label={t('interface.password')}
             />
           </Form.Group>
           {error && <p style={{ color: 'red' }}>{error}</p>}

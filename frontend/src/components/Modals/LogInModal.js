@@ -20,7 +20,7 @@ const LogInModal = () => {
           <LogInForm />
         </Modal.Body>
         <Modal.Footer>
-          <PrimaryButton text="Регистрация" onClick={() => navigate(routes.signup(), { replace: false })}>
+          <PrimaryButton text={t('interface.registration')} onClick={() => navigate(routes.signup(), { replace: false })}>
             <p style={{ display: 'inline-block' }}>{t('interface.noAccount')}</p>
           </PrimaryButton>
         </Modal.Footer>

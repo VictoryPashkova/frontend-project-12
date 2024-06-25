@@ -74,7 +74,7 @@ const ChannelWindow = () => {
       <Row className="justify-content-between">
         <Col className="bg-light p-4">
           <h5>
-            #
+            {t('interface.channelsSign')}
             {currentChannelName}
           </h5>
           <span className="text-muted">{numberTextMessage()}</span>

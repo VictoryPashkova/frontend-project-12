@@ -87,7 +87,7 @@ const AddChannaleForm = ({ handleScroll }) => {
       }) => (
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
-            <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
+            <Form.Label className="form-label visually-hidden">{t('interface.channelName')}</Form.Label>
             <Form.Control
               type="text"
               name="channelName"
@@ -97,8 +97,8 @@ const AddChannaleForm = ({ handleScroll }) => {
               className="form-control-sm"
               autoFocus
               ref={inputRef}
-              placeholder="Название канала"
-              aria-label="Название канала"
+              placeholder={t('interface.channelNameLabel')}
+              aria-label={t('interface.channelNameLabel')}
             />
             <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
           </Form.Group>

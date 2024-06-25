@@ -30,7 +30,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
           className={`w-100 rounded-0 text-start text-truncate btn ${isActive ? 'btn-secondary' : ''}`}
           onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
         >
-          <span className="me-1">#</span>
+          <span className="me-1">{t('interface.channelsSign')}</span>
           {channel.name}
         </button>
         {channel.removable && (

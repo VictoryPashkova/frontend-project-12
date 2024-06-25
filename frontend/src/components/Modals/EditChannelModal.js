@@ -118,19 +118,19 @@ const EditChannelModal = () => {
               }) => (
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3 form-control-sm" controlId="formBasicChannelName">
-                    <Form.Label className="form-label visually-hidden">Имя канала</Form.Label>
+                    <Form.Label className="form-label visually-hidden">{t('interface.channelName')}</Form.Label>
                     <Form.Control
                       type="text"
                       name="channelName"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       isInvalid={!isValid}
-                      placeholder="Название канала"
+                      placeholder={t('interface.channelNameLabel')}
                       className="form-control-sm"
                       ref={inputRef}
                       autoFocus
                       value={values.channelName}
-                      aria-label="Название канала"
+                      aria-label={t('interface.channelNameLabel')}
                     />
                     <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                     <div className="d-flex justify-content-end gap-2 mt-3">

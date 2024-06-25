@@ -92,7 +92,7 @@ const RegistrationForm = () => {
               value={values.name}
               isInvalid={!!errors.name && touched.name}
               ref={inputRef}
-              aria-label="Имя"
+              aria-label={t('interface.name')}
               autoFocus
             />
             <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
@@ -106,7 +106,7 @@ const RegistrationForm = () => {
               onBlur={handleBlur}
               value={values.password}
               isInvalid={!!errors.password && touched.password}
-              aria-label="Пароль"
+              aria-label={t('interface.password')}
             />
             <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
           </Form.Group>
@@ -119,7 +119,7 @@ const RegistrationForm = () => {
               onBlur={handleBlur}
               value={values.confirmPassword}
               isInvalid={!!errors.confirmPassword && touched.confirmPassword && touched.password}
-              aria-label="Подтверждение пароля"
+              aria-label={t('interface.confirmPasswordLabel')}
             />
             <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
           </Form.Group>
