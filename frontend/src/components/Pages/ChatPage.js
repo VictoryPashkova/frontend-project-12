@@ -16,7 +16,7 @@ import { useGetMassagesQuery } from '../../redux/reducers/massagesApiSlice.js';
 import { setChannels } from '../../redux/reducers/channelsSlice.js';
 import { setMessages } from '../../redux/reducers/messagesSlice.js';
 import AppSpinner from '../../uikit/spinner/Spinner.js';
-import routes from '../routes.js';
+import routes from '../../routes.js';
 
 const ChatPage = () => {
   const { t } = useTranslation();

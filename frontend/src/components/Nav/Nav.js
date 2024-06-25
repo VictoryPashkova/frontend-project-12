@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { useTranslation } from 'react-i18next';
-import routes from '../routes';
+import routes from '../../routes';
 
 const NavbarHeader = ({ children }) => {
   const { t } = useTranslation();

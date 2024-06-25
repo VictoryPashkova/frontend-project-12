@@ -12,7 +12,7 @@ import NavItemChannel from './NavItemChannel';
 import AddChannelModal from '../Modals/AddChannelModal';
 import EditChannelModal from '../Modals/EditChannelModal';
 import RemoveChannelModal from '../Modals/RemoveChannelModal';
-import routes from '../routes';
+import routes from '../../routes';
 
 const NavbarSideBar = () => {
   const { t } = useTranslation();

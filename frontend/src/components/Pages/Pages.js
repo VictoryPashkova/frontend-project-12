@@ -7,7 +7,7 @@ import RegistrationPage from './RegistrationPage';
 import NotFoundPage from './NotFoundPage';
 import { useAuth } from '../../context/AuthContext';
 import Home from './HomePage';
-import routes from '../routes';
+import routes from '../../routes';
 
 const AppRouter = () => {
   const { token } = useAuth();
