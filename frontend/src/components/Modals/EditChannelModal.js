@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setEditChannelModal } from '../../redux/reducers/modalsSlice';
+import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useBadWordsContext } from '../../context/BadWordsContext';
@@ -16,8 +16,10 @@ const EditChannelModal = () => {
   const { t } = useTranslation();
   const { cleanBadWords } = useBadWordsContext();
   const dispatch = useDispatch();
-  const modalState = useSelector((state) => state.modals.editChannelModal);
-  const currentChannelId = useSelector((state) => state.modals.onEditChannelId);
+  const isMatchModalType = useSelector((state) => state.modals.type) === 'editChannel';
+  const isModalVisible = useSelector((state) => state.modals.isVisible);
+  const modalState = isMatchModalType && isModalVisible;
+  const currentChannelId = useSelector((state) => state.modals.extraData.onEditChannelId);
   const minChannelNameLength = 3;
   const maxChannelNameLength = 20;
   const { name } = useSelector((state) => state.channels.channels
@@ -34,7 +36,7 @@ const EditChannelModal = () => {
     const newChannel = { name: cleanChannelName };
     try {
       await editChannel({ id: currentChannelId, ...newChannel });
-      dispatch(setEditChannelModal({ state: false }));
+      dispatch(resetModalState());
       toast.success(t('interface.channelRenamed'));
     } catch (error) {
       console.error('Failed to edit channel:', error);
@@ -63,7 +65,7 @@ const EditChannelModal = () => {
       show={modalState}
       size="md"
       centered
-      onHide={() => dispatch(setEditChannelModal({ state: false }))}
+      onHide={() => dispatch(resetModalState())}
     >
 
       <Modal.Header closeButton>
@@ -134,7 +136,7 @@ const EditChannelModal = () => {
                     />
                     <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
                     <div className="d-flex justify-content-end gap-2 mt-3">
-                      <Button variant="secondary" type="button" onClick={() => dispatch(setEditChannelModal({ state: false }))}>
+                      <Button variant="secondary" type="button" onClick={() => dispatch(resetModalState())}>
                         {t('interface.buttons.cancel')}
                       </Button>
                       <Button variant="primary" type="submit" disabled={isSubmitting}>

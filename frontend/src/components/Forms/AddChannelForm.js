@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
-import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { resetModalState } from '../../redux/reducers/modalsSlice';
 import 'react-toastify/dist/ReactToastify.css';
 import { useBadWordsContext } from '../../context/BadWordsContext';
 import { useSocket } from '../../context/socketContext';
@@ -42,7 +42,7 @@ const AddChannaleForm = ({ handleScroll }) => {
         dispatch(setCurrentChannel({ id: result.id, name: result.name }));
         toast.success(t('interface.channelCreated'));
         refetch();
-        dispatch(setAddChannelModal({ state: false }));
+        dispatch(resetModalState());
         socket.emit('newChannel', result);
       }
     } catch (error) {
@@ -103,7 +103,7 @@ const AddChannaleForm = ({ handleScroll }) => {
             <Form.Control.Feedback type="invalid">{errors.channelName}</Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end gap-2 mt-3">
-            <Button variant="secondary" type="button" onClick={() => dispatch(setAddChannelModal({ state: false }))}>
+            <Button variant="secondary" type="button" onClick={() => dispatch(resetModalState())}>
               {t('interface.buttons.cancel')}
             </Button>
             <Button variant="primary" type="submit" disabled={isSubmitting}>

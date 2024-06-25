@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
-import { setAddChannelModal } from '../../redux/reducers/modalsSlice';
+import { setModalVisibility } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 import NavItemChannel from './NavItemChannel';
 import AddChannelModal from '../Modals/AddChannelModal';
@@ -53,7 +53,7 @@ const NavbarSideBar = () => {
                 variant="outline-primary"
                 size="sm"
                 type="button"
-                onClick={() => dispatch(setAddChannelModal({ state: true }))}
+                onClick={() => dispatch(setModalVisibility({ isVisible: true, type: 'addChannel', extraData: {} }))}
               >
                 +
               </Button>

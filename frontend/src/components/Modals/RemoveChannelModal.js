@@ -5,16 +5,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../redux/reducers/channelsApiSlice';
-import { setRemoveChannelModal } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../redux/reducers/massagesApiSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RemoveChannelModal = ({ handleScroll }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const modalState = useSelector((state) => state.modals.removeChannelModal);
-  const currentChannelId = useSelector((state) => state.modals.onEditChannelId);
+  const isMatchModalType = useSelector((state) => state.modals.type) === 'removeChannel';
+  const isModalVisible = useSelector((state) => state.modals.isVisible);
+  const modalState = isMatchModalType && isModalVisible;
+  const currentChannelId = useSelector((state) => state.modals.extraData.onEditChannelId);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const [
     removeChannel,
@@ -45,7 +47,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
     try {
       await removeChannel(id).unwrap();
       await removeChannelMessages(id);
-      dispatch(setRemoveChannelModal({ state: false }));
+      dispatch(resetModalState());
       if (Number(currentChannelId) === Number(activeChannelId)) {
         dispatch(setCurrentChannel({ id: 1, name: 'general' }));
       }
@@ -68,7 +70,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
       show={modalState}
       size="md"
       centered
-      onHide={() => dispatch(setRemoveChannelModal({ state: false }))}
+      onHide={() => dispatch(resetModalState())}
     >
       <Modal.Header closeButton>
         <Modal.Title>{t('interface.deleteChannel')}</Modal.Title>
@@ -92,7 +94,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(setRemoveChannelModal({ state: false }))} disabled={isRemovingChannel}>
+        <Button variant="secondary" onClick={() => dispatch(resetModalState())} disabled={isRemovingChannel}>
           {t('interface.buttons.cancel')}
         </Button>
         <Button variant="danger" onClick={() => removeChannelHandler(Number(currentChannelId))} disabled={isRemovingChannel}>

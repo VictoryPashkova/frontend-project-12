@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { setRemoveChannelModal, setEditChannelModal, setOnEditChannel } from '../../redux/reducers/modalsSlice';
+import { setModalVisibility } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 
 const NavItemChannel = ({ channel, currentChannelId }) => {
@@ -10,13 +10,11 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
   const dispatch = useDispatch();
 
   const removeClickHandler = () => {
-    dispatch(setRemoveChannelModal({ state: true }));
-    dispatch(setOnEditChannel({ id: channel.id }));
+    dispatch(setModalVisibility({ isVisible: true, type: 'removeChannel', extraData: { onEditChannelId: channel.id } }));
   };
 
   const editClickHandler = () => {
-    dispatch(setEditChannelModal({ state: true }));
-    dispatch(setOnEditChannel({ id: channel.id }));
+    dispatch(setModalVisibility({ isVisible: true, type: 'editChannel', extraData: { onEditChannelId: channel.id } }));
   };
 
   const isActive = Number(currentChannelId) === Number(channel.id);
