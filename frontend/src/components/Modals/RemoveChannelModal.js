@@ -8,7 +8,6 @@ import { useRemoveChannelMutation } from '../../redux/reducers/channelsApiSlice'
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../redux/reducers/massagesApiSlice';
-import 'react-toastify/dist/ReactToastify.css';
 
 const RemoveChannelModal = ({ handleScroll }) => {
   const { t } = useTranslation();

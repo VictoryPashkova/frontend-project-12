@@ -3,7 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import AddMessageForm from './Forms/AddNewMessageForm';
 import MessageList from './MessageList';
 import { useSendMessageMutation } from '../redux/reducers/massagesApiSlice';

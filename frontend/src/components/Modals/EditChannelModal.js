@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
-import 'react-toastify/dist/ReactToastify.css';
 import { useBadWordsContext } from '../../context/BadWordsContext';
 
 const EditChannelModal = () => {

@@ -7,7 +7,6 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setCredentials } from '../../redux/reducers/authSlice';
-import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/AuthContext';
 import routes from '../../routes';
 
