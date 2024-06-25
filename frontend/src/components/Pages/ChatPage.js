@@ -23,6 +23,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { clearAuthData } = useAuth();
+  const authNetworkErrCode = 401;
 
   const handleExit = useCallback(() => {
     localStorage.clear();
@@ -72,7 +73,8 @@ const ChatPage = () => {
       const isErrorMessagesStatus = errorMessages?.status;
       const isErrorChannelsStatus = errorChannels?.status;
       if (
-        (isErrorMessagesStatus === 401) || (isErrorChannelsStatus === 401)
+        (isErrorMessagesStatus === authNetworkErrCode)
+        || (isErrorChannelsStatus === authNetworkErrCode)
       ) {
         handleExit();
       }

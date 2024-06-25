@@ -18,6 +18,9 @@ const AddChannaleForm = ({ handleScroll }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const minChannelNameLength = 3;
+  const maxChannelNameLength = 20;
+  const timeInterval = 500;
   const [
     addChannel,
     { error: addChannelError },
@@ -35,7 +38,7 @@ const AddChannaleForm = ({ handleScroll }) => {
       if (result && result.id) {
         setTimeout(() => {
           handleScroll();
-        }, 200);
+        }, timeInterval);
         dispatch(setCurrentChannel({ id: result.id, name: result.name }));
         toast.success(t('interface.channelCreated'));
         refetch();
@@ -61,7 +64,8 @@ const AddChannaleForm = ({ handleScroll }) => {
       validateOnChange={false}
       validate={(values) => {
         const errors = {};
-        if (values.channelName.length < 3 || values.channelName.length > 20) {
+        if (values.channelName.length < minChannelNameLength
+          || values.channelName.length > maxChannelNameLength) {
           errors.channelName = t('interface.usernameLength');
         } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
           errors.channelName = t('interface.channelExists');

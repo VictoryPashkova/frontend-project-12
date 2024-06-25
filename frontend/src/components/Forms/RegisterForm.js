@@ -16,6 +16,10 @@ const RegistrationForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRef = useRef(null);
+  const minNameLength = 3;
+  const maxNameLength = 20;
+  const minPasswordLength = 5;
+  const timeInterval = 1000;
   const { saveAuthData } = useAuth();
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
@@ -28,7 +32,7 @@ const RegistrationForm = () => {
         saveAuthData(token, username);
         setTimeout(() => {
           navigate(routes.home(), { replace: false });
-        }, 1000);
+        }, timeInterval);
       }
     } catch (err) {
       console.error('Error signing up:', err);
@@ -49,11 +53,11 @@ const RegistrationForm = () => {
         const errors = {};
         if (!values.name) {
           errors.name = t('interface.requiredField');
-        } else if (values.name.length < 3 || values.name.length > 20) {
+        } else if (values.name.length < minNameLength || values.name.length > maxNameLength) {
           errors.name = t('interface.usernameLength');
         } if (!values.password) {
           errors.password = t('interface.requiredField');
-        } else if (values.password.length < 5) {
+        } else if (values.password.length < minPasswordLength) {
           errors.password = t('interface.passwordLength');
         } if (!values.confirmPassword) {
           errors.confirmPassword = t('interface.requiredField');

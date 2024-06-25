@@ -18,6 +18,8 @@ const EditChannelModal = () => {
   const dispatch = useDispatch();
   const modalState = useSelector((state) => state.modals.editChannelModal);
   const currentChannelId = useSelector((state) => state.modals.onEditChannelId);
+  const minChannelNameLength = 3;
+  const maxChannelNameLength = 20;
   const { name } = useSelector((state) => state.channels.channels
     .find((channel) => channel.id === currentChannelId)) || {};
   const inputRef = useRef(null);
@@ -91,7 +93,8 @@ const EditChannelModal = () => {
                 const errors = {};
                 if (!values.channelName) {
                   errors.channelName = t('interface.requiredField');
-                } else if (values.channelName.length < 3 || values.channelName.length > 20) {
+                } else if (values.channelName.length < minChannelNameLength
+                  || values.channelName.length > maxChannelNameLength) {
                   errors.channelName = t('interface.usernameLength');
                 } else if (channels && channels
                   .find((channel) => channel.name === values.channelName)) {
