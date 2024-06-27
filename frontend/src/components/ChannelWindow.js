@@ -21,7 +21,8 @@ const ChannelWindow = () => {
   const sendMessageHandler = (message) => sendMessage(message);
   const userName = localStorage.getItem('username');
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannelName = useSelector((state) => state.channels.currentChannelName);
+  const { name } = useSelector((state) => state.channels.channels
+    .find((channel) => channel.id === currentChannelId)) || {};
   const currentChannelMessages = messages
     .filter((message) => message.channelId === currentChannelId);
 
@@ -74,7 +75,7 @@ const ChannelWindow = () => {
         <Col className="bg-light p-4">
           <h5>
             {t('interface.channelsSign')}
-            {currentChannelName}
+            {name}
           </h5>
           <span className="text-muted">{numberTextMessage()}</span>
         </Col>

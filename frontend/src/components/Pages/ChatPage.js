@@ -41,7 +41,7 @@ const ChatPage = () => {
   } = useGetMassagesQuery();
 
   const {
-    data: channles,
+    data: channels,
     isLoading: isLoadingChannels,
     isError: isErrorChannels, error: errorChannels, refetch: refetchChannels,
   } = useGetChannelsQuery();
@@ -53,12 +53,12 @@ const ChatPage = () => {
   }, [token, dispatch]);
 
   useEffect(() => {
-    if (channles) {
-      dispatch(setChannels(channles));
+    if (channels) {
+      dispatch(setChannels(channels));
     } else {
       refetchChannels();
     }
-  }, [channles, dispatch, refetchChannels]);
+  }, [channels, dispatch, refetchChannels]);
 
   useEffect(() => {
     if (massages) {

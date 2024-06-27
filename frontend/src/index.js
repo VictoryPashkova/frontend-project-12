@@ -25,7 +25,10 @@ const rollbarConfig = {
 };
 
 const runApp = async () => {
-  const { i18next, socket } = await initializeApp(store, sendChannel, addMessage);
+  const {
+    i18next,
+    socket,
+  } = await initializeApp(store, sendChannel, addMessage);
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(

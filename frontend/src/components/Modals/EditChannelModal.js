@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import { useBadWordsContext } from '../../context/BadWordsContext';
+import { setEditChannel } from '../../redux/reducers/channelsSlice';
 
 const EditChannelModal = () => {
   const { t } = useTranslation();
@@ -36,6 +37,7 @@ const EditChannelModal = () => {
     try {
       await editChannel({ id: currentChannelId, ...newChannel });
       dispatch(resetModalState());
+      dispatch(setEditChannel({ id: currentChannelId, name: cleanChannelName }));
       toast.success(t('interface.channelRenamed'));
     } catch (error) {
       console.error('Failed to edit channel:', error);

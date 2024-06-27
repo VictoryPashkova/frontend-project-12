@@ -18,11 +18,11 @@ const channelsSlice = createSlice({
       ...state,
       channels: [...state.channels, action.payload],
     }),
-    removeChannel: (state, action) => ({
+    deleteChannel: (state, action) => ({
       ...state,
       channels: state.channels.filter((channel) => channel.id !== action.payload),
     }),
-    editChannel: (state, action) => ({
+    setEditChannel: (state, action) => ({
       ...state,
       channels:
         state.channels
@@ -40,8 +40,8 @@ const channelsSlice = createSlice({
 export const {
   setChannels,
   sendChannel,
-  removeChannel,
-  editChannel,
+  deleteChannel,
+  setEditChannel,
   setCurrentChannel,
 } = channelsSlice.actions;
 
