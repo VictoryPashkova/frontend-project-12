@@ -31,7 +31,7 @@ const EditChannelModal = () => {
   const { data: channels } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
-    const cleanChannelName = cleanBadWords(values.channelName);
+    const cleanChannelName = cleanBadWords(values.channelName.trim());
     const newChannel = { name: cleanChannelName };
     try {
       await editChannel({ id: currentChannelId, ...newChannel });

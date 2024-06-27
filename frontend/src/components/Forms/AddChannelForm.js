@@ -29,7 +29,7 @@ const AddChannaleForm = ({ handleScroll }) => {
   } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
-    const cleanChannelName = cleanBadWords(values.channelName);
+    const cleanChannelName = cleanBadWords(values.channelName.trim());
 
     const newChannel = { name: cleanChannelName };
     try {
