@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-const initSocket = (store, sendChannel, addMessage, setEditChannel) => {
+const initSocket = (store, sendChannel, addMessage, setEditChannel, deleteChannel) => {
   const socket = io();
   const { dispatch } = store;
 
@@ -25,6 +25,10 @@ const initSocket = (store, sendChannel, addMessage, setEditChannel) => {
 
   socket.on('editChannel', (updatedChannel) => {
     dispatch(setEditChannel(updatedChannel));
+  });
+
+  socket.on('removeChannel', (id) => {
+    dispatch(deleteChannel(id));
   });
 
   socket.on('newMessage', (message) => {

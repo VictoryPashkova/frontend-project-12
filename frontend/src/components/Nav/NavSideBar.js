@@ -22,6 +22,7 @@ const NavbarSideBar = () => {
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const refScroll = useRef(null);
+  console.log(channels);
 
   const handleScrollToTop = () => {
     refScroll.current?.firstElementChild?.scrollIntoView({ behavior: 'smooth' });
