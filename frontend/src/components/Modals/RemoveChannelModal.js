@@ -8,8 +8,10 @@ import { useRemoveChannelMutation } from '../../redux/reducers/channelsApiSlice'
 import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../redux/reducers/massagesApiSlice';
+import { useSocket } from '../../context/socketContext';
 
 const RemoveChannelModal = ({ handleScroll }) => {
+  const socket = useSocket();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isMatchModalType = useSelector((state) => state.modals.type) === 'removeChannel';
@@ -52,6 +54,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
       }
       toast.success(t('interface.channelDeleted'));
       handleScroll();
+      socket.emit('removeChannel', id);
     } catch (error) {
       console.error('Failed to remove channel:', error);
       toast.error(t('interface.deleteChannelError'));

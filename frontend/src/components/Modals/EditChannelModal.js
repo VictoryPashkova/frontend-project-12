@@ -10,9 +10,10 @@ import { toast } from 'react-toastify';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import { useBadWordsContext } from '../../context/BadWordsContext';
-import { setEditChannel } from '../../redux/reducers/channelsSlice';
+import { useSocket } from '../../context/socketContext';
 
 const EditChannelModal = () => {
+  const socket = useSocket();
   const { t } = useTranslation();
   const { cleanBadWords } = useBadWordsContext();
   const dispatch = useDispatch();
@@ -29,16 +30,16 @@ const EditChannelModal = () => {
     editChannel,
     { error: editingChannelError, isLoading: isEditingChannel },
   ] = useEditChannelMutation();
-  const { data: channels } = useGetChannelsQuery();
+  const { data: channels, refetch } = useGetChannelsQuery();
 
   const onSubmit = async (values) => {
     const cleanChannelName = cleanBadWords(values.channelName.trim());
-    const newChannel = { name: cleanChannelName };
     try {
-      await editChannel({ id: currentChannelId, ...newChannel });
+      await editChannel({ id: currentChannelId, name: cleanChannelName });
       dispatch(resetModalState());
-      dispatch(setEditChannel({ id: currentChannelId, name: cleanChannelName }));
+      refetch();
       toast.success(t('interface.channelRenamed'));
+      socket.emit('editChannel', { id: currentChannelId, name: cleanChannelName });
     } catch (error) {
       console.error('Failed to edit channel:', error);
     }

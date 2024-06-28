@@ -11,7 +11,7 @@ import store from './redux/store';
 import AuthProvider from './context/AuthContext';
 import { SocketProvider } from './context/socketContext';
 import { BadWordsProvider } from './context/BadWordsContext';
-import { sendChannel } from './redux/reducers/channelsSlice';
+import { sendChannel, setEditChannel } from './redux/reducers/channelsSlice';
 import { addMessage } from './redux/reducers/messagesSlice';
 import initializeApp from './initializeApp';
 
@@ -28,7 +28,7 @@ const runApp = async () => {
   const {
     i18next,
     socket,
-  } = await initializeApp(store, sendChannel, addMessage);
+  } = await initializeApp(store, sendChannel, addMessage, setEditChannel);
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
