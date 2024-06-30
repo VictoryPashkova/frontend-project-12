@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../redux/reducers/channelsApiSlice';
-import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { setCurrentChannelId } from '../../redux/reducers/channelsSlice';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useGetMassagesQuery, useRemoveMessageMutation } from '../../redux/reducers/massagesApiSlice';
 import { useSocket } from '../../context/socketContext';
@@ -32,7 +32,7 @@ const RemoveChannelModal = ({ handleScroll }) => {
 
   const removeChannelMessages = async (channelId) => {
     const currentChannelMessages = massages.filter(
-      (message) => message.channelId === channelId,
+      (message) => Number(message.channelId) === Number(channelId),
     );
 
     currentChannelMessages.forEach(async (message) => {
@@ -50,10 +50,10 @@ const RemoveChannelModal = ({ handleScroll }) => {
       await removeChannelMessages(id);
       dispatch(resetModalState());
       if (Number(currentChannelId) === Number(activeChannelId)) {
-        dispatch(setCurrentChannel({ id: 1, name: 'general' }));
+        handleScroll();
+        dispatch(setCurrentChannelId({ id: 1 }));
       }
       toast.success(t('interface.channelDeleted'));
-      handleScroll();
       socket.emit('removeChannel', id);
     } catch (error) {
       console.error('Failed to remove channel:', error);

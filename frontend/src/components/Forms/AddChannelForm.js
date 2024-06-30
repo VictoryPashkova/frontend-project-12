@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
-import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { setCurrentChannelId } from '../../redux/reducers/channelsSlice';
 import { resetModalState } from '../../redux/reducers/modalsSlice';
 import { useBadWordsContext } from '../../context/BadWordsContext';
 import { useSocket } from '../../context/socketContext';
@@ -38,7 +38,7 @@ const AddChannaleForm = ({ handleScroll }) => {
         setTimeout(() => {
           handleScroll();
         }, timeInterval);
-        dispatch(setCurrentChannel({ id: result.id, name: result.name }));
+        dispatch(setCurrentChannelId({ id: result.id }));
         toast.success(t('interface.channelCreated'));
         refetch();
         dispatch(resetModalState());

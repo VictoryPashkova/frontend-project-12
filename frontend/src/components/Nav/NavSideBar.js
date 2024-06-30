@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice';
 import { setModalVisibility } from '../../redux/reducers/modalsSlice';
-import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { setCurrentChannelId } from '../../redux/reducers/channelsSlice';
 import NavItemChannel from './NavItemChannel';
 import AddChannelModal from '../Modals/AddChannelModal';
 import EditChannelModal from '../Modals/EditChannelModal';
@@ -33,7 +33,7 @@ const NavbarSideBar = () => {
   };
 
   useEffect(() => {
-    dispatch(setCurrentChannel({ id: 1, name: 'general' }));
+    dispatch(setCurrentChannelId({ id: 1 }));
     if (isError) {
       if (error.response && error.response.status === 401) {
         navigate(routes.login(), { replace: false });

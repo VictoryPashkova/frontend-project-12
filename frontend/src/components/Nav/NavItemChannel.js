@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { setModalVisibility } from '../../redux/reducers/modalsSlice';
-import { setCurrentChannel } from '../../redux/reducers/channelsSlice';
+import { setCurrentChannelId } from '../../redux/reducers/channelsSlice';
 
 const NavItemChannel = ({ channel, currentChannelId }) => {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
           type="button"
           id={channel.id}
           className={`w-100 rounded-0 text-start text-truncate btn ${isActive ? 'btn-secondary' : ''}`}
-          onClick={() => dispatch(setCurrentChannel({ id: channel.id, name: channel.name }))}
+          onClick={() => dispatch(setCurrentChannelId({ id: channel.id }))}
         >
           <span className="me-1">{t('interface.channelsSign')}</span>
           {channel.name}
