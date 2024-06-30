@@ -21,10 +21,13 @@ const ChannelWindow = () => {
   const sendMessageHandler = (message) => sendMessage(message);
   const userName = localStorage.getItem('username');
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  console.log(currentChannelId);
   const { name } = useSelector((state) => state.channels.channels
     .find((channel) => channel.id === currentChannelId)) || {};
   const currentChannelMessages = messages
     .filter((message) => message.channelId === currentChannelId);
+
+  console.log(messages);
 
   useEffect(() => {
     if (addMessageError) {

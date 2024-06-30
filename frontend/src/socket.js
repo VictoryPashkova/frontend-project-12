@@ -23,7 +23,7 @@ const initSocket = (store, sendChannel, addMessage, setEditChannel, deleteChanne
     dispatch(sendChannel(newChannel));
   });
 
-  socket.on('editChannel', (updatedChannel) => {
+  socket.on('renameChannel', (updatedChannel) => {
     dispatch(setEditChannel(updatedChannel));
   });
 

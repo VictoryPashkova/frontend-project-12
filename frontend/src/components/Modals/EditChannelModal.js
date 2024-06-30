@@ -39,7 +39,7 @@ const EditChannelModal = () => {
       dispatch(resetModalState());
       refetch();
       toast.success(t('interface.channelRenamed'));
-      socket.emit('editChannel', { id: currentChannelId, name: cleanChannelName });
+      socket.emit('renameChannel', { id: currentChannelId, name: cleanChannelName });
     } catch (error) {
       console.error('Failed to edit channel:', error);
     }
