@@ -6,7 +6,7 @@ import routes from '../../routes';
 const NavbarHeader = ({ children }) => {
   const { t } = useTranslation();
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-light">
       <Container>
         <Navbar.Brand href={routes.home()}>{t('interface.hexletChat')}</Navbar.Brand>
         {children}

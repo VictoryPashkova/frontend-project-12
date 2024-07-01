@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import React, { useEffect, useRef } from 'react';
@@ -42,38 +41,34 @@ const NavbarSideBar = () => {
   }, [dispatch, t, navigate, isError, error]);
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary flex-column h-100 text-overflow-ellipsis d-block">
-      <div className="overflow-auto" style={{ maxHeight: '80vh', minHeight: '80vh' }}>
-        <Container className="flex-column align-items-start">
-          <div className="d-flex justify-content-between w-100 mb-3">
-            <div>
-              <p className="m-0 fw-bold">{t('interface.channels')}</p>
-            </div>
-            <div>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                type="button"
-                onClick={() => dispatch(setModalVisibility({ isVisible: true, type: 'addChannel', extraData: {} }))}
-              >
-                +
-              </Button>
-            </div>
-          </div>
-          <ul ref={refScroll} id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 h-100 d-block">
-            {channels && channels.map((channel) => (
-              <NavItemChannel
-                key={channel.id}
-                channel={channel}
-                currentChannelId={currentChannelId}
-              />
-            ))}
-          </ul>
-          <AddChannelModal handleScroll={handleScrollToBottom} />
-          <RemoveChannelModal handleScroll={handleScrollToTop} />
-          <EditChannelModal />
-        </Container>
+    <Navbar className="d-block shadow-sm navbar navbar-expand-lg navbar-light bg-light h-100">
+      <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
+        <div>
+          <p className="m-0 fw-bold">{t('interface.channels')}</p>
+        </div>
+        <div>
+          <Button
+            variant="outline-primary btn-group-vertical"
+            size="sm"
+            type="button"
+            onClick={() => dispatch(setModalVisibility({ isVisible: true, type: 'addChannel', extraData: {} }))}
+          >
+            +
+          </Button>
+        </div>
       </div>
+      <ul ref={refScroll} id="channels-box" className="nav nav-pills nav-fill px-2 mb-3 d-block overflow-auto" style={{ maxHeight: '70vh', minHeight: '70vh' }}>
+        {channels && channels.map((channel) => (
+          <NavItemChannel
+            key={channel.id}
+            channel={channel}
+            currentChannelId={currentChannelId}
+          />
+        ))}
+      </ul>
+      <AddChannelModal handleScroll={handleScrollToBottom} />
+      <RemoveChannelModal handleScroll={handleScrollToTop} />
+      <EditChannelModal />
     </Navbar>
   );
 };

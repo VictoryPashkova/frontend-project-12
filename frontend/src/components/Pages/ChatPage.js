@@ -101,7 +101,7 @@ const ChatPage = () => {
   }
 
   return (
-    <>
+    <div className="h-100 d-flex flex-column">
       <NavbarHeader>
         <Button variant="primary" size="sm" type="button" onClick={handleExit}>
           {t('interface.buttons.logout')}
@@ -109,18 +109,16 @@ const ChatPage = () => {
       </NavbarHeader>
       <div className="container h-100 my-4 overflow-scroll rounded shadow">
         <ToastContainer />
-        <div className="row h-100 bg-white flex-md-row p-3">
-          <Row>
-            <Col xs={2} id="sidebar-wrapper" className="bg-light border-end col-xs">
-              <NavbarSideBar />
-            </Col>
-            <Col xs={8} id="page-content-wrapper" className="border-end col-md">
-              <ChannelWindow />
-            </Col>
-          </Row>
-        </div>
+        <Row className="h-100 bg-white flex-md-row">
+          <Col id="sidebar-wrapper" className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+            <NavbarSideBar />
+          </Col>
+          <Col id="page-content-wrapper" className="border-end col p-0 h-100">
+            <ChannelWindow />
+          </Col>
+        </Row>
       </div>
-    </>
+    </div>
   );
 };
 

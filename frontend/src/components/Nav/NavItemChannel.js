@@ -20,7 +20,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
   const isActive = Number(currentChannelId) === Number(channel.id);
 
   return (
-    <li key={channel.id}>
+    <li key={channel.id} className="nav-item w-100">
       <Dropdown as={ButtonGroup} className="d-flex justify-content-between align-items-center w-100">
         <button
           type="button"
@@ -33,7 +33,23 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
         </button>
         {channel.removable && (
           <>
-            <Dropdown.Toggle split variant="link" className={`dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`} aria-expanded="false">
+            <Dropdown.Toggle
+              variant="link"
+              className={`flex-grow-0 dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`}
+              aria-expanded="false"
+              popperConfig={{
+                placement: 'bottom-end',
+                modifiers: {
+                  flip: {
+                    enabled: true,
+                  },
+                  preventOverflow: {
+                    enabled: true,
+                    boundariesElement: 'viewport',
+                  },
+                },
+              }}
+            >
               <i className="bi bi-chevron-down cursor-pointer" />
               <span className="visually-hidden">{t('interface.channelManagement')}</span>
             </Dropdown.Toggle>
