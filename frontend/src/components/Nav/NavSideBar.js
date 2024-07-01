@@ -41,7 +41,7 @@ const NavbarSideBar = () => {
   }, [dispatch, t, navigate, isError, error]);
 
   return (
-    <Navbar className="d-block shadow-sm navbar navbar-expand-lg navbar-light bg-light h-100">
+    <Navbar className="d-block navbar navbar-expand-lg navbar-light bg-light h-100">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <div>
           <p className="m-0 fw-bold">{t('interface.channels')}</p>
@@ -57,7 +57,7 @@ const NavbarSideBar = () => {
           </Button>
         </div>
       </div>
-      <ul ref={refScroll} id="channels-box" className="nav nav-pills nav-fill px-2 mb-3 d-block overflow-auto" style={{ maxHeight: '70vh', minHeight: '70vh' }}>
+      <ul ref={refScroll} id="channels-box" className="nav nav-pills flex-column nav-fill px-2 mb-3 d-block overflow-auto w-100" style={{ maxHeight: '70vh', minHeight: '70vh' }}>
         {channels && channels.map((channel) => (
           <NavItemChannel
             key={channel.id}

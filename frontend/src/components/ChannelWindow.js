@@ -71,7 +71,7 @@ const ChannelWindow = () => {
   };
 
   return (
-    <Container className="h-100 d-flex flex-column justify-content-between p-0" style={{ maxHeight: '80vh' }}>
+    <Container className="d-flex flex-column justify-content-between p-0" style={{ maxHeight: '90vh' }}>
       <Row className="justify-content-between">
         <Col className="bg-light p-4">
           <h5>
@@ -81,16 +81,19 @@ const ChannelWindow = () => {
           <span className="text-muted">{numberTextMessage()}</span>
         </Col>
       </Row>
-      <Row className="flex-grow-1 overflow-auto">
+      <Row className="flex-grow-1 overflow-auto" style={{ maxHeight: '70vh' }}>
         <MessageList
           messages={currentChannelMessages}
         />
       </Row>
-      <AddMessageForm
-        disabled={isMessageUser}
-        btnName={t('interface.buttons.send')}
-        sendMessage={handleSendMessage}
-      />
+      <Row className="p-4">
+        <AddMessageForm
+          disabled={isMessageUser}
+          btnName={t('interface.buttons.send')}
+          sendMessage={handleSendMessage}
+        />
+      </Row>
+
     </Container>
   );
 };

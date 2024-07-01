@@ -110,10 +110,10 @@ const ChatPage = () => {
       <div className="container h-100 my-4 overflow-scroll rounded shadow">
         <ToastContainer />
         <Row className="h-100 bg-white flex-md-row">
-          <Col id="sidebar-wrapper" className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+          <Col id="sidebar-wrapper" className="col-4 col-md-3 col-lg-2 px-0 bg-light flex-column d-flex">
             <NavbarSideBar />
           </Col>
-          <Col id="page-content-wrapper" className="border-end col p-0 h-100">
+          <Col id="page-content-wrapper" className="col p-0 h-100">
             <ChannelWindow />
           </Col>
         </Row>

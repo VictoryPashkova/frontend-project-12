@@ -21,7 +21,7 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
 
   return (
     <li key={channel.id} className="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="d-flex justify-content-between align-items-center w-100">
+      <Dropdown as={ButtonGroup} className="d-flex justify-content-between align-items-center w-100" align={{ lg: 'start' }}>
         <button
           type="button"
           id={channel.id}
@@ -35,25 +35,20 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
           <>
             <Dropdown.Toggle
               variant="link"
+              data-bs-toggle="dropdown"
+              split
               className={`flex-grow-0 dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`}
               aria-expanded="false"
-              popperConfig={{
-                placement: 'bottom-end',
-                modifiers: {
-                  flip: {
-                    enabled: true,
-                  },
-                  preventOverflow: {
-                    enabled: true,
-                    boundariesElement: 'viewport',
-                  },
-                },
-              }}
+              id="react-aria9230295641-1"
+              aria-haspopup="true"
             >
               <i className="bi bi-chevron-down cursor-pointer" />
               <span className="visually-hidden">{t('interface.channelManagement')}</span>
             </Dropdown.Toggle>
-            <Dropdown.Menu className="dropdown-menu-dark dropdown-menu-sm-auto">
+            <Dropdown.Menu
+              aria-labelledby="react-aria9230295641-1"
+              className="dropdown-menu-dark dropdown-menu-sm"
+            >
               <Dropdown.Item onClick={removeClickHandler}>{t('interface.buttons.delete')}</Dropdown.Item>
               <Dropdown.Item onClick={editClickHandler}>{t('interface.buttons.rename')}</Dropdown.Item>
             </Dropdown.Menu>
