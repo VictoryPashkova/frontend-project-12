@@ -30,7 +30,6 @@ const AddChannaleForm = ({ handleScroll }) => {
 
   const onSubmit = async (values) => {
     const cleanChannelName = cleanBadWords(values.channelName.trim());
-
     const newChannel = { name: cleanChannelName };
     try {
       const result = await addChannel(newChannel).unwrap();
@@ -63,11 +62,14 @@ const AddChannaleForm = ({ handleScroll }) => {
       validateOnChange={false}
       validate={(values) => {
         const errors = {};
+        const trimedChannelName = values.channelName.trim();
         if (values.channelName.length < minChannelNameLength
           || values.channelName.length > maxChannelNameLength) {
           errors.channelName = t('interface.usernameLength');
         } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
           errors.channelName = t('interface.channelExists');
+        } else if (trimedChannelName.length === 0) {
+          errors.channelName = t('interface.requiredField');
         }
         return errors;
       }}
