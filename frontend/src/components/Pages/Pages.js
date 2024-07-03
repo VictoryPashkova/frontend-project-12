@@ -15,7 +15,7 @@ const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path={routes.home()} element={token ? <Home /> : <Navigate to="/login" />} />
+        <Route path={routes.home()} element={token ? <Home /> : <Navigate to={routes.login()} />} />
         <Route path={routes.login()} element={<LogInPage />} />
         <Route path={routes.signup()} element={<RegistrationPage />} />
         <Route path="/*" element={<NotFoundPage />} />
