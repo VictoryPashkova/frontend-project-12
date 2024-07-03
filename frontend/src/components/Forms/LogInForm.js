@@ -17,7 +17,6 @@ const LogInForm = () => {
   const inputRef = useRef(null);
   const [error, setError] = useState('');
   const { saveAuthData } = useAuth();
-  const timeInterval = 1000;
   const onSubmit = async ({ name, password }) => {
     setError('');
     try {
@@ -26,9 +25,8 @@ const LogInForm = () => {
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
-        setTimeout(() => {
-          navigate(routes.home(), { replace: false });
-        }, timeInterval);
+        navigate(routes.home(), { replace: false });
+        console.log(localStorage.getItem('token'));
       }
     } catch (e) {
       setError(t('interface.invalidCredentials'));

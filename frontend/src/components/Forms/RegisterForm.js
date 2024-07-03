@@ -18,7 +18,6 @@ const RegistrationForm = () => {
   const minNameLength = 3;
   const maxNameLength = 20;
   const minPasswordLength = 5;
-  const timeInterval = 1000;
   const { saveAuthData } = useAuth();
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
@@ -29,9 +28,7 @@ const RegistrationForm = () => {
       if (username) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
-        setTimeout(() => {
-          navigate(routes.home(), { replace: false });
-        }, timeInterval);
+        navigate(routes.home(), { replace: false });
       }
     } catch (err) {
       console.error('Error signing up:', err);
