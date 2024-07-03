@@ -4,13 +4,6 @@ const initSocket = (store, sendChannel, addMessage, setEditChannel, deleteChanne
   const socket = io();
   const { dispatch } = store;
 
-  socket.on('connect', () => {
-  });
-
-  socket.on('disconnect', () => {
-    socket.connect();
-  });
-
   socket.on('connect_error', () => {
     socket.connect();
   });
