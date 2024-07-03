@@ -22,11 +22,10 @@ const LogInForm = () => {
     try {
       const response = await axios.post(routes.loginApi(), { username: name, password });
       const { token, username } = response.data;
-      if (username) {
+      if (token) {
         dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
         navigate(routes.home(), { replace: false });
-        console.log(localStorage.getItem('token'));
       }
     } catch (e) {
       setError(t('interface.invalidCredentials'));

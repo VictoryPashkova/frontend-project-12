@@ -32,12 +32,12 @@ const ChatPage = () => {
     dispatch(setCredentials({ username: '', token: null }));
   }, [navigate, clearAuthData, dispatch]);
 
-  const token = localStorage.getItem('token');
+  const { token } = useAuth();
 
   const {
     data: massages,
     isLoading: isLoadingMessages,
-    isError: isErrorMessages, error: errorMessages, refetch: refetchMessages,
+    refetch: refetchMessages,
   } = useGetMassagesQuery();
 
   const {
@@ -69,18 +69,16 @@ const ChatPage = () => {
   }, [massages, dispatch, refetchMessages]);
 
   useEffect(() => {
-    if (isErrorMessages || isErrorChannels) {
-      const isErrorMessagesStatus = errorMessages?.status;
-      const isErrorChannelsStatus = errorChannels?.status;
-      if (
-        (isErrorMessagesStatus === authNetworkErrCode)
-        || (isErrorChannelsStatus === authNetworkErrCode)
-      ) {
-        handleExit();
+    setTimeout(() => {
+      if (isErrorChannels) {
+        const isErrorChannelsStatus = errorChannels?.status;
+        if (isErrorChannelsStatus === authNetworkErrCode) {
+          handleExit();
+        }
       }
-    }
+    }, 1000);
   }, [
-    isErrorMessages, isErrorChannels, errorMessages, errorChannels, handleExit,
+    isErrorChannels, errorChannels, handleExit,
   ]);
 
   if (isLoadingMessages || isLoadingChannels) {

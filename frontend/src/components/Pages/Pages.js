@@ -11,6 +11,7 @@ import routes from '../../routes';
 
 const AppRouter = () => {
   const { token } = useAuth();
+  console.log(token);
 
   return (
     <Router>
