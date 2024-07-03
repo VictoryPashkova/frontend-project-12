@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ const ChannelWindow = () => {
   const socket = useSocket();
   const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
+  const inputRef = useRef(null);
 
   const [
     sendMessage,
@@ -32,6 +33,12 @@ const ChannelWindow = () => {
       toast.error(t('interface.messageSendError'));
     }
   }, [addMessageError, t]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [currentChannelId]);
 
   const handleSendMessage = async (newMessage) => {
     if (newMessage.trim()) {
@@ -91,6 +98,7 @@ const ChannelWindow = () => {
           disabled={isMessageUser}
           btnName={t('interface.buttons.send')}
           sendMessage={handleSendMessage}
+          inputRef={inputRef}
         />
       </Row>
 

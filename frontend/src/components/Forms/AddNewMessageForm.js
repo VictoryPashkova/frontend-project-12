@@ -5,7 +5,12 @@ import {
 } from 'react-bootstrap';
 import { useBadWordsContext } from '../../context/BadWordsContext';
 
-const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
+const AddMessageForm = ({
+  sendMessage,
+  disabled,
+  btnName,
+  inputRef,
+}) => {
   const { t } = useTranslation();
   const [newMessage, setNewMessage] = useState('');
   const { cleanBadWords } = useBadWordsContext();
@@ -36,6 +41,7 @@ const AddMessageForm = ({ sendMessage, disabled, btnName }) => {
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               aria-label={t('interface.newMessage')}
+              ref={inputRef}
             />
             <Button variant="primary" type="submit" name="sendNewMessage" onClick={sendMessageHandler} disabled={disabled}>{btnName}</Button>
           </InputGroup>
