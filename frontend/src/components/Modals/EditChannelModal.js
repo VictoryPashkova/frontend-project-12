@@ -95,14 +95,17 @@ const EditChannelModal = () => {
               validateOnBlur={false}
               validate={(values) => {
                 const errors = {};
+                const trimedChannelName = values.channelName.trim();
                 if (!values.channelName) {
                   errors.channelName = t('interface.requiredField');
-                } else if (values.channelName.length < minChannelNameLength
-                  || values.channelName.length > maxChannelNameLength) {
+                } else if (trimedChannelName.length < minChannelNameLength
+                  || trimedChannelName.length > maxChannelNameLength) {
                   errors.channelName = t('interface.usernameLength');
                 } else if (channels && channels
                   .find((channel) => channel.name === values.channelName)) {
                   errors.channelName = t('interface.channelExists');
+                } else if (trimedChannelName.length === 0) {
+                  errors.channelName = t('interface.requiredField');
                 }
                 return errors;
               }}

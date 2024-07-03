@@ -101,19 +101,19 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="h-100 d-flex flex-column">
+    <div className="d-flex flex-column bg-light h-100">
       <NavbarHeader>
         <Button variant="primary" size="sm" type="button" onClick={handleExit}>
           {t('interface.buttons.logout')}
         </Button>
       </NavbarHeader>
-      <div className="container h-100 my-4 overflow-scroll rounded shadow">
+      <div className="container my-4 overflow-hidden rounded shadow bg-light" style={{ height: 'calc(100vh - 100px)' }}>
         <ToastContainer />
-        <Row className="h-100 bg-white flex-md-row">
-          <Col id="sidebar-wrapper" className="col-4 col-md-3 col-lg-2 px-0 bg-light flex-column d-flex">
+        <Row className="row h-100 bg-light flex-md-row overflow-auto">
+          <Col id="sidebar-wrapper" className="col-4 col-md-3 col-lg-2 px-0 flex-column d-flex h-100">
             <NavbarSideBar />
           </Col>
-          <Col id="page-content-wrapper" className="col p-0 h-100">
+          <Col id="page-content-wrapper" className="col p-0 h-100 bg-white">
             <ChannelWindow />
           </Col>
         </Row>

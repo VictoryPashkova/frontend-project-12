@@ -63,8 +63,8 @@ const AddChannaleForm = ({ handleScroll }) => {
       validate={(values) => {
         const errors = {};
         const trimedChannelName = values.channelName.trim();
-        if (values.channelName.length < minChannelNameLength
-          || values.channelName.length > maxChannelNameLength) {
+        if (trimedChannelName.length < minChannelNameLength
+          || trimedChannelName.length > maxChannelNameLength) {
           errors.channelName = t('interface.usernameLength');
         } else if (channels && channels.find((channel) => channel.name === values.channelName)) {
           errors.channelName = t('interface.channelExists');

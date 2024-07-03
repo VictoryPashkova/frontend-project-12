@@ -16,7 +16,7 @@ const AddMessageForm = ({
   const { cleanBadWords } = useBadWordsContext();
 
   const sendMessageHandler = () => {
-    sendMessage(cleanBadWords(newMessage));
+    sendMessage(cleanBadWords(newMessage.trim()));
     setNewMessage('');
   };
 

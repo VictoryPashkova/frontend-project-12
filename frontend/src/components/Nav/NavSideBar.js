@@ -1,4 +1,3 @@
-import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,10 +20,9 @@ const NavbarSideBar = () => {
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const refScroll = useRef(null);
-  console.log(channels);
 
   const handleScrollToTop = () => {
-    refScroll.current?.firstElementChild?.scrollIntoView({ behavior: 'smooth' });
+    refScroll.current.scrollTop = 0;
   };
 
   const handleScrollToBottom = () => {
@@ -41,7 +39,7 @@ const NavbarSideBar = () => {
   }, [dispatch, t, navigate, isError, error]);
 
   return (
-    <Navbar className="d-block navbar navbar-expand-lg navbar-light bg-light h-100">
+    <div className="d-block navbar navbar-expand-lg navbar-light bg-light h-100">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <div>
           <p className="m-0 fw-bold">{t('interface.channels')}</p>
@@ -57,7 +55,7 @@ const NavbarSideBar = () => {
           </Button>
         </div>
       </div>
-      <ul ref={refScroll} id="channels-box" className="nav nav-pills flex-column nav-fill px-2 mb-3 d-block overflow-auto w-100" style={{ maxHeight: '70vh', minHeight: '70vh' }}>
+      <ul ref={refScroll} id="channels-box" className="nav nav-pills flex-column nav-fill px-2 mb-3 d-block overflow-auto" style={{ maxHeight: 'calc(100vh - 220px)' }}>
         {channels && channels.map((channel) => (
           <NavItemChannel
             key={channel.id}
@@ -69,7 +67,7 @@ const NavbarSideBar = () => {
       <AddChannelModal handleScroll={handleScrollToBottom} />
       <RemoveChannelModal handleScroll={handleScrollToTop} />
       <EditChannelModal />
-    </Navbar>
+    </div>
   );
 };
 

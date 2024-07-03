@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { setModalVisibility } from '../../redux/reducers/modalsSlice';
 import { setCurrentChannelId } from '../../redux/reducers/channelsSlice';
@@ -21,23 +21,24 @@ const NavItemChannel = ({ channel, currentChannelId }) => {
 
   return (
     <li key={channel.id} className="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="d-flex justify-content-between align-items-center w-100" align={{ lg: 'start' }}>
-        <button
+      <Dropdown as={ButtonGroup} className="d-flex">
+        <Button
           type="button"
           id={channel.id}
-          className={`w-100 rounded-0 text-start text-truncate btn ${isActive ? 'btn-secondary' : ''}`}
+          className="w-100 rounded-0 text-start text-truncate"
+          variant={`${isActive && 'secondary'}`}
           onClick={() => dispatch(setCurrentChannelId({ id: channel.id }))}
         >
           <span className="me-1">{t('interface.channelsSign')}</span>
           {channel.name}
-        </button>
+        </Button>
         {channel.removable && (
           <>
             <Dropdown.Toggle
-              variant="link"
               data-bs-toggle="dropdown"
               split
-              className={`flex-grow-0 dropdown dropdown-toggle dropdown-toggle-split show ${isActive ? 'btn btn-secondary text-light' : ''}`}
+              className="border-0"
+              variant={`${isActive && 'secondary'}`}
               aria-expanded="false"
               id="react-aria9230295641-1"
               aria-haspopup="true"

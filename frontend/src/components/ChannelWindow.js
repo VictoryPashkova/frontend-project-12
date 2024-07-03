@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -78,17 +78,17 @@ const ChannelWindow = () => {
   };
 
   return (
-    <Container className="d-flex flex-column justify-content-between p-0" style={{ maxHeight: '90vh' }}>
-      <Row className="justify-content-between">
-        <Col className="bg-light p-4">
-          <h5>
+    <Container className="d-flex flex-column h-100">
+      <Row className="bg-light mb-4 p-3 shadow-sm small">
+        <p className="m-0">
+          <b>
             {t('interface.channelsSign')}
             {name}
-          </h5>
-          <span className="text-muted">{numberTextMessage()}</span>
-        </Col>
+          </b>
+        </p>
+        <span className="text-muted">{numberTextMessage()}</span>
       </Row>
-      <Row className="flex-grow-1 overflow-auto" style={{ maxHeight: '70vh' }}>
+      <Row id="messages-box" className="chat-messages overflow-auto px-5" style={{ maxHeight: 'calc(100vh - 150px)' }}>
         <MessageList
           messages={currentChannelMessages}
         />
