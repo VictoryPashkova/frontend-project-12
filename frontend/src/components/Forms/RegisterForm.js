@@ -23,7 +23,7 @@ const RegistrationForm = () => {
   const [error, setError] = useState('');
   const onSubmit = async ({ name, password }) => {
     try {
-      const response = await axios.post('/api/v1/signup', { username: name, password });
+      const response = await axios.post(routes.signupApi(), { username: name, password });
       const { token } = response.data;
       const { username } = response.data;
       if (username) {

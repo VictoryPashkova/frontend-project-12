@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import routes from '../../routes';
 
 export const massagesApi = createApi({
   reducerPath: 'massagesApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/messages',
+    baseUrl: routes.messagesApi(),
     prepareHeaders: (headers) => {
       const token = localStorage.getItem('token');
       if (token) {

@@ -21,7 +21,7 @@ const LogInForm = () => {
   const onSubmit = async ({ name, password }) => {
     setError('');
     try {
-      const response = await axios.post('/api/v1/login', { username: name, password });
+      const response = await axios.post(routes.loginApi(), { username: name, password });
       const { token, username } = response.data;
       if (username) {
         dispatch(setCredentials({ username, token }));
