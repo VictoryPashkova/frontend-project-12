@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
@@ -13,7 +18,15 @@ const LogInForm = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [error, setError] = useState('');
-  const { saveAuthData } = useAuth();
+  const { saveAuthData, clearAuthData } = useAuth();
+  const authNetworkErrCode = 401;
+
+  const handleExit = useCallback(() => {
+    localStorage.clear();
+    navigate(routes.login(), { replace: false });
+    clearAuthData();
+  }, [navigate, clearAuthData]);
+
   const onSubmit = async ({ name, password }) => {
     setError('');
     try {
@@ -25,6 +38,9 @@ const LogInForm = () => {
       }
     } catch (e) {
       setError(t('interface.invalidCredentials'));
+      if (e.response && e.response.status === authNetworkErrCode) {
+        handleExit();
+      }
     }
   };
 

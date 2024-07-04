@@ -3,7 +3,12 @@ import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import routes from '../../routes';
@@ -15,8 +20,17 @@ const RegistrationForm = () => {
   const minNameLength = 3;
   const maxNameLength = 20;
   const minPasswordLength = 5;
-  const { saveAuthData } = useAuth();
+  const { saveAuthData, clearAuthData } = useAuth();
+  const authNetworkErrCode = 401;
+
   const [error, setError] = useState('');
+
+  const handleExit = useCallback(() => {
+    localStorage.clear();
+    navigate(routes.login(), { replace: false });
+    clearAuthData();
+  }, [navigate, clearAuthData]);
+
   const onSubmit = async ({ name, password }) => {
     try {
       const response = await axios.post(routes.signupApi(), { username: name, password });
@@ -29,6 +43,9 @@ const RegistrationForm = () => {
     } catch (err) {
       console.error('Error signing up:', err);
       setError(t('interface.userExists'));
+      if (err.response && err.response.status === authNetworkErrCode) {
+        handleExit();
+      }
     }
   };
 

@@ -89,7 +89,7 @@ const ChannelWindow = () => {
         </p>
         <span className="text-muted">{numberTextMessage()}</span>
       </Row>
-      <Row id="messages-box" className="chat-messages overflow-auto" style={{ maxHeight: 'calc(100vh - 150px)', overflowWrap: 'break-word' }}>
+      <Row id="messages-box" className="chat-messages overflow-auto" style={{ maxHeight: '60vh', overflowWrap: 'break-word' }}>
         <MessageList
           messages={currentChannelMessages}
         />
