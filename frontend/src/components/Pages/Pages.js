@@ -11,17 +11,21 @@ import routes from '../../routes';
 
 const AppRouter = () => {
   const { token } = useAuth();
-  console.log(token);
 
   return (
-    <Router>
-      <Routes>
-        <Route path={routes.home()} element={token ? <Home /> : <Navigate to={routes.login()} />} />
-        <Route path={routes.login()} element={<LogInPage />} />
-        <Route path={routes.signup()} element={<RegistrationPage />} />
-        <Route path="/*" element={<NotFoundPage />} />
-      </Routes>
-    </Router>
+    <div className="d-flex flex-column h-100">
+      <Router>
+        <Routes>
+          <Route
+            path={routes.home()}
+            element={token ? <Home /> : <Navigate to={routes.login()} />}
+          />
+          <Route path={routes.login()} element={<LogInPage />} />
+          <Route path={routes.signup()} element={<RegistrationPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 

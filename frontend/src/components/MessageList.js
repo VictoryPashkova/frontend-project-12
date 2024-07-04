@@ -16,19 +16,19 @@ const MessageList = ({ isLoading, messages }) => {
   if (isLoading) {
     return (
       <Row>
-        <Col className="bg-white p-4 overflow-scroll" style={{ minHeight: '60vh' }}>
+        <Col className="bg-white p-4 overflow-auto" style={{ minHeight: '60vh' }}>
           <AppSpinner />
         </Col>
       </Row>
     );
   }
   return (
-    <Row>
-      <Col className="bg-white p-4 overflow-scroll" style={{ minHeight: '60vh' }}>
+    <Row className="h-100 py-3 w-100" style={{ maxWidth: '75vw', overflowX: 'hidden' }}>
+      <Col className="bg-white p-4" style={{ minHeight: '60vh', overflowWrap: 'break-word' }}>
         <>
           {messages.map((message) => (
             <Row key={message.id}>
-              <p>
+              <p style={{ wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
                 <b>
                   {`${message.username}: `}
                 </b>

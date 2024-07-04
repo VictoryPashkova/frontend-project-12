@@ -69,14 +69,12 @@ const ChatPage = () => {
   }, [massages, dispatch, refetchMessages]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (isErrorChannels) {
-        const isErrorChannelsStatus = errorChannels?.status;
-        if (isErrorChannelsStatus === authNetworkErrCode) {
-          handleExit();
-        }
+    if (isErrorChannels) {
+      const isErrorChannelsStatus = errorChannels?.status;
+      if (isErrorChannelsStatus === authNetworkErrCode) {
+        handleExit();
       }
-    }, 1000);
+    }
   }, [
     isErrorChannels, errorChannels, handleExit,
   ]);
@@ -105,13 +103,13 @@ const ChatPage = () => {
           {t('interface.buttons.logout')}
         </Button>
       </NavbarHeader>
-      <div className="container my-4 overflow-hidden rounded shadow bg-light" style={{ height: 'calc(100vh - 100px)' }}>
+      <div className="container my-4 overflow-hidden rounded shadow bg-light flex-nowrap" style={{ height: 'calc(100vh - 100px)' }}>
         <ToastContainer />
-        <Row className="row h-100 bg-light flex-md-row overflow-auto">
+        <Row className="row h-100 bg-light flex-md-row flex-nowrap">
           <Col id="sidebar-wrapper" className="col-4 col-md-3 col-lg-2 px-0 flex-column d-flex h-100">
             <NavbarSideBar />
           </Col>
-          <Col id="page-content-wrapper" className="col p-0 h-100 bg-white">
+          <Col id="page-content-wrapper" className="col p-0 h-100 bg-white overflow-auto">
             <ChannelWindow />
           </Col>
         </Row>
