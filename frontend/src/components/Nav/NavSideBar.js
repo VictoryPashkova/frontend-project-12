@@ -55,7 +55,7 @@ const NavbarSideBar = () => {
           </Button>
         </div>
       </div>
-      <ul ref={refScroll} id="channels-box" className="nav nav-pills flex-column nav-fill px-2 mb-3 d-block overflow-auto" style={{ maxHeight: 'calc(100vh - 220px)' }}>
+      <ul ref={refScroll} id="channels-box" className="nav nav-pills flex-column nav-fill px-2 mb-3 d-block overflow-auto" style={{ maxHeight: 'calc(100vh - 220px)', minHeight: '60vh' }}>
         {channels && channels.map((channel) => (
           <NavItemChannel
             key={channel.id}
