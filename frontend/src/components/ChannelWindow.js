@@ -7,12 +7,14 @@ import AddMessageForm from './Forms/AddNewMessageForm';
 import MessageList from './MessageList';
 import { useSendMessageMutation } from '../redux/reducers/massagesApiSlice';
 import { useSocket } from '../context/socketContext';
+import { useAuth } from '../context/AuthContext';
 
 const ChannelWindow = () => {
   const socket = useSocket();
   const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
   const inputRef = useRef(null);
+  const { userName } = useAuth();
 
   const [
     sendMessage,
@@ -20,9 +22,8 @@ const ChannelWindow = () => {
   ] = useSendMessageMutation();
 
   const sendMessageHandler = (message) => sendMessage(message);
-  const userName = localStorage.getItem('username');
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const { name } = useSelector((state) => state.channels.channels
+  const { name: channelName } = useSelector((state) => state.channels.channels
     .find((channel) => Number(channel.id) === Number(currentChannelId))) || {};
 
   const currentChannelMessages = messages
@@ -83,7 +84,7 @@ const ChannelWindow = () => {
         <p className="m-0">
           <b>
             {t('interface.channelsSign')}
-            {name}
+            {channelName}
           </b>
         </p>
         <span className="text-muted">{numberTextMessage()}</span>

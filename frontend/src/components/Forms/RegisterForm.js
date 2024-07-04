@@ -1,18 +1,15 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setCredentials } from '../../redux/reducers/authSlice';
 import { useAuth } from '../../context/AuthContext';
 import routes from '../../routes';
 
 const RegistrationForm = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const minNameLength = 3;
@@ -26,7 +23,6 @@ const RegistrationForm = () => {
       const { token } = response.data;
       const { username } = response.data;
       if (username) {
-        dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
         navigate(routes.home(), { replace: false });
       }

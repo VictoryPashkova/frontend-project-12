@@ -3,16 +3,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Formik } from 'formik';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { setCredentials } from '../../redux/reducers/authSlice';
 import { useAuth } from '../../context/AuthContext';
 import routes from '../../routes';
 
 const LogInForm = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [error, setError] = useState('');
@@ -23,7 +20,6 @@ const LogInForm = () => {
       const response = await axios.post(routes.loginApi(), { username: name, password });
       const { token, username } = response.data;
       if (token) {
-        dispatch(setCredentials({ username, token }));
         saveAuthData(token, username);
         navigate(routes.home(), { replace: false });
       }

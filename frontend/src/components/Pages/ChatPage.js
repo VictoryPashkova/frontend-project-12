@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import NavbarSideBar from '../Nav/NavSideBar.js';
 import ChannelWindow from '../ChannelWindow.js';
-import { setCredentials, setToken } from '../../redux/reducers/authSlice.js';
 import NavbarHeader from '../Nav/Nav.js';
 import { useAuth } from '../../context/AuthContext.js';
 import { useGetChannelsQuery } from '../../redux/reducers/channelsApiSlice.js';
@@ -29,10 +28,7 @@ const ChatPage = () => {
     localStorage.clear();
     navigate(routes.login(), { replace: false });
     clearAuthData();
-    dispatch(setCredentials({ username: '', token: null }));
-  }, [navigate, clearAuthData, dispatch]);
-
-  const { token } = useAuth();
+  }, [navigate, clearAuthData]);
 
   const {
     data: massages,
@@ -45,12 +41,6 @@ const ChatPage = () => {
     isLoading: isLoadingChannels,
     isError: isErrorChannels, error: errorChannels, refetch: refetchChannels,
   } = useGetChannelsQuery();
-
-  useEffect(() => {
-    if (token) {
-      dispatch(setToken(token));
-    }
-  }, [token, dispatch]);
 
   useEffect(() => {
     if (channels) {

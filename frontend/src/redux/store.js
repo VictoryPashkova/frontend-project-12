@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from './reducers/authSlice';
 import { channelsApi } from './reducers/channelsApiSlice';
 import modalsReducer from './reducers/modalsSlice';
 import { massagesApi } from './reducers/massagesApiSlice';
@@ -9,7 +8,6 @@ import messageReducer from './reducers/messagesSlice';
 const rootReducer = combineReducers({
   channels: channelReducer,
   messages: messageReducer,
-  user: authReducer,
   [channelsApi.reducerPath]: channelsApi.reducer,
   modals: modalsReducer,
   [massagesApi.reducerPath]: massagesApi.reducer,
