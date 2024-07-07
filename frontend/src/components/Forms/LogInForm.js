@@ -18,7 +18,10 @@ const LogInForm = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [error, setError] = useState('');
-  const { saveAuthData, clearAuthData } = useAuth();
+  const {
+    saveAuthData,
+    clearAuthData,
+  } = useAuth();
   const authNetworkErrCode = 401;
 
   const handleExit = useCallback(() => {
@@ -30,12 +33,20 @@ const LogInForm = () => {
   const onSubmit = async ({ name, password }) => {
     setError('');
     try {
-      const response = await axios.post(routes.loginApi(), { username: name, password });
-      const { token, username } = response.data;
-      if (token) {
-        saveAuthData(token, username);
-        navigate(routes.home(), { replace: false });
-      }
+      await axios
+        .post(routes.loginApi(), { username: name, password })
+        .then((response) => {
+          const { token, username } = response.data;
+          if (token) {
+            saveAuthData(token, username);
+          }
+        })
+        .then(() => {
+          const localToken = localStorage.getItem('token');
+          if (localToken) {
+            navigate(routes.home(), { replace: false });
+          }
+        });
     } catch (e) {
       setError(t('interface.invalidCredentials'));
       if (e.response && e.response.status === authNetworkErrCode) {

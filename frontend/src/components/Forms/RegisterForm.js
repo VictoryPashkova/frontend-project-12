@@ -20,7 +20,10 @@ const RegistrationForm = () => {
   const minNameLength = 3;
   const maxNameLength = 20;
   const minPasswordLength = 5;
-  const { saveAuthData, clearAuthData } = useAuth();
+  const {
+    saveAuthData,
+    clearAuthData,
+  } = useAuth();
   const authNetworkErrCode = 401;
 
   const [error, setError] = useState('');
@@ -32,18 +35,26 @@ const RegistrationForm = () => {
   }, [navigate, clearAuthData]);
 
   const onSubmit = async ({ name, password }) => {
+    setError('');
     try {
-      const response = await axios.post(routes.signupApi(), { username: name, password });
-      const { token } = response.data;
-      const { username } = response.data;
-      if (username) {
-        saveAuthData(token, username);
-        navigate(routes.home(), { replace: false });
-      }
-    } catch (err) {
-      console.error('Error signing up:', err);
+      await axios
+        .post(routes.signupApi(), { username: name, password })
+        .then((response) => {
+          const { token, username } = response.data;
+          if (token) {
+            saveAuthData(token, username);
+          }
+        })
+        .then(() => {
+          const localToken = localStorage.getItem('token');
+          if (localToken) {
+            navigate(routes.home(), { replace: false });
+          }
+        });
+    } catch (e) {
+      console.error('Error signing up:', e);
       setError(t('interface.userExists'));
-      if (err.response && err.response.status === authNetworkErrCode) {
+      if (e.response && e.response.status === authNetworkErrCode) {
         handleExit();
       }
     }

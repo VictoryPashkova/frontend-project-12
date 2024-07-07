@@ -22,6 +22,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { clearAuthData } = useAuth();
+  const authNetworkErrCode = 401;
 
   const handleExit = useCallback(() => {
     localStorage.clear();
@@ -32,30 +33,37 @@ const ChatPage = () => {
   const {
     data: massages,
     isLoading: isLoadingMessages,
-    refetch: refetchMessages,
   } = useGetMassagesQuery();
 
   const {
     data: channels,
     isLoading: isLoadingChannels,
-    refetch: refetchChannels,
+    isError: isErrorChannels,
+    error: errorChannels,
   } = useGetChannelsQuery();
 
   useEffect(() => {
     if (channels) {
       dispatch(setChannels(channels));
-    } else {
-      refetchChannels();
     }
-  }, [channels, dispatch, refetchChannels]);
+  }, [channels, dispatch]);
 
   useEffect(() => {
     if (massages) {
       dispatch(setMessages(massages));
-    } else {
-      refetchMessages();
     }
-  }, [massages, dispatch, refetchMessages]);
+  }, [massages, dispatch]);
+
+  useEffect(() => {
+    if (isErrorChannels) {
+      const errorChannelsStatus = errorChannels?.status;
+      if (errorChannelsStatus === authNetworkErrCode) {
+        handleExit();
+      }
+    }
+  }, [
+    isErrorChannels, errorChannels, handleExit, t,
+  ]);
 
   if (isLoadingMessages || isLoadingChannels) {
     return (
